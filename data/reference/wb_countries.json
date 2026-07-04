@@ -1,0 +1,1529 @@
+{
+  "ABW": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Aruba",
+    "region": "Latin America & Caribbean"
+  },
+  "AFG": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Afghanistan",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "AGO": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Angola",
+    "region": "Sub-Saharan Africa"
+  },
+  "ALB": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Albania",
+    "region": "Europe & Central Asia"
+  },
+  "AND": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Andorra",
+    "region": "Europe & Central Asia"
+  },
+  "ARE": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "United Arab Emirates",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "ARG": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Argentina",
+    "region": "Latin America & Caribbean"
+  },
+  "ARM": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Armenia",
+    "region": "Europe & Central Asia"
+  },
+  "ASM": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "American Samoa",
+    "region": "East Asia & Pacific"
+  },
+  "ATG": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Antigua and Barbuda",
+    "region": "Latin America & Caribbean"
+  },
+  "AUS": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Australia",
+    "region": "East Asia & Pacific"
+  },
+  "AUT": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Austria",
+    "region": "Europe & Central Asia"
+  },
+  "AZE": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Azerbaijan",
+    "region": "Europe & Central Asia"
+  },
+  "BDI": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Burundi",
+    "region": "Sub-Saharan Africa"
+  },
+  "BEL": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Belgium",
+    "region": "Europe & Central Asia"
+  },
+  "BEN": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Benin",
+    "region": "Sub-Saharan Africa"
+  },
+  "BFA": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Burkina Faso",
+    "region": "Sub-Saharan Africa"
+  },
+  "BGD": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Bangladesh",
+    "region": "South Asia"
+  },
+  "BGR": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Bulgaria",
+    "region": "Europe & Central Asia"
+  },
+  "BHR": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Bahrain",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "BHS": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Bahamas, The",
+    "region": "Latin America & Caribbean"
+  },
+  "BIH": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Bosnia and Herzegovina",
+    "region": "Europe & Central Asia"
+  },
+  "BLR": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Belarus",
+    "region": "Europe & Central Asia"
+  },
+  "BLZ": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Belize",
+    "region": "Latin America & Caribbean"
+  },
+  "BMU": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Bermuda",
+    "region": "North America"
+  },
+  "BOL": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Bolivia",
+    "region": "Latin America & Caribbean"
+  },
+  "BRA": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Brazil",
+    "region": "Latin America & Caribbean"
+  },
+  "BRB": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Barbados",
+    "region": "Latin America & Caribbean"
+  },
+  "BRN": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Brunei Darussalam",
+    "region": "East Asia & Pacific"
+  },
+  "BTN": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Bhutan",
+    "region": "South Asia"
+  },
+  "BWA": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Botswana",
+    "region": "Sub-Saharan Africa"
+  },
+  "CAF": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Central African Republic",
+    "region": "Sub-Saharan Africa"
+  },
+  "CAN": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Canada",
+    "region": "North America"
+  },
+  "CHE": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Switzerland",
+    "region": "Europe & Central Asia"
+  },
+  "CHI": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Channel Islands",
+    "region": "Europe & Central Asia"
+  },
+  "CHL": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Chile",
+    "region": "Latin America & Caribbean"
+  },
+  "CHN": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "China",
+    "region": "East Asia & Pacific"
+  },
+  "CIV": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Cote d'Ivoire",
+    "region": "Sub-Saharan Africa"
+  },
+  "CMR": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Cameroon",
+    "region": "Sub-Saharan Africa"
+  },
+  "COD": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Congo, Dem. Rep.",
+    "region": "Sub-Saharan Africa"
+  },
+  "COG": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Congo, Rep.",
+    "region": "Sub-Saharan Africa"
+  },
+  "COL": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Colombia",
+    "region": "Latin America & Caribbean"
+  },
+  "COM": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Comoros",
+    "region": "Sub-Saharan Africa"
+  },
+  "CPV": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Cabo Verde",
+    "region": "Sub-Saharan Africa"
+  },
+  "CRI": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Costa Rica",
+    "region": "Latin America & Caribbean"
+  },
+  "CUB": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Cuba",
+    "region": "Latin America & Caribbean"
+  },
+  "CUW": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Curacao",
+    "region": "Latin America & Caribbean"
+  },
+  "CYM": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Cayman Islands",
+    "region": "Latin America & Caribbean"
+  },
+  "CYP": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Cyprus",
+    "region": "Europe & Central Asia"
+  },
+  "CZE": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Czechia",
+    "region": "Europe & Central Asia"
+  },
+  "DEU": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Germany",
+    "region": "Europe & Central Asia"
+  },
+  "DJI": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Djibouti",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "DMA": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Dominica",
+    "region": "Latin America & Caribbean"
+  },
+  "DNK": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Denmark",
+    "region": "Europe & Central Asia"
+  },
+  "DOM": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Dominican Republic",
+    "region": "Latin America & Caribbean"
+  },
+  "DZA": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Algeria",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "ECU": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Ecuador",
+    "region": "Latin America & Caribbean"
+  },
+  "EGY": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Egypt, Arab Rep.",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "ERI": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Eritrea",
+    "region": "Sub-Saharan Africa"
+  },
+  "ESP": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Spain",
+    "region": "Europe & Central Asia"
+  },
+  "EST": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Estonia",
+    "region": "Europe & Central Asia"
+  },
+  "ETH": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Ethiopia",
+    "region": "Sub-Saharan Africa"
+  },
+  "FIN": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Finland",
+    "region": "Europe & Central Asia"
+  },
+  "FJI": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Fiji",
+    "region": "East Asia & Pacific"
+  },
+  "FRA": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "France",
+    "region": "Europe & Central Asia"
+  },
+  "FRO": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Faroe Islands",
+    "region": "Europe & Central Asia"
+  },
+  "FSM": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Micronesia, Fed. Sts.",
+    "region": "East Asia & Pacific"
+  },
+  "GAB": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Gabon",
+    "region": "Sub-Saharan Africa"
+  },
+  "GBR": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "United Kingdom",
+    "region": "Europe & Central Asia"
+  },
+  "GEO": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Georgia",
+    "region": "Europe & Central Asia"
+  },
+  "GHA": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Ghana",
+    "region": "Sub-Saharan Africa"
+  },
+  "GIB": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Gibraltar",
+    "region": "Europe & Central Asia"
+  },
+  "GIN": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Guinea",
+    "region": "Sub-Saharan Africa"
+  },
+  "GMB": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Gambia, The",
+    "region": "Sub-Saharan Africa"
+  },
+  "GNB": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Guinea-Bissau",
+    "region": "Sub-Saharan Africa"
+  },
+  "GNQ": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Equatorial Guinea",
+    "region": "Sub-Saharan Africa"
+  },
+  "GRC": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Greece",
+    "region": "Europe & Central Asia"
+  },
+  "GRD": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Grenada",
+    "region": "Latin America & Caribbean"
+  },
+  "GRL": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Greenland",
+    "region": "Europe & Central Asia"
+  },
+  "GTM": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Guatemala",
+    "region": "Latin America & Caribbean"
+  },
+  "GUM": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Guam",
+    "region": "East Asia & Pacific"
+  },
+  "GUY": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Guyana",
+    "region": "Latin America & Caribbean"
+  },
+  "HKG": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Hong Kong SAR, China",
+    "region": "East Asia & Pacific"
+  },
+  "HND": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Honduras",
+    "region": "Latin America & Caribbean"
+  },
+  "HRV": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Croatia",
+    "region": "Europe & Central Asia"
+  },
+  "HTI": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Haiti",
+    "region": "Latin America & Caribbean"
+  },
+  "HUN": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Hungary",
+    "region": "Europe & Central Asia"
+  },
+  "IDN": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Indonesia",
+    "region": "East Asia & Pacific"
+  },
+  "IMN": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Isle of Man",
+    "region": "Europe & Central Asia"
+  },
+  "IND": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "India",
+    "region": "South Asia"
+  },
+  "IRL": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Ireland",
+    "region": "Europe & Central Asia"
+  },
+  "IRN": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Iran, Islamic Rep.",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "IRQ": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Iraq",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "ISL": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Iceland",
+    "region": "Europe & Central Asia"
+  },
+  "ISR": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Israel",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "ITA": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Italy",
+    "region": "Europe & Central Asia"
+  },
+  "JAM": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Jamaica",
+    "region": "Latin America & Caribbean"
+  },
+  "JOR": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Jordan",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "JPN": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Japan",
+    "region": "East Asia & Pacific"
+  },
+  "KAZ": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Kazakhstan",
+    "region": "Europe & Central Asia"
+  },
+  "KEN": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Kenya",
+    "region": "Sub-Saharan Africa"
+  },
+  "KGZ": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Kyrgyz Republic",
+    "region": "Europe & Central Asia"
+  },
+  "KHM": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Cambodia",
+    "region": "East Asia & Pacific"
+  },
+  "KIR": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Kiribati",
+    "region": "East Asia & Pacific"
+  },
+  "KNA": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "St. Kitts and Nevis",
+    "region": "Latin America & Caribbean"
+  },
+  "KOR": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Korea, Rep.",
+    "region": "East Asia & Pacific"
+  },
+  "KWT": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Kuwait",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "LAO": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Lao PDR",
+    "region": "East Asia & Pacific"
+  },
+  "LBN": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Lebanon",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "LBR": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Liberia",
+    "region": "Sub-Saharan Africa"
+  },
+  "LBY": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Libya",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "LCA": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "St. Lucia",
+    "region": "Latin America & Caribbean"
+  },
+  "LIE": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Liechtenstein",
+    "region": "Europe & Central Asia"
+  },
+  "LKA": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Sri Lanka",
+    "region": "South Asia"
+  },
+  "LSO": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Lesotho",
+    "region": "Sub-Saharan Africa"
+  },
+  "LTU": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Lithuania",
+    "region": "Europe & Central Asia"
+  },
+  "LUX": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Luxembourg",
+    "region": "Europe & Central Asia"
+  },
+  "LVA": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Latvia",
+    "region": "Europe & Central Asia"
+  },
+  "MAC": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Macao SAR, China",
+    "region": "East Asia & Pacific"
+  },
+  "MAF": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "St. Martin (French part)",
+    "region": "Latin America & Caribbean"
+  },
+  "MAR": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Morocco",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "MCO": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Monaco",
+    "region": "Europe & Central Asia"
+  },
+  "MDA": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Moldova",
+    "region": "Europe & Central Asia"
+  },
+  "MDG": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Madagascar",
+    "region": "Sub-Saharan Africa"
+  },
+  "MDV": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Maldives",
+    "region": "South Asia"
+  },
+  "MEX": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Mexico",
+    "region": "Latin America & Caribbean"
+  },
+  "MHL": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Marshall Islands",
+    "region": "East Asia & Pacific"
+  },
+  "MKD": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "North Macedonia",
+    "region": "Europe & Central Asia"
+  },
+  "MLI": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Mali",
+    "region": "Sub-Saharan Africa"
+  },
+  "MLT": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Malta",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "MMR": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Myanmar",
+    "region": "East Asia & Pacific"
+  },
+  "MNE": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Montenegro",
+    "region": "Europe & Central Asia"
+  },
+  "MNG": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Mongolia",
+    "region": "East Asia & Pacific"
+  },
+  "MNP": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Northern Mariana Islands",
+    "region": "East Asia & Pacific"
+  },
+  "MOZ": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Mozambique",
+    "region": "Sub-Saharan Africa"
+  },
+  "MRT": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Mauritania",
+    "region": "Sub-Saharan Africa"
+  },
+  "MUS": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Mauritius",
+    "region": "Sub-Saharan Africa"
+  },
+  "MWI": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Malawi",
+    "region": "Sub-Saharan Africa"
+  },
+  "MYS": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Malaysia",
+    "region": "East Asia & Pacific"
+  },
+  "NAM": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Namibia",
+    "region": "Sub-Saharan Africa"
+  },
+  "NCL": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "New Caledonia",
+    "region": "East Asia & Pacific"
+  },
+  "NER": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Niger",
+    "region": "Sub-Saharan Africa"
+  },
+  "NGA": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Nigeria",
+    "region": "Sub-Saharan Africa"
+  },
+  "NIC": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Nicaragua",
+    "region": "Latin America & Caribbean"
+  },
+  "NLD": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Netherlands",
+    "region": "Europe & Central Asia"
+  },
+  "NOR": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Norway",
+    "region": "Europe & Central Asia"
+  },
+  "NPL": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Nepal",
+    "region": "South Asia"
+  },
+  "NRU": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Nauru",
+    "region": "East Asia & Pacific"
+  },
+  "NZL": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "New Zealand",
+    "region": "East Asia & Pacific"
+  },
+  "OMN": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Oman",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "PAK": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Pakistan",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "PAN": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Panama",
+    "region": "Latin America & Caribbean"
+  },
+  "PER": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Peru",
+    "region": "Latin America & Caribbean"
+  },
+  "PHL": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Philippines",
+    "region": "East Asia & Pacific"
+  },
+  "PLW": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Palau",
+    "region": "East Asia & Pacific"
+  },
+  "PNG": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Papua New Guinea",
+    "region": "East Asia & Pacific"
+  },
+  "POL": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Poland",
+    "region": "Europe & Central Asia"
+  },
+  "PRI": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Puerto Rico (US)",
+    "region": "Latin America & Caribbean"
+  },
+  "PRK": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Korea, Dem. People's Rep.",
+    "region": "East Asia & Pacific"
+  },
+  "PRT": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Portugal",
+    "region": "Europe & Central Asia"
+  },
+  "PRY": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Paraguay",
+    "region": "Latin America & Caribbean"
+  },
+  "PSE": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "West Bank and Gaza",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "PYF": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "French Polynesia",
+    "region": "East Asia & Pacific"
+  },
+  "QAT": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Qatar",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "ROU": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Romania",
+    "region": "Europe & Central Asia"
+  },
+  "RUS": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Russian Federation",
+    "region": "Europe & Central Asia"
+  },
+  "RWA": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Rwanda",
+    "region": "Sub-Saharan Africa"
+  },
+  "SAU": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Saudi Arabia",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "SDN": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Sudan",
+    "region": "Sub-Saharan Africa"
+  },
+  "SEN": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Senegal",
+    "region": "Sub-Saharan Africa"
+  },
+  "SGP": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Singapore",
+    "region": "East Asia & Pacific"
+  },
+  "SLB": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Solomon Islands",
+    "region": "East Asia & Pacific"
+  },
+  "SLE": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Sierra Leone",
+    "region": "Sub-Saharan Africa"
+  },
+  "SLV": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "El Salvador",
+    "region": "Latin America & Caribbean"
+  },
+  "SMR": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "San Marino",
+    "region": "Europe & Central Asia"
+  },
+  "SOM": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Somalia, Fed. Rep.",
+    "region": "Sub-Saharan Africa"
+  },
+  "SRB": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Serbia",
+    "region": "Europe & Central Asia"
+  },
+  "SSD": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "South Sudan",
+    "region": "Sub-Saharan Africa"
+  },
+  "STP": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Sao Tome and Principe",
+    "region": "Sub-Saharan Africa"
+  },
+  "SUR": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Suriname",
+    "region": "Latin America & Caribbean"
+  },
+  "SVK": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Slovak Republic",
+    "region": "Europe & Central Asia"
+  },
+  "SVN": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Slovenia",
+    "region": "Europe & Central Asia"
+  },
+  "SWE": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Sweden",
+    "region": "Europe & Central Asia"
+  },
+  "SWZ": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Eswatini",
+    "region": "Sub-Saharan Africa"
+  },
+  "SXM": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Sint Maarten (Dutch part)",
+    "region": "Latin America & Caribbean"
+  },
+  "SYC": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Seychelles",
+    "region": "Sub-Saharan Africa"
+  },
+  "SYR": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Syrian Arab Republic",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "TCA": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Turks and Caicos Islands",
+    "region": "Latin America & Caribbean"
+  },
+  "TCD": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Chad",
+    "region": "Sub-Saharan Africa"
+  },
+  "TGO": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Togo",
+    "region": "Sub-Saharan Africa"
+  },
+  "THA": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Thailand",
+    "region": "East Asia & Pacific"
+  },
+  "TJK": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Tajikistan",
+    "region": "Europe & Central Asia"
+  },
+  "TKM": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Turkmenistan",
+    "region": "Europe & Central Asia"
+  },
+  "TLS": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Timor-Leste",
+    "region": "East Asia & Pacific"
+  },
+  "TON": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Tonga",
+    "region": "East Asia & Pacific"
+  },
+  "TTO": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Trinidad and Tobago",
+    "region": "Latin America & Caribbean"
+  },
+  "TUN": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Tunisia",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "TUR": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Turkiye",
+    "region": "Europe & Central Asia"
+  },
+  "TUV": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Tuvalu",
+    "region": "East Asia & Pacific"
+  },
+  "TWN": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "TWN",
+    "note": "not WB-classified; IMF advanced economy",
+    "region": "East Asia & Pacific"
+  },
+  "TZA": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Tanzania",
+    "region": "Sub-Saharan Africa"
+  },
+  "UGA": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Uganda",
+    "region": "Sub-Saharan Africa"
+  },
+  "UKR": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Ukraine",
+    "region": "Europe & Central Asia"
+  },
+  "URY": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Uruguay",
+    "region": "Latin America & Caribbean"
+  },
+  "USA": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "United States",
+    "region": "North America"
+  },
+  "UZB": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Uzbekistan",
+    "region": "Europe & Central Asia"
+  },
+  "VCT": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "St. Vincent and the Grenadines",
+    "region": "Latin America & Caribbean"
+  },
+  "VEN": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Venezuela, RB",
+    "region": "Latin America & Caribbean"
+  },
+  "VGB": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "British Virgin Islands",
+    "region": "Latin America & Caribbean"
+  },
+  "VIR": {
+    "global_north": true,
+    "income_label": "High income",
+    "income_tier": "HIC",
+    "name": "Virgin Islands (U.S.)",
+    "region": "Latin America & Caribbean"
+  },
+  "VNM": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Viet Nam",
+    "region": "East Asia & Pacific"
+  },
+  "VUT": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Vanuatu",
+    "region": "East Asia & Pacific"
+  },
+  "WSM": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Samoa",
+    "region": "East Asia & Pacific"
+  },
+  "XKX": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "Kosovo",
+    "region": "Europe & Central Asia"
+  },
+  "YEM": {
+    "global_north": false,
+    "income_label": "Low income",
+    "income_tier": "LIC",
+    "name": "Yemen, Rep.",
+    "region": "Middle East, North Africa, Afghanistan & Pakistan"
+  },
+  "ZAF": {
+    "global_north": false,
+    "income_label": "Upper middle income",
+    "income_tier": "UMC",
+    "name": "South Africa",
+    "region": "Sub-Saharan Africa"
+  },
+  "ZMB": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Zambia",
+    "region": "Sub-Saharan Africa"
+  },
+  "ZWE": {
+    "global_north": false,
+    "income_label": "Lower middle income",
+    "income_tier": "LMC",
+    "name": "Zimbabwe",
+    "region": "Sub-Saharan Africa"
+  }
+}

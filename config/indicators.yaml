@@ -1,0 +1,172 @@
+# Indicator screening configuration.
+#
+# Candidates below are the 18 indicators of the IEEE IRAI 2026 pilot, with
+# exact GAID metric strings verified against wave w1_v2. The screening module
+# re-runs the three-stage screen (thematic mapping -> coverage -> redundancy)
+# against EVERY new wave, so this file lists candidates and rules; what is
+# actually retained is decided by the data and written to the screening report.
+#
+# Peer-review incorporation (see METHODOLOGY.md for the full traceability):
+# - coverage stats are reported per income tier so thin-coverage themes are
+#   visible and gated, not silently generalised (IEEE R1, weakness 2)
+# - redundancy conflicts are auto-resolved to the higher-coverage indicator
+#   unless a `keep` override records an explicit conceptual justification,
+#   which is printed in the report (IEEE R1's transparency concern)
+
+eval_years: [2010, 2013, 2016, 2019, 2022, 2023]
+
+screening:
+  min_countries: 10          # retained if >= this many countries in >= 1 eval year
+  redundancy_threshold: 0.90 # |Spearman r| above this flags a pair
+  redundancy_year: 2022      # cross-section for correlation (falls back to
+                             # latest year where both indicators overlap)
+
+analysis_gates:
+  min_value_responses: 30    # thematic/geographic claims need >= this many
+                             # value-bearing responses (the Apart pilot's
+                             # D5 n=9 / 100% headline must not recur)
+  balanced_subset_min_per_tier: 5  # indicator joins the balanced-coverage
+                                   # subset if >= 5 countries per income tier
+
+indicators:
+  - id: AI_Pubs
+    theme: Transparency
+    metric: "Number Of AI Publications: All"
+    source: "Stanford AI Index"
+    prompt_source: "the Stanford AI Index"
+    label: "the number of AI publications"
+    binary: false
+  - id: WIPO_Patents
+    theme: Transparency
+    metric: "Total AI-Related Patent Publications (Applicant Origin)"
+    source: "WIPO (World Intellectual Property Organisation)"
+    prompt_source: "WIPO"
+    label: "the total number of AI-related patent publications (by applicant country of origin)"
+    binary: false
+  - id: FWCI
+    theme: Transparency
+    metric: "Field Weighted Citation Impact: All"
+    source: "Stanford AI Index"
+    prompt_source: "the Stanford AI Index"
+    label: "the field-weighted citation impact of AI research"
+    binary: false
+  - id: CS_Grad_F
+    theme: Fairness
+    metric: "Share of CS Bachelor's Graduates: Female"
+    source: "Stanford AI Index"
+    prompt_source: "the Stanford AI Index / OECD"
+    label: "the share of computer science bachelor's graduates who are female (%)"
+    binary: false
+  - id: CS_PhD_F
+    theme: Fairness
+    metric: "Share of CS Doctoral Graduates: Female"
+    source: "Stanford AI Index"
+    prompt_source: "the Stanford AI Index / OECD"
+    label: "the share of computer science doctoral graduates who are female (%)"
+    binary: false
+  - id: WB_GTMI
+    theme: Adoption
+    metric: "WB GovTech: Overall Maturity Index (GTMI)"
+    source: "World Bank - GovTech Maturity Index"
+    prompt_source: "the World Bank GovTech Maturity Index"
+    label: "the GovTech overall maturity index score"
+    binary: false
+  - id: Coursera_Biz
+    theme: Adoption
+    metric: "Coursera: Business Proficiency Score"
+    source: "Coursera - Global Skills Report"
+    prompt_source: "the Coursera Global Skills Report"
+    label: "the Coursera business skills proficiency score"
+    binary: false
+  - id: Coursera_Tech
+    theme: Adoption
+    metric: "Coursera: Technology Proficiency Score"
+    source: "Coursera - Global Skills Report"
+    prompt_source: "the Coursera Global Skills Report"
+    label: "the Coursera technology skills proficiency score"
+    binary: false
+  - id: BigData_Biz
+    theme: Adoption
+    metric: "Businesses having performed big data analysis (Total - all activities, 10 or more)"
+    source: "OECD.ai"
+    prompt_source: "OECD.ai"
+    label: "the proportion of businesses (10+ employees) having performed big data analysis (%)"
+    binary: false
+  - id: Nat_AI_Strat
+    theme: Regulation
+    metric: "Released National Strategy On AI"
+    source: "Stanford AI Index"
+    prompt_source: "the Stanford AI Index"
+    label: "whether the country has released a national AI strategy"
+    binary: true
+  - id: AI_Bills
+    theme: Regulation
+    metric: "Number Of AI-Related Bills Passed Into Law"
+    source: "Stanford AI Index"
+    prompt_source: "the Stanford AI Index"
+    label: "the number of AI-related bills passed into law"
+    binary: false
+  - id: AI_Legis
+    theme: Accountability
+    metric: "Number of AI Mentions in Legislative Proceedings (2022 Annual)"
+    source: "Stanford AI Index"
+    prompt_source: "the Stanford AI Index"
+    label: "the number of AI mentions in national legislative proceedings (2022 annual count)"
+    binary: false
+    years_override: [2023]
+  - id: Train_Compute
+    theme: Safety
+    metric: "Total Training Compute (FLOP)"
+    source: "Epoch AI"
+    prompt_source: "Epoch AI"
+    label: "the total training compute of AI models released (FLOP)"
+    binary: false
+  - id: Model_Params
+    theme: Safety
+    metric: "Total Model Parameters"
+    source: "Epoch AI"
+    prompt_source: "Epoch AI"
+    label: "the total parameters of AI models released"
+    binary: false
+  - id: ICT_Sec_All
+    theme: Security
+    metric: "Businesses experiencing ICT incidents (security breaches) (Total - all activities, 10 or more)"
+    source: "OECD.ai"
+    prompt_source: "OECD.ai"
+    label: "the proportion of businesses (10+ employees) that experienced ICT security breaches (%)"
+    binary: false
+  - id: ICT_Sec_ICT
+    theme: Security
+    metric: "Businesses experiencing ICT incidents (security breaches) (Information and communication, 10 or more)"
+    source: "OECD.ai"
+    prompt_source: "OECD.ai"
+    label: "the proportion of information-and-communication-sector businesses (10+ employees) that experienced ICT security breaches (%)"
+    binary: false
+  - id: AI_Benefits
+    theme: Ethics
+    metric: "% Agreeing With Statement: Products And Services Using Artificial Intelligence Have More Benefits Than Drawbacks"
+    source: "Stanford AI Index"
+    prompt_source: "the Stanford AI Index (Ipsos survey)"
+    label: "the percentage of survey respondents agreeing that AI products and services have more benefits than drawbacks"
+    binary: false
+  - id: AI_Nervous
+    theme: Ethics
+    metric: "% Agreeing With Statement: Products And Services Using Artificial Intelligence Make Me Nervous"
+    source: "Stanford AI Index"
+    prompt_source: "the Stanford AI Index (Ipsos survey)"
+    label: "the percentage of survey respondents agreeing that AI products and services make them nervous"
+    binary: false
+
+# Explicit keep-decisions for redundancy conflicts, with the conceptual
+# justification the report must print (IEEE pilot retained these pairs):
+redundancy_overrides:
+  - pair: [Model_Params, Train_Compute]
+    keep: both
+    justification: >
+      Model scale versus training resource requirements are conceptually
+      distinct constructs (r = 0.888 in the 2022 cross-section of the pilot).
+  - pair: [AI_Pubs, WIPO_Patents]
+    keep: both
+    justification: >
+      Academic research output versus industrial innovation are conceptually
+      distinct constructs (r = 0.722-0.792 across pilot evaluation years).
