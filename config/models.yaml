@@ -1,0 +1,71 @@
+# Model registry: the eval panel + release-watch configuration.
+#
+# Two triggers feed one eval engine:
+#   1. Data trigger  — new GAID wave on Dataverse -> re-evaluate every `active`
+#      panel model (delta evaluation: only new/changed observations + a fixed
+#      drift-control subsample).
+#   2. Model trigger — release watcher spots a new frontier model matching the
+#      watch criteria -> it is added here as `candidate` and a notification is
+#      opened. Nothing runs until Jason flips it to `active` and launches the
+#      run himself (cost control; runs are always human-launched).
+#
+# training_cutoff.status is `documented` or `estimated`; temporal analyses
+# automatically run a sensitivity excluding estimated-cutoff models
+# (IEEE reviewer 1, weakness 4).
+
+panel:
+  # --- open-weight core (reproducible; runs on free tiers) ---
+  - id: llama-4-maverick
+    endpoint: meta-llama/llama-4-maverick        # OpenRouter id
+    free_endpoint: meta-llama/llama-4-maverick:free
+    developer: Meta AI
+    developer_origin: US
+    weights: open
+    training_cutoff: { date: "2024-08", status: documented, source: "Meta model card" }
+    status: active
+  - id: mistral-large-3
+    endpoint: mistralai/mistral-large-3          # also: Mistral La Plateforme free tier
+    developer: Mistral AI
+    developer_origin: EU
+    weights: open
+    training_cutoff: { date: "2025-late", status: estimated, source: "NVIDIA model card" }
+    status: active
+  - id: qwen3-235b-a22b
+    endpoint: qwen/qwen3-235b-a22b
+    free_endpoint: qwen/qwen3-235b-a22b:free
+    developer: Alibaba Cloud
+    developer_origin: CN
+    weights: open
+    training_cutoff: { date: "2025-mid", status: estimated, source: "Qwen blog" }
+    status: active
+  - id: deepseek-v3-0324
+    endpoint: deepseek/deepseek-chat-v3-0324
+    free_endpoint: deepseek/deepseek-chat-v3-0324:free
+    developer: DeepSeek
+    developer_origin: CN
+    weights: open
+    training_cutoff: { date: "2024-07", status: estimated, source: "Knostic system-prompt extraction" }
+    status: active
+
+  # --- proprietary annex (optional; clearly separated in analysis; goes
+  #     through provider batch endpoints at 50% off when run) ---
+  - id: claude-opus-4-6
+    endpoint: anthropic/claude-opus-4.6
+    developer: Anthropic
+    developer_origin: US
+    weights: proprietary
+    training_cutoff: { date: "2025", status: documented, source: "Anthropic model card" }
+    status: inactive   # pilot already run in Apart study; activate for annex rounds
+
+watch:
+  # Weekly GitHub Actions job diffs OpenRouter's /api/v1/models list and the
+  # Hugging Face orgs below against this registry. Matches become `candidate`
+  # entries in a notification issue with an estimated eval cost. flag-and-wait:
+  # nothing is ever evaluated automatically.
+  policy: flag-and-wait
+  huggingface_orgs: [meta-llama, deepseek-ai, Qwen, mistralai, moonshotai, zai-org]
+  criteria:
+    frontier_only: true          # flagship-tier releases, not mini/nano/distill variants
+    exclude_patterns: ["*-mini*", "*-nano*", "*distill*", "*guard*", "*-vl*"]
+    min_weeks_public: 4          # let a release accumulate independent benchmarks first
+                                 # (same rationale the IEEE paper used to defer Qwen3.5)

@@ -1,0 +1,14 @@
+{
+  "installed": {
+    "wave": 1,
+    "version": 2,
+    "filename": "gaid_w1_v2.zip",
+    "file_id": 13351164,
+    "md5": "9a4234c7ed734f7c31ddc7422f241d5c",
+    "size": 4592037,
+    "dataset_doi": "doi:10.7910/DVN/PUMGYU",
+    "dataset_version": "1.2"
+  },
+  "extracted_to": "/Users/newlivehung/Desktop/gaid-pipeline/data/wave/w1_v2",
+  "synced_at": "2026-07-04T17:43:23+00:00"
+}
