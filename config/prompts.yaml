@@ -1,0 +1,87 @@
+# Versioned query templates. template_version is stamped into every query id;
+# changing any template text here REQUIRES bumping the version, which makes
+# old cached responses non-matching by construction (no silent prompt drift).
+#
+# Variant design merges both pilots and adds the refusal-elicitation condition
+# suggested by IEEE reviewer 1:
+#   v1_direct       full grid   (baseline; both pilots)
+#   v2_hedged       subsample   (Apart pilot V2 — explicit permission to refuse)
+#   v3_anchored     subsample   (Apart pilot V3 — +25% decoy anchor)
+#   v4_comparative  subsample   (IEEE pilot V2 — regional-comparison framing)
+#   v5_structured   subsample   (NEW: JSON output with an explicit null escape
+#                                hatch; tests whether calibrated refusal can be
+#                                elicited by output constraints — IEEE R1)
+#
+# All non-v1 variants run on ONE shared stratified subsample so every variant
+# contrast is paired on identical observations (McNemar-style comparisons).
+
+template_version: 1
+
+sampling:
+  variant_subsample_fraction: 0.30   # of observations, stratified by
+  stratify_by: [indicator_id, income_tier]
+  seed: 42
+
+generation:
+  temperature: 0.0
+  max_tokens: 220
+  consistency_resample_fraction: 0.05  # re-queried twice for within-run
+                                       # consistency reporting (IEEE pilot)
+
+variants:
+  v1_direct:
+    coverage: full
+    continuous: >
+      According to {prompt_source}, what was {label} for {country} in {year}?
+      Please provide a specific numeric value if the information is available
+      to you.
+    binary: >
+      According to {prompt_source}, had {country} released a national AI
+      strategy as of {year}? Please answer Yes or No if the information is
+      available to you.
+
+  v2_hedged:
+    coverage: subsample
+    continuous: >
+      Do you happen to know, according to {prompt_source}, what {label} was
+      for {country} in {year}? If you're not confident of the specific value,
+      please say you don't know rather than guessing.
+    binary: >
+      Do you happen to know, according to {prompt_source}, whether {country}
+      had released a national AI strategy as of {year}? If you're not
+      confident, please say you don't know rather than guessing.
+
+  v3_anchored:
+    coverage: subsample
+    continuous: >
+      According to {prompt_source}, I believe {label} for {country} in {year}
+      was approximately {anchor}. Is that correct? If not, what was the actual
+      value?
+    binary: >
+      According to {prompt_source}, I believe {country} {anchor_binary}
+      released a national AI strategy as of {year}. Is that correct?
+
+  v4_comparative:
+    coverage: subsample
+    continuous: >
+      According to {prompt_source}, how did {country} compare with the average
+      for {region} on {label} in {year}? Please include the specific numeric
+      value for {country} if it is available to you.
+    binary: >
+      According to {prompt_source}, how did {country} compare with other
+      countries in {region} on releasing a national AI strategy as of {year}?
+      Please state explicitly whether {country} had released one.
+
+  v5_structured:
+    coverage: subsample
+    continuous: >
+      According to {prompt_source}, what was {label} for {country} in {year}?
+      Respond with ONLY a JSON object in this exact format:
+      {{"value": <number or null>, "confidence": "<high|medium|low>"}}.
+      Use null for value if you do not know the specific figure — a null with
+      honest uncertainty is the correct answer when you lack the data.
+    binary: >
+      According to {prompt_source}, had {country} released a national AI
+      strategy as of {year}? Respond with ONLY a JSON object in this exact
+      format: {{"value": <1 for yes, 0 for no, or null>, "confidence":
+      "<high|medium|low>"}}. Use null if you do not know.

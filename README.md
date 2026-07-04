@@ -47,8 +47,25 @@ pip install -r requirements.txt
 python -m gaid_pipeline check       # is there a newer wave on Dataverse?
 python -m gaid_pipeline sync        # download + verify + extract it
 python -m gaid_pipeline harmonise   # validate -> data/processed/<tag>/gaid_canonical.parquet
+python -m gaid_pipeline screen      # indicator screening -> observations.parquet + report
+python -m gaid_pipeline queries     # versioned query set (5 variants, paired subsample)
+
+# $0 pipeline test with synthetic responses (separate cache):
+python -m gaid_pipeline run-eval --model llama-4-maverick --dry-run --limit 400
+python -m gaid_pipeline classify --dry-run
+
+# real run (launched by the researcher only; resumable, hard budget cap,
+# free-tier endpoint by default — needs OPENROUTER_API_KEY in .env):
+python -m gaid_pipeline run-eval --model llama-4-maverick --budget 5
+python -m gaid_pipeline classify              # $0 post-processing, re-runnable
+python -m gaid_pipeline validate-export      # blind-coding CSV for human validation
+python -m gaid_pipeline validate-kappa       # Cohen's kappa after coding
+
 python -m gaid_pipeline status      # what is installed locally
 ```
+
+Methodology decisions and their mapping to the pilots' peer review:
+see [METHODOLOGY.md](METHODOLOGY.md).
 
 Wave detection needs no API key (GAID is public). New waves are found by
 enumerating every dataset in the `gaidproject` dataverse and matching the
@@ -62,10 +79,14 @@ report rather than silently producing a wrong benchmark.
 
 - [x] Dataverse sync module (wave detection, checksum-verified download, manifest)
 - [x] Harmonisation layer (canonical schema, validation, per-wave coverage report)
-- [ ] Indicator screening as code (thematic mapping, coverage, redundancy) per wave
-- [ ] Eval engine: model registry client (OpenRouter free tiers + provider batch),
-      response cache, multi-threshold scale-aware classifier, refusal-elicitation
-      variant, human-validation harness
+- [x] Indicator screening as code (thematic mapping, coverage incl. income tiers,
+      redundancy with printed keep-justifications) — reproduces the IEEE frame
+      on w1_v2: 18 indicators, 2,978 observations
+- [x] Eval engine: versioned query templates (5 variants incl. the
+      refusal-elicitation JSON contract), paired variant subsampling, cached
+      budget-capped resumable OpenRouter client with dry-run mode,
+      multi-threshold scale-aware classifier (18 unit tests),
+      human-validation harness (blind coding + Cohen's kappa)
 - [ ] Stats module: mixed-effects logistic regression, DiD, PCA, World Bank
       income-tier stratification, built-in threshold sensitivity
 - [ ] Release watcher (OpenRouter /models + Hugging Face org diff → candidates)
