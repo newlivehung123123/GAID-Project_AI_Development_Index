@@ -64,15 +64,15 @@ def layout(title: str, description: str, body: str, *, depth: int = 0,
 <meta property="og:description" content="{description}">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{p}assets/style.css">
 </head>
 <body{body_attr(body)}>
 <header class="site"><div class="wrap">
-  <div><span class="brand">GAID<span class="accent">.</span></span>
-    <span class="backlink">&nbsp; the Global AI Dataset Project</span></div>
+  <span class="brand">Global AI Dataset</span>
+  <span class="tagline">the GAID Project &mdash; measuring the world's AI landscape</span>
   <nav class="top">{nav}
-    <a href="https://aiinsocietyhub.com/" class="backlink">&larr; AI in Society</a></nav>
+    <a href="https://aiinsocietyhub.com/">AI in Society</a></nav>
 </div></header>
 <main class="wrap">
 {body}
@@ -133,9 +133,9 @@ def build_country_page(c: dict, profile: dict, meta: dict, latest: int) -> str:
             latest_scores[pid] = by_ed[str(latest)]
     rank_html = ""
     if "overall" in c:
-        rank_html = (f'<div class="rank-box"><div class="big">#{c["overall"]["rank"]}</div>'
-                     f'<div class="sub">of {meta["n_ranked"]} ranked<br>'
-                     f'GAID Index {c["overall"]["score"]:.1f} ({latest})</div></div>')
+        rank_html = (f'<p class="rank-line">Ranked <b>#{c["overall"]["rank"]}</b> of '
+                     f'{meta["n_ranked"]} &middot; GAID Index '
+                     f'<b>{c["overall"]["score"]:.1f}</b> ({latest})</p>')
     chips = "".join(
         f'<div class="score-chip">{pid} · {pillars[pid]}<b>{fmt_score(latest_scores.get(pid))}</b></div>'
         for pid in pillars)
@@ -149,10 +149,8 @@ def build_country_page(c: dict, profile: dict, meta: dict, latest: int) -> str:
     name, region, income = c["name"], c.get("region") or "—", c.get("income") or "unclassified"
     body = f"""
 <div class="hero profile-head">
-  <div>
-    <h1>{name}</h1>
-    <div class="meta-line">{region} · {income} · <b>{c["metrics"]:,}</b> GAID indicators</div>
-  </div>
+  <h1>{name}</h1>
+  <div class="meta-line">{region} · {income} · <b>{c["metrics"]:,}</b> GAID indicators</div>
   {rank_html}
 </div>
 <section><h2>AI development profile</h2>
