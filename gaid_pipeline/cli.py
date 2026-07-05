@@ -17,7 +17,8 @@ import yaml
 
 from . import (client, dashboard_data, dataverse, harmonise as harmonise_mod,
                indices as indices_mod, queries as queries_mod,
-               results as results_mod, screening, validate as validate_mod)
+               results as results_mod, screening, site_build,
+               validate as validate_mod)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = REPO_ROOT / "data"
@@ -101,6 +102,14 @@ def cmd_site_data(_args) -> int:
     return 0
 
 
+def cmd_site_build(_args) -> int:
+    if not (REPO_ROOT / "site" / "data" / "meta.json").exists():
+        print("Run `python -m gaid_pipeline site-data` first.", file=sys.stderr)
+        return 1
+    print(json.dumps(site_build.build_site(REPO_ROOT), indent=2))
+    return 0
+
+
 def cmd_queries(_args) -> int:
     tag = _installed_tag()
     obs = DATA_DIR / "processed" / tag / "observations.parquet"
@@ -179,6 +188,7 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("screen", help="run indicator screening on the installed wave")
     sub.add_parser("indices", help="compute composite indices + validation report")
     sub.add_parser("site-data", help="export static JSON for the dashboard")
+    sub.add_parser("site-build", help="generate the static dashboard site (site/dist)")
     sub.add_parser("queries", help="generate the versioned query set")
     p_run = sub.add_parser("run-eval", help="run one model over the query set "
                                             "(cached, budget-capped, resumable)")
@@ -201,7 +211,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     return {"check": cmd_check, "sync": cmd_sync, "harmonise": cmd_harmonise,
             "screen": cmd_screen, "indices": cmd_indices,
-            "site-data": cmd_site_data, "queries": cmd_queries,
+            "site-data": cmd_site_data, "site-build": cmd_site_build,
+            "queries": cmd_queries,
             "run-eval": cmd_run_eval, "classify": cmd_classify,
             "validate-export": cmd_validate_export,
             "validate-kappa": cmd_validate_kappa,

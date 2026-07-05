@@ -95,6 +95,12 @@ report rather than silently producing a wrong benchmark.
 - [ ] Stats module: mixed-effects logistic regression, DiD, PCA, World Bank
       income-tier stratification, built-in threshold sensitivity
 - [ ] Release watcher (OpenRouter /models + Hugging Face org diff → candidates)
-- [ ] Dashboard static build + Hostinger deploy (gaid.aiinsocietyhub.com)
+- [x] Dashboard static build (`site-data` + `site-build`): 230 SEO-indexable
+      HTML pages — home with interactive choropleth + edition slider, full
+      rankings, methodology, 227 country profiles (server-rendered radar,
+      full metric browser) — design harmonised with aiinsocietyhub.com;
+      sitemap.xml + robots.txt included; verified in browser preview
+- [ ] Hostinger deploy of site/dist to gaid.aiinsocietyhub.com (subdomain
+      document root only; WordPress never touched)
 - [ ] GitHub Actions: weekly wave check (free path), manual `workflow_dispatch`
       eval runs (paid path, budget-capped)
