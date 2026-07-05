@@ -312,6 +312,33 @@ def write_report(panel: pd.DataFrame, val: dict, cfg: dict, tag: str,
         pd.DataFrame(val["sensitivity"]).round(3).to_markdown(), "",
         "## Convergent validity vs held-out external indices", "",
         pd.DataFrame(val["convergent"]).to_markdown(index=False), "",
+        "## Pillar availability by edition (first edition with >= 10 countries)", "",
+        (panel[panel["level"] == "pillar"]
+         .groupby(["id", "edition"])["ISO3"].nunique().reset_index()
+         .query("ISO3 >= 10").groupby("id")["edition"].min()
+         .rename("first_edition").to_frame().to_markdown()), "",
+        "## Known interpretation caveats (for papers using these indices)", "",
+        "1. **P3/P5 vs Tortoise counterparts (rho ~ 0.3-0.4) is construct "
+        "divergence, not error.** Tortoise's Government Strategy score measures "
+        "announced national-AI-strategy commitment; GAID P3 measures operational "
+        "digital-government capacity (GovTech) plus legislative activity. "
+        "Tortoise's Infrastructure score measures broad electricity/internet/"
+        "supercomputing access; GAID P5 measures frontier compute concentration "
+        "(Epoch AI). Report these as related-but-distinct constructs.", "",
+        "2. **P2 is a formative composite of near-orthogonal facets.** Talent "
+        "concentration and skill penetration barely correlate (alpha = 0.05, "
+        "w1_v2), so they are separate weight groups; do not describe P2 as "
+        "measuring a single latent 'talent' trait. Its external validity "
+        "against Tortoise Talent (rho = 0.84) supports the composite reading.", "",
+        "3. **The panel is thin before ~2020 because global AI measurement "
+        "infrastructure is young**, not because of processing choices: GovTech "
+        "starts 2020, GIRAI 2024, talent metrics 2025. The overall index "
+        "exists only where >= 4 pillars score a country (from ~2022). This is "
+        "itself a reportable finding (cf. the IEEE IRAI paper's observation "
+        "that AI ethics instruments did not exist before 2024).", "",
+        "4. **GIRAI enters P6 as components with attribution**, so the "
+        "P6-vs-GIRAI convergent check is partially circular; the clean "
+        "held-out validations are the Tortoise rows.", "",
     ]
     path = rep_dir / "index_report.md"
     path.write_text("\n".join(lines))

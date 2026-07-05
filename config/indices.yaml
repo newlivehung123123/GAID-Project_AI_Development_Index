@@ -39,12 +39,16 @@ pillars:
          metric: "Number Of Responsible AI (RAI) Papers Accepted (2019-24)"}
   P2:
     name: Talent & Skills
+    # talent_conc and skill_pen proved near-orthogonal (alpha = 0.05, w1_v2
+    # audit), so they are separate formative facets, not one reflective group:
+    # components that do not cohere must not be averaged as if they measure
+    # the same construct.
     components:
-      - {id: talent_conc, group: talent_stock, log: false, direction: 1,
+      - {id: talent_conc, group: talent_concentration, log: false, direction: 1,
          metric: "AI Talent Concentration (Share of Professionals)"}
-      - {id: skill_pen,   group: talent_stock, log: false, direction: 1,
+      - {id: skill_pen,   group: skill_penetration,    log: false, direction: 1,
          metric: "Relative AI Skill Penetration Rate, 2015-24"}
-      - {id: ai_jobs,     group: demand,       log: false, direction: 1,
+      - {id: ai_jobs,     group: demand,               log: false, direction: 1,
          metric: "AI Job Postings (% Of All Job Postings) (2025 Report Methodology)"}
   P3:
     name: Governance & Regulation

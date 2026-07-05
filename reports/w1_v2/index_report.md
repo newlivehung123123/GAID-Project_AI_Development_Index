@@ -19,28 +19,28 @@ Normalisation: log1p (flagged) -> winsorise [0.01, 0.99] -> min-max within editi
 
 | ISO3   |   score |
 |:-------|--------:|
-| USA    |   77.91 |
+| USA    |   78.21 |
 | CHN    |   73.38 |
-| GBR    |   63.5  |
-| SGP    |   63.08 |
+| GBR    |   63.72 |
+| SGP    |   61.94 |
 | IND    |   60.77 |
 | JPN    |   60.46 |
 | KOR    |   60.1  |
-| DEU    |   57.24 |
-| CAN    |   57.16 |
-| CHE    |   55.64 |
-| FRA    |   55.58 |
-| ARE    |   53.29 |
-| ITA    |   53.21 |
+| DEU    |   57.72 |
+| CAN    |   57.24 |
+| FRA    |   55.79 |
+| CHE    |   55.65 |
+| ITA    |   53.13 |
 | ISR    |   52.48 |
-| AUS    |   51.9  |
+| ARE    |   52.38 |
+| AUS    |   51.93 |
 
 ## Dimensionality audit — edition 2025
 
 | pillar   | name                     |   k_active |   alpha_pillar(info) |   n | group_alphas(test)                            |   rho_equal_vs_pca |
 |:---------|:-------------------------|-----------:|---------------------:|----:|:----------------------------------------------|-------------------:|
 | P1       | Research & Innovation    |          2 |                 0    |  70 | single-component groups                       |            nan     |
-| P2       | Talent & Skills          |          3 |                 0.58 |  21 | talent_stock=0.05 (n=48)                      |              0.965 |
+| P2       | Talent & Skills          |          3 |                 0.58 |  21 | single-component groups                       |              0.965 |
 | P3       | Governance & Regulation  |          6 |                 0.83 |  63 | govtech=0.96 (n=197), legislation=0.39 (n=68) |              0.953 |
 | P4       | AI Economy & Investment  |          2 |                 0.93 |  91 | single-component groups                       |              1     |
 | P5       | Infrastructure & Compute |          2 |                 0.53 |  24 | compute=0.53 (n=24)                           |              0.997 |
@@ -64,10 +64,10 @@ Interpretation: pillars are FORMATIVE composites (OECD/JRC handbook) — interna
 |    |   P1 |   P2 |    P3 |   P4 |    P5 |   P6 |
 |:---|-----:|-----:|------:|-----:|------:|-----:|
 | P1 | 1    | 0.75 |  0.27 | 0.84 |  0.25 | 0.26 |
-| P2 | 0.75 | 1    |  0.22 | 0.78 |  0.09 | 0.06 |
+| P2 | 0.75 | 1    |  0.22 | 0.78 |  0.11 | 0.06 |
 | P3 | 0.27 | 0.22 |  1    | 0.36 | -0.02 | 0.67 |
 | P4 | 0.84 | 0.78 |  0.36 | 1    |  0.27 | 0.58 |
-| P5 | 0.25 | 0.09 | -0.02 | 0.27 |  1    | 0.23 |
+| P5 | 0.25 | 0.11 | -0.02 | 0.27 |  1    | 0.23 |
 | P6 | 0.26 | 0.06 |  0.67 | 0.58 |  0.23 | 1    |
 
 ## Normalisation sensitivity (Spearman vs headline min-max)
@@ -75,7 +75,7 @@ Interpretation: pillars are FORMATIVE composites (OECD/JRC handbook) — interna
 |    |   zscore |   percentile |
 |:---|---------:|-------------:|
 | P1 |    1     |        1     |
-| P2 |    0.988 |        0.956 |
+| P2 |    0.993 |        0.97  |
 | P3 |    0.951 |        0.93  |
 | P4 |    1     |        0.997 |
 | P5 |    0.954 |        0.918 |
@@ -85,10 +85,31 @@ Interpretation: pillars are FORMATIVE composites (OECD/JRC handbook) — interna
 
 | ours    | theirs                                   |   n |      rho | note                                                          |
 |:--------|:-----------------------------------------|----:|---------:|:--------------------------------------------------------------|
-| overall | AI Index: Overall Score                  |  62 | 0.821965 |                                                               |
+| overall | AI Index: Overall Score                  |  62 | 0.815881 |                                                               |
 | P1      | AI Index: Research Score                 |  64 | 0.757854 |                                                               |
-| P2      | AI Index: Talent Score                   |  45 | 0.836288 |                                                               |
+| P2      | AI Index: Talent Score                   |  45 | 0.86513  |                                                               |
 | P3      | AI Index: Government Strategy Score      |  82 | 0.390511 |                                                               |
 | P4      | AI Index: Commercial Score               |  71 | 0.732411 |                                                               |
 | P5      | AI Index: Infrastructure Score           |  34 | 0.315105 |                                                               |
 | P6      | The Global Index on Responsible AI Score | 136 | 0.941959 | partially circular — GIRAI dimension scores are P6 components |
+
+## Pillar availability by edition (first edition with >= 10 countries)
+
+| id   |   first_edition |
+|:-----|----------------:|
+| P1   |            2000 |
+| P2   |            2025 |
+| P3   |            2020 |
+| P4   |            2023 |
+| P5   |            2014 |
+| P6   |            2024 |
+
+## Known interpretation caveats (for papers using these indices)
+
+1. **P3/P5 vs Tortoise counterparts (rho ~ 0.3-0.4) is construct divergence, not error.** Tortoise's Government Strategy score measures announced national-AI-strategy commitment; GAID P3 measures operational digital-government capacity (GovTech) plus legislative activity. Tortoise's Infrastructure score measures broad electricity/internet/supercomputing access; GAID P5 measures frontier compute concentration (Epoch AI). Report these as related-but-distinct constructs.
+
+2. **P2 is a formative composite of near-orthogonal facets.** Talent concentration and skill penetration barely correlate (alpha = 0.05, w1_v2), so they are separate weight groups; do not describe P2 as measuring a single latent 'talent' trait. Its external validity against Tortoise Talent (rho = 0.84) supports the composite reading.
+
+3. **The panel is thin before ~2020 because global AI measurement infrastructure is young**, not because of processing choices: GovTech starts 2020, GIRAI 2024, talent metrics 2025. The overall index exists only where >= 4 pillars score a country (from ~2022). This is itself a reportable finding (cf. the IEEE IRAI paper's observation that AI ethics instruments did not exist before 2024).
+
+4. **GIRAI enters P6 as components with attribution**, so the P6-vs-GIRAI convergent check is partially circular; the clean held-out validations are the Tortoise rows.
