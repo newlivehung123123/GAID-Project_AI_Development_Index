@@ -87,6 +87,11 @@ report rather than silently producing a wrong benchmark.
       budget-capped resumable OpenRouter client with dry-run mode,
       multi-threshold scale-aware classifier (18 unit tests),
       human-validation harness (blind coding + Cohen's kappa)
+- [x] Composite index module (Phase 3): six formative pillars -> overall index
+      + readiness lens, annual editions with 3-year lookback, nested equal
+      weights; per-wave dimensionality audit (group-level Cronbach's alpha,
+      equal-vs-PCA weighting check), normalisation sensitivity variants,
+      convergent validity vs held-out Tortoise + GIRAI indices
 - [ ] Stats module: mixed-effects logistic regression, DiD, PCA, World Bank
       income-tier stratification, built-in threshold sensitivity
 - [ ] Release watcher (OpenRouter /models + Hugging Face org diff → candidates)

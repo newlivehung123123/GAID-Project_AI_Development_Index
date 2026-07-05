@@ -15,8 +15,9 @@ from pathlib import Path
 
 import yaml
 
-from . import (client, dataverse, harmonise as harmonise_mod, queries as queries_mod,
-               results as results_mod, screening, validate as validate_mod)
+from . import (client, dataverse, harmonise as harmonise_mod, indices as indices_mod,
+               queries as queries_mod, results as results_mod, screening,
+               validate as validate_mod)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = REPO_ROOT / "data"
@@ -75,6 +76,16 @@ def cmd_screen(_args) -> int:
         return 1
     summary = screening.screen(parquet, tag, REPO_ROOT)
     print(json.dumps(summary, indent=2))
+    return 0
+
+
+def cmd_indices(_args) -> int:
+    tag = _installed_tag()
+    parquet = DATA_DIR / "processed" / tag / "gaid_canonical.parquet"
+    if tag is None or not parquet.exists():
+        print("Run sync + harmonise first.", file=sys.stderr)
+        return 1
+    print(json.dumps(indices_mod.build_indices(parquet, tag, REPO_ROOT), indent=2))
     return 0
 
 
@@ -154,6 +165,7 @@ def main(argv: list[str] | None = None) -> int:
                         help="re-download even if already up to date")
     sub.add_parser("harmonise", help="validate installed wave into canonical dataset")
     sub.add_parser("screen", help="run indicator screening on the installed wave")
+    sub.add_parser("indices", help="compute composite indices + validation report")
     sub.add_parser("queries", help="generate the versioned query set")
     p_run = sub.add_parser("run-eval", help="run one model over the query set "
                                             "(cached, budget-capped, resumable)")
@@ -175,7 +187,7 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("status", help="show the local manifest")
     args = parser.parse_args(argv)
     return {"check": cmd_check, "sync": cmd_sync, "harmonise": cmd_harmonise,
-            "screen": cmd_screen, "queries": cmd_queries,
+            "screen": cmd_screen, "indices": cmd_indices, "queries": cmd_queries,
             "run-eval": cmd_run_eval, "classify": cmd_classify,
             "validate-export": cmd_validate_export,
             "validate-kappa": cmd_validate_kappa,

@@ -1,0 +1,114 @@
+# GAID composite index definitions (Phase 3).
+#
+# Design (agreed 2026-07): six measurement pillars -> one overall index +
+# policy lenses. Nested equal weights (components equal within group, groups
+# equal within pillar). Normalisation: log1p on skewed counts -> winsorise
+# p1/p99 -> min-max within edition to 0-100. PCA is validation, not weights.
+#
+# Editions: for edition year Y, each component contributes its latest
+# observation within (Y - max_lookback_years, Y]; the vintage is recorded.
+# This prevents the cross-vintage mixing the dimensionality audit caught
+# (2019 publications vs 2024 patents), while keeping the panel annual.
+#
+# `metric` = exact GAID metric string; `metric_regex` = pattern for logical
+# components whose names embed reference years (legislative series).
+# direction: +1 higher-is-better, -1 inverted before scoring.
+# Ingested composite indices from Tortoise are NEVER components — they are
+# held out for convergent validation (see `validation`).
+
+editions:
+  max_lookback_years: 3
+  min_component_share: 0.5     # pillar scored when >= ceil(0.5 * k) components present
+  min_pillars_for_overall: 4
+
+normalisation:
+  winsorise: [0.01, 0.99]
+  headline: minmax             # sensitivity variants: zscore, percentile
+
+pillars:
+  P1:
+    name: Research & Innovation
+    components:
+      - {id: ai_pubs,   group: publications, log: true,  direction: 1,
+         metric: "Number Of AI Publications: All"}
+      - {id: fwci,      group: publications, log: false, direction: 1,
+         metric: "Field Weighted Citation Impact: All"}
+      - {id: patents,   group: patents,      log: true,  direction: 1,
+         metric: "Total AI-Related Patent Publications (Applicant Origin)"}
+      - {id: rai_papers, group: rai_papers,  log: true,  direction: 1,
+         metric: "Number Of Responsible AI (RAI) Papers Accepted (2019-24)"}
+  P2:
+    name: Talent & Skills
+    components:
+      - {id: talent_conc, group: talent_stock, log: false, direction: 1,
+         metric: "AI Talent Concentration (Share of Professionals)"}
+      - {id: skill_pen,   group: talent_stock, log: false, direction: 1,
+         metric: "Relative AI Skill Penetration Rate, 2015-24"}
+      - {id: ai_jobs,     group: demand,       log: false, direction: 1,
+         metric: "AI Job Postings (% Of All Job Postings) (2025 Report Methodology)"}
+  P3:
+    name: Governance & Regulation
+    components:
+      - {id: gt_cgsi, group: govtech, log: false, direction: 1,
+         metric: "WB GovTech: Core Government Systems Index (CGSI)"}
+      - {id: gt_gtei, group: govtech, log: false, direction: 1,
+         metric: "WB GovTech: Government Technology Enablers Index (GTEI)"}
+      - {id: gt_dcei, group: govtech, log: false, direction: 1,
+         metric: "WB GovTech: Digital Citizen Engagement Index (DCEI)"}
+      - {id: gt_psdi, group: govtech, log: false, direction: 1,
+         metric: "WB GovTech: Public Service Delivery Index (PSDI)"}
+      - {id: ai_bills, group: legislation, log: true, direction: 1,
+         metric_regex: '^(Number Of AI-Related Bills Passed Into Law|Total Number of AI-Related Bills Passed Into Law \(Cumulative 2016-2024\))$'}
+      - {id: ai_mentions, group: legislation, log: true, direction: 1,
+         metric_regex: '^Number of AI Mentions in Legislative Proceedings \(\d{4} Annual\)$'}
+  P4:
+    name: AI Economy & Investment
+    components:
+      - {id: investment, group: investment, log: true, direction: 1,
+         metric_regex: '^Total Private Investment in AI \(In Billions Of US Dollars\) \[Cumulative'}
+      - {id: new_companies, group: startups, log: true, direction: 1,
+         metric: "Number Of Newly Funded AI Companies, 2013-24"}
+  P5:
+    name: Infrastructure & Compute
+    components:
+      - {id: cluster_power, group: compute, log: true, direction: 1,
+         metric: "National Aggregate Peak Compute (OP/s)"}
+      - {id: train_compute, group: compute, log: true, direction: 1,
+         metric: "Total Training Compute (FLOP)"}
+  P6:
+    name: Responsible AI & Society
+    components:
+      - {id: girai_rights,     group: girai, log: false, direction: 1,
+         metric: "DIMENSION SCORES: Human Rights and AI"}
+      - {id: girai_capacities, group: girai, log: false, direction: 1,
+         metric: "DIMENSION SCORES: Responsible AI Capacities"}
+      - {id: girai_governance, group: girai, log: false, direction: 1,
+         metric: "DIMENSION SCORES: Responsible AI Governance"}
+      - {id: ai_benefits, group: attitudes, log: false, direction: 1,
+         metric: "% Agreeing With Statement: Products And Services Using Artificial Intelligence Have More Benefits Than Drawbacks"}
+      - {id: ict_breaches, group: security, log: false, direction: -1,
+         metric: "Businesses experiencing ICT incidents (security breaches) (Total - all activities, 10 or more)"}
+
+overall:
+  id: GAID_AI_Development_Index
+  pillars: [P1, P2, P3, P4, P5, P6]
+
+lenses:
+  readiness:
+    name: AI Readiness (lens)
+    pillars: [P2, P3, P5]
+    min_pillars: 2
+  # fairness and safety are presented as country profile cards, not ranked
+  # indices (coverage too thin to rank defensibly; agreed 2026-07)
+
+validation:
+  convergent:   # held-out external indices ingested in GAID
+    - {ours: overall, theirs: "AI Index: Overall Score", source_hint: Tortoise}
+    - {ours: P1, theirs: "AI Index: Research Score", source_hint: Tortoise}
+    - {ours: P2, theirs: "AI Index: Talent Score", source_hint: Tortoise}
+    - {ours: P3, theirs: "AI Index: Government Strategy Score", source_hint: Tortoise}
+    - {ours: P4, theirs: "AI Index: Commercial Score", source_hint: Tortoise}
+    - {ours: P5, theirs: "AI Index: Infrastructure Score", source_hint: Tortoise}
+    - {ours: P6, theirs: "The Global Index on Responsible AI Score",
+       source_hint: GIRAI,
+       note: partially circular — GIRAI dimension scores are P6 components}
