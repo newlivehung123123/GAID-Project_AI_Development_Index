@@ -17,10 +17,13 @@ from __future__ import annotations
 import json
 import math
 import shutil
+import time
 from datetime import date
 from pathlib import Path
 
 import requests
+
+BUILD = str(int(time.time()))  # cache-buster stamped on every asset URL
 
 BASE_URL = "https://gaid.aiinsocietyhub.com"
 WORLD_GEOJSON = "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"
@@ -48,7 +51,7 @@ def layout(title: str, description: str, body: str, *, depth: int = 0,
            canonical: str = "", active: str = "") -> str:
     p = "../" * depth
     nav = "".join(
-        f'<a href="{p}{href}"{" class=\"active\"" if key == active else ""}>{label}</a>'
+        f'<li><a href="{p}{href}"{" class=\"active\"" if key == active else ""}>{label}</a></li>'
         for key, href, label in [("home", "index.html", "Dashboard"),
                                  ("rankings", "rankings.html", "Rankings"),
                                  ("methodology", "methodology.html", "Methodology")])
@@ -65,15 +68,24 @@ def layout(title: str, description: str, body: str, *, depth: int = 0,
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{p}assets/style.css">
+<link rel="stylesheet" href="{p}assets/style.css?v={BUILD}">
+<script src="{p}assets/theme.js?v={BUILD}"></script>
 </head>
 <body{body_attr(body)}>
-<header class="site"><div class="wrap">
-  <span class="brand">Global AI Dataset</span>
-  <span class="tagline">the GAID Project &mdash; measuring the world's AI landscape</span>
-  <nav class="top">{nav}
-    <a href="https://aiinsocietyhub.com/">AI in Society</a></nav>
-</div></header>
+<header class="site">
+  <div class="utility">
+    <a class="ubar" href="https://aiinsocietyhub.com/">AI in Society</a>
+    <div class="uright">
+      <span class="ubar">GAID Project</span>
+      <button id="theme-toggle" title="Toggle theme">Νύξ</button>
+    </div>
+  </div>
+  <div class="brandwrap">
+    <a class="brand" href="{p}index.html">GLOBAL <span class="brand-mid">AI</span> DATASET</a>
+  </div>
+  <nav class="top"><ul>{nav}
+    <li><a href="https://aiinsocietyhub.com/">AI in Society</a></li></ul></nav>
+</header>
 <main class="wrap">
 {body}
 </main>
@@ -102,22 +114,21 @@ def radar_svg(scores: dict[str, float], pillars: dict[str, str]) -> str:
         a = -math.pi / 2 + 2 * math.pi * i / n
         return cx + r * math.cos(a), cy + r * math.sin(a)
     rings = "".join(
-        '<polygon points="{}" fill="none" stroke="#e2dccf" stroke-width="1"/>'.format(
+        '<polygon points="{}" class="radar-grid"/>'.format(
             " ".join(f"{x:.1f},{y:.1f}" for x, y in (pt(i, R * f) for i in range(n))))
         for f in (0.33, 0.66, 1.0))
     axes = "".join(
-        f'<line x1="{cx}" y1="{cy}" x2="{pt(i, R)[0]:.1f}" y2="{pt(i, R)[1]:.1f}" stroke="#e2dccf"/>'
+        f'<line x1="{cx}" y1="{cy}" x2="{pt(i, R)[0]:.1f}" y2="{pt(i, R)[1]:.1f}" class="radar-grid"/>'
         for i in range(n))
     labels = "".join(
         f'<text x="{pt(i, R + 16)[0]:.1f}" y="{pt(i, R + 16)[1]:.1f}" font-size="12" '
-        f'text-anchor="middle" fill="#5a5a5a">{ids[i]}</text>'
+        f'text-anchor="middle" class="radar-label">{ids[i]}</text>'
         for i in range(n))
     shape = " ".join(f"{x:.1f},{y:.1f}" for x, y in
                      (pt(i, R * scores[ids[i]] / 100) for i in range(n)))
     return (f'<svg viewBox="0 0 260 250" width="260" height="250" role="img" '
             f'aria-label="Pillar radar">{rings}{axes}'
-            f'<polygon points="{shape}" fill="rgba(192,57,43,.25)" stroke="#c0392b" '
-            f'stroke-width="2"/>{labels}</svg>')
+            f'<polygon points="{shape}" class="radar-shape"/>{labels}</svg>')
 
 
 def fmt_score(v) -> str:
@@ -163,7 +174,7 @@ def build_country_page(c: dict, profile: dict, meta: dict, latest: int) -> str:
   <input id="metric-search" type="search" placeholder="Search {c["metrics"]:,} metrics…">
   <div id="metric-browser"><p class="note">Loading…</p></div>
 </section>
-<script src="../assets/country.js"></script>"""
+<script src="../assets/country.js?v={BUILD}"></script>"""
     html = layout(
         f"{name} — AI development profile | GAID",
         f"AI development profile of {name}: {c['metrics']:,} verified indicators across "
@@ -225,7 +236,7 @@ def build_home(meta: dict, indices: dict, latest: int) -> str:
   methodology and robustness results →</a></p>
 </section>
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script src="assets/app.js"></script>"""
+<script src="assets/app.js?v={BUILD}"></script>"""
     return layout(
         "GAID — Global AI Dataset dashboard: national AI development profiles and indices",
         "Interactive dashboard of the Global AI Dataset (GAID): AI development indices, "

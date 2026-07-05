@@ -36,13 +36,17 @@
   const proj = d3.geoNaturalEarth1().fitSize([W, H], world);
   const path = d3.geoPath(proj);
   const tip = d3.select("body").append("div").attr("class", "map-tooltip");
-  const ramp = d3.interpolateRgb("#f0e4d0", "#7a1408");
+
+  // monochrome ink ramp, following the current NYX/EOS theme
+  const inkRGB = () => getComputedStyle(document.documentElement)
+    .getPropertyValue("--ink-rgb").trim();
+  const ramp = t => `rgba(${inkRGB()}, ${(0.07 + 0.85 * t).toFixed(3)})`;
 
   const g = svg.append("g");
   const feats = world.features.filter(f => f.id !== "ATA");
   const paths = g.selectAll("path").data(feats).join("path")
     .attr("d", path)
-    .attr("stroke", "#c9c2b2").attr("stroke-width", 0.5)
+    .attr("stroke-width", 0.5)
     .style("cursor", "pointer")
     .on("click", (_, d) => { if (names[d.id]) location.href = "countries/" + d.id + ".html"; });
 
@@ -63,7 +67,9 @@
       if (byEd[edition] !== undefined) scores[iso] = byEd[edition];
     });
     paths
-      .attr("fill", d => scores[d.id] !== undefined ? ramp(scores[d.id] / 100) : "#eceae4")
+      .attr("stroke", `rgba(${inkRGB()}, 0.22)`)
+      .attr("fill", d => scores[d.id] !== undefined
+        ? ramp(scores[d.id] / 100) : `rgba(${inkRGB()}, 0.045)`)
       .on("mousemove", (ev, d) => {
         const v = scores[d.id];
         tip.style("opacity", 1)
@@ -82,5 +88,6 @@
   indexSel.value = meta.overall_id;
   indexSel.addEventListener("change", () => { jumpToLatest = true; render(); });
   edSlider.addEventListener("input", render);
+  addEventListener("gaid-theme", render);
   render();
 })();
