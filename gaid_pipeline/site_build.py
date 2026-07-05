@@ -204,8 +204,8 @@ def build_home(meta: dict, indices: dict, latest: int) -> str:
   <h2>World map</h2>
   <div class="card">
     <div id="map-controls">
-      <label>Index <select id="index-select"></select></label>
-      <label>Edition <input id="edition-slider" type="range" min="0" max="0" value="0">
+      <label><span>Index</span> <select id="index-select"></select></label>
+      <label><span>Edition</span> <input id="edition-slider" type="range" min="0" max="0" value="0">
         <b id="edition-label"></b></label>
     </div>
     <div id="choropleth"></div>
