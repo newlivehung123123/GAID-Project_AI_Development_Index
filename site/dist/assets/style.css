@@ -162,7 +162,20 @@ h2 {
 
 /* ── Stat line ──────────────────────────────────────────────────── */
 .stat-line { display: flex; gap: 0.75rem 2.2rem; flex-wrap: wrap;
-             justify-content: center; margin: 0 0 3rem; }
+             justify-content: center; margin: 0 0 2rem; }
+
+/* ── Section tabs (jump-to-section) ─────────────────────────────── */
+.section-tabs { display: flex; flex-wrap: wrap; justify-content: center;
+                gap: 0.5rem; margin: 0 0 2.5rem; }
+.section-tabs a {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--ink);
+  padding: 0.6rem 1.25rem; border-radius: 999px;
+  background: var(--panel); border: 1px solid var(--panel-border);
+  transition: background 0.2s ease, opacity 0.2s ease;
+}
+.section-tabs a:hover { background: var(--raised); text-decoration: none; opacity: 1; }
+.glass-panel[id] { scroll-margin-top: 90px; }
 .badge { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em;
          font-weight: 600; color: var(--ink); opacity: 0.60; }
 .badge b { font-family: var(--display); font-size: 1.35rem; font-weight: 400;
@@ -248,7 +261,7 @@ details.mcat summary small { font-family: var(--serif); font-weight: 300;
 
 /* ── National profile hover card (CORDA CountryCard clone) ──────── */
 .profile-card {
-  position: absolute; z-index: 300; width: 300px; pointer-events: none;
+  position: absolute; z-index: 300; width: min(300px, calc(100vw - 24px)); pointer-events: none;
   background: var(--bg); border: 1px solid var(--panel-border);
   border-radius: 16px; padding: 0.95rem 1.1rem;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.14);

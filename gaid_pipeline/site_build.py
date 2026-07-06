@@ -44,9 +44,10 @@ def world_geojson(repo_root: Path) -> Path:
     return cached
 
 
-def panel(title: str, inner: str) -> str:
+def panel(title: str, inner: str, anchor: str | None = None) -> str:
     """A GAIDPage glass panel: section title + divider + content."""
-    return (f'<div class="glass-panel"><h2>{title}</h2>'
+    id_attr = f' id="{anchor}"' if anchor else ""
+    return (f'<div class="glass-panel"{id_attr}><h2>{title}</h2>'
             f'<div class="divider"></div>{inner}</div>')
 
 
@@ -162,7 +163,7 @@ def build_home(meta: dict, indices: dict, latest: int) -> str:
             ("1,331", "verified indicators"),
             (meta["n_ranked"], f"countries ranked ({latest})"),
             (6, "measurement pillars"),
-            (meta["wave"]["tag"], "wave"),
+            (f'GAID {meta["wave"]["tag"].replace("_", " ")}', "dataset"),
         ])
     map_inner = f"""
     <div id="map-controls">
@@ -192,15 +193,22 @@ def build_home(meta: dict, indices: dict, latest: int) -> str:
     <a class="cta-link" href="methodology.html">Full methodology and robustness results →</a>"""
     body = page_title_block(
         "Global AI Dataset (GAID) Project",
-        "The GAID dashboard turns the Global AI Dataset — verified indicators from 11 "
-        "international sources — into national AI development profiles, composite indices, "
-        "and a living benchmark of how equitably AI capability is distributed worldwide.",
+        "The GAID dashboard turns the latest version of the GAID dataset (verified indicators "
+        "from 11 international sources) into national AI development profiles, composite "
+        "indices, and a living benchmark of how equitably AI capability is distributed "
+        "worldwide.",
     ) + f"""
 <div class="stat-line">{stats}</div>
-{panel("World Map", map_inner)}
-{panel("Scatter Plot", scatter_inner)}
-{panel(f"Top 20 — GAID AI Development Index, {latest}", top20_inner)}
-{panel("Six Measurement Pillars", pillars_inner)}
+<nav class="section-tabs">
+  <a href="#world-map">World Map</a>
+  <a href="#scatter-plot">Scatter Plot</a>
+  <a href="#global-ranking">Global Ranking</a>
+  <a href="#pillars">Pillars</a>
+</nav>
+{panel("World Map", map_inner, anchor="world-map")}
+{panel("Scatter Plot", scatter_inner, anchor="scatter-plot")}
+{panel(f"Top 20 — GAID AI Development Index, {latest}", top20_inner, anchor="global-ranking")}
+{panel("Six Measurement Pillars", pillars_inner, anchor="pillars")}
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="assets/app.js?v={BUILD}"></script>
 <script src="assets/profile.js?v={BUILD}"></script>"""

@@ -11,8 +11,8 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,300;1,8..60,400;1,8..60,500;1,8..60,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=1783319333">
-<script src="assets/theme.js?v=1783319333"></script>
+<link rel="stylesheet" href="assets/style.css?v=1783320275">
+<script src="assets/theme.js?v=1783320275"></script>
 </head>
 <body>
 <header class="site">
@@ -33,10 +33,16 @@
 
 <div class="page-title">
   <h1>Global AI Dataset (GAID) Project</h1>
-  <p class="lede">The GAID dashboard turns the Global AI Dataset — verified indicators from 11 international sources — into national AI development profiles, composite indices, and a living benchmark of how equitably AI capability is distributed worldwide.</p>
+  <p class="lede">The GAID dashboard turns the latest version of the GAID dataset (verified indicators from 11 international sources) into national AI development profiles, composite indices, and a living benchmark of how equitably AI capability is distributed worldwide.</p>
 </div>
-<div class="stat-line"><span class="badge"><b>227</b>countries &amp; territories</span><span class="badge"><b>1,331</b>verified indicators</span><span class="badge"><b>65</b>countries ranked (2025)</span><span class="badge"><b>6</b>measurement pillars</span><span class="badge"><b>w1_v2</b>wave</span></div>
-<div class="glass-panel"><h2>World Map</h2><div class="divider"></div>
+<div class="stat-line"><span class="badge"><b>227</b>countries &amp; territories</span><span class="badge"><b>1,331</b>verified indicators</span><span class="badge"><b>65</b>countries ranked (2025)</span><span class="badge"><b>6</b>measurement pillars</span><span class="badge"><b>GAID w1 v2</b>dataset</span></div>
+<nav class="section-tabs">
+  <a href="#world-map">World Map</a>
+  <a href="#scatter-plot">Scatter Plot</a>
+  <a href="#global-ranking">Global Ranking</a>
+  <a href="#pillars">Pillars</a>
+</nav>
+<div class="glass-panel" id="world-map"><h2>World Map</h2><div class="divider"></div>
     <div id="map-controls">
       <label><span>Index</span> <select id="index-select"></select></label>
       <label><span>Edition</span> <input id="edition-slider" type="range" min="0" max="0" value="0">
@@ -46,25 +52,25 @@
     <div id="legend"></div>
     <p class="note" style="margin-top:0.8rem">Click a country for its full profile.
     Darker = higher relative standing.</p></div>
-<div class="glass-panel"><h2>Scatter Plot</h2><div class="divider"></div>
+<div class="glass-panel" id="scatter-plot"><h2>Scatter Plot</h2><div class="divider"></div>
     <div id="map-controls">
       <label><span>X axis</span> <select id="scatter-x"></select></label>
       <label><span>Y axis</span> <select id="scatter-y"></select></label>
     </div>
     <div id="scatterplot"></div>
     <p class="note" id="scatter-note" style="margin-top:0.8rem"></p></div>
-<div class="glass-panel"><h2>Top 20 — GAID AI Development Index, 2025</h2><div class="divider"></div>
+<div class="glass-panel" id="global-ranking"><h2>Top 20 — GAID AI Development Index, 2025</h2><div class="divider"></div>
     <table class="data"><thead><tr><th class="num">Rank</th><th>Country</th>
     <th class="num">Score</th></tr></thead><tbody><tr data-iso3="USA"><td class="rank num">#1</td><td><a href="countries/USA.html">United States</a></td><td class="num">78.2</td></tr><tr data-iso3="CHN"><td class="rank num">#2</td><td><a href="countries/CHN.html">China</a></td><td class="num">73.4</td></tr><tr data-iso3="GBR"><td class="rank num">#3</td><td><a href="countries/GBR.html">United Kingdom</a></td><td class="num">63.7</td></tr><tr data-iso3="SGP"><td class="rank num">#4</td><td><a href="countries/SGP.html">Singapore</a></td><td class="num">61.9</td></tr><tr data-iso3="IND"><td class="rank num">#5</td><td><a href="countries/IND.html">India</a></td><td class="num">60.8</td></tr><tr data-iso3="JPN"><td class="rank num">#6</td><td><a href="countries/JPN.html">Japan</a></td><td class="num">60.5</td></tr><tr data-iso3="KOR"><td class="rank num">#7</td><td><a href="countries/KOR.html">South Korea</a></td><td class="num">60.1</td></tr><tr data-iso3="DEU"><td class="rank num">#8</td><td><a href="countries/DEU.html">Germany</a></td><td class="num">57.7</td></tr><tr data-iso3="CAN"><td class="rank num">#9</td><td><a href="countries/CAN.html">Canada</a></td><td class="num">57.2</td></tr><tr data-iso3="FRA"><td class="rank num">#10</td><td><a href="countries/FRA.html">France</a></td><td class="num">55.8</td></tr><tr data-iso3="CHE"><td class="rank num">#11</td><td><a href="countries/CHE.html">Switzerland</a></td><td class="num">55.6</td></tr><tr data-iso3="ITA"><td class="rank num">#12</td><td><a href="countries/ITA.html">Italy</a></td><td class="num">53.1</td></tr><tr data-iso3="ISR"><td class="rank num">#13</td><td><a href="countries/ISR.html">Israel</a></td><td class="num">52.5</td></tr><tr data-iso3="ARE"><td class="rank num">#14</td><td><a href="countries/ARE.html">United Arab Emirates</a></td><td class="num">52.4</td></tr><tr data-iso3="AUS"><td class="rank num">#15</td><td><a href="countries/AUS.html">Australia</a></td><td class="num">51.9</td></tr><tr data-iso3="ESP"><td class="rank num">#16</td><td><a href="countries/ESP.html">Spain</a></td><td class="num">49.8</td></tr><tr data-iso3="IRL"><td class="rank num">#17</td><td><a href="countries/IRL.html">Ireland</a></td><td class="num">48.1</td></tr><tr data-iso3="SWE"><td class="rank num">#18</td><td><a href="countries/SWE.html">Sweden</a></td><td class="num">47.4</td></tr><tr data-iso3="MYS"><td class="rank num">#19</td><td><a href="countries/MYS.html">Malaysia</a></td><td class="num">47.1</td></tr><tr data-iso3="AUT"><td class="rank num">#20</td><td><a href="countries/AUT.html">Austria</a></td><td class="num">46.8</td></tr></tbody></table>
     <a class="cta-link" href="rankings.html">Full rankings with all six pillars →</a></div>
-<div class="glass-panel"><h2>Six Measurement Pillars</h2><div class="divider"></div>
+<div class="glass-panel" id="pillars"><h2>Six Measurement Pillars</h2><div class="divider"></div>
     <div class="cards-stack"><div class="tone-card"><h3 class="card-title">P1 — Research & Innovation</h3><p class="card-body">Publications, citation impact, patents, and responsible-AI research output.</p></div><div class="tone-card"><h3 class="card-title">P2 — Talent & Skills</h3><p class="card-body">AI talent concentration, skill penetration, and AI hiring demand.</p></div><div class="tone-card"><h3 class="card-title">P3 — Governance & Regulation</h3><p class="card-body">Digital-government capacity (World Bank GovTech) and AI legislative activity.</p></div><div class="tone-card"><h3 class="card-title">P4 — AI Economy & Investment</h3><p class="card-body">Private AI investment and newly funded AI companies.</p></div><div class="tone-card"><h3 class="card-title">P5 — Infrastructure & Compute</h3><p class="card-body">Frontier compute concentration: national training compute and cluster power.</p></div><div class="tone-card"><h3 class="card-title">P6 — Responsible AI & Society</h3><p class="card-body">Responsible AI capacity (GIRAI), public attitudes, and ICT security.</p></div></div>
     <p class="card-body" style="margin-top:1.1rem">Pillars are formative composites with nested
     equal weights; scores are min&ndash;max normalised within each annual edition.</p>
     <a class="cta-link" href="methodology.html">Full methodology and robustness results →</a></div>
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script src="assets/app.js?v=1783319333"></script>
-<script src="assets/profile.js?v=1783319333"></script>
+<script src="assets/app.js?v=1783320275"></script>
+<script src="assets/profile.js?v=1783320275"></script>
 </main>
 <footer class="site"><div class="wrap">
   <p>Global AI Dataset (GAID) Project ·

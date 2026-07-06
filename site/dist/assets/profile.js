@@ -38,10 +38,20 @@
   window.gaidProfile = {
     show(iso3, ev) { card.innerHTML = html(iso3); card.classList.add("on"); this.move(ev); },
     move(ev) {
-      const x = Math.min(ev.pageX + 16,
-        window.scrollX + document.documentElement.clientWidth - card.offsetWidth - 12);
-      card.style.left = x + "px";
-      card.style.top = (ev.pageY - 12) + "px";
+      const pad = 12;
+      const vw = document.documentElement.clientWidth;
+      const vh = document.documentElement.clientHeight;
+      const cw = card.offsetWidth, ch = card.offsetHeight;
+      // horizontal: prefer right of cursor; flip left if it would overflow
+      let x = ev.clientX + 16;
+      if (x + cw + pad > vw) x = ev.clientX - cw - 16;
+      x = Math.max(pad, Math.min(x, vw - cw - pad));
+      // vertical: prefer just above cursor; clamp fully inside the viewport
+      let y = Math.min(ev.clientY - 12, vh - ch - pad);
+      y = Math.max(pad, y);
+      // card is position:absolute, so add the current scroll offset
+      card.style.left = (x + window.scrollX) + "px";
+      card.style.top = (y + window.scrollY) + "px";
     },
     hide() { card.classList.remove("on"); },
   };
