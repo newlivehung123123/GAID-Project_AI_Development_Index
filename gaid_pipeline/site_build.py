@@ -347,7 +347,7 @@ def build_methodology(meta: dict, latest: int) -> str:
     body = page_title_block(
         "Global AI Dataset (GAID) Project",
         "How the GAID composite indices are constructed, and the robustness results behind "
-        "them. The full machine-generated validation report ships with every data wave.",
+        "them.",
     ) + (panel("Construction", construction)
          + panel(f"Robustness Check&mdash;GAID {tag_spaced} dataset (Edition {latest})",
                  robustness)
