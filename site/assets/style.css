@@ -237,6 +237,52 @@ details.mcat summary small { font-family: var(--serif); font-weight: 300;
 .metric-row .msrc { font-size: 0.76rem; font-weight: 300; opacity: 0.60; }
 .metric-vals { font-variant-numeric: tabular-nums; white-space: nowrap; }
 
+/* ── Typewriter caret (TypewriterText clone: w-2 h-[1em] ml-1 blue-500,
+      animate-pulse) ─────────────────────────────────────────────── */
+.tw-caret {
+  display: inline-block; width: 0.5rem; height: 1em; margin-left: 0.25rem;
+  background: #3b82f6; vertical-align: middle;
+  animation: tw-pulse 2s cubic-bezier(.4, 0, .6, 1) infinite;
+}
+@keyframes tw-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+
+/* ── National profile hover card (CORDA CountryCard clone) ──────── */
+.profile-card {
+  position: absolute; z-index: 300; width: 300px; pointer-events: none;
+  background: var(--bg); border: 1px solid var(--panel-border);
+  border-radius: 16px; padding: 0.95rem 1.1rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.14);
+  opacity: 0; transition: opacity .12s ease;
+}
+.profile-card.on { opacity: 1; }
+.pc-head { margin-bottom: 0.55rem; }
+.pc-head b { display: block; font-family: var(--serif); font-size: 1rem;
+             font-weight: 600; }
+.pc-head span { font-size: 0.74rem; opacity: 0.65; }
+.pc-head span b { display: inline; font-size: 0.8rem; }
+.pc-row { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.42rem; }
+.pc-label { flex: 0 0 132px; font-size: 0.66rem; letter-spacing: 0.03em;
+            opacity: 0.70; line-height: 1.3; }
+.pc-bar { flex: 1; height: 6px; background: rgba(var(--ink-rgb), 0.12);
+          border-radius: 3px; overflow: hidden; }
+.pc-bar span { display: block; height: 100%; border-radius: 3px;
+               background: rgba(var(--ink-rgb), 0.72);
+               transition: width 0.3s ease; }
+.pc-val { flex: 0 0 34px; text-align: right; font-size: 0.72rem;
+          font-variant-numeric: tabular-nums; }
+
+/* ── Scatter plot ────────────────────────────────────────────────── */
+#scatterplot svg { display: block; width: 100%; height: auto; }
+.scatter-dot { fill: rgba(var(--ink-rgb), 0.50);
+               stroke: rgba(var(--ink-rgb), 0.75); stroke-width: 0.75; }
+.scatter-dot:hover { fill: rgba(var(--ink-rgb), 0.85); }
+.axis path { stroke: rgba(var(--ink-rgb), 0.30); }
+.axis line { stroke: rgba(var(--ink-rgb), 0.10); }
+.axis text { fill: var(--ink); opacity: 0.55; font-family: var(--serif);
+             font-size: 11px; }
+.axis-title { fill: var(--ink); opacity: 0.60; font-family: var(--serif);
+              font-size: 12px; letter-spacing: 0.06em; }
+
 /* ── Footer ─────────────────────────────────────────────────────── */
 footer.site { margin-top: 5rem; padding: 2rem 0 3rem; font-size: 0.85rem;
               text-align: center; }
