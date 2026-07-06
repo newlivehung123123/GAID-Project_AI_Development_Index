@@ -101,35 +101,45 @@ nav.top a {
 }
 nav.top a:hover, nav.top a.active { opacity: 0.65; }
 
-/* ── Page titles: exact GAIDPage.tsx values ────────────────────── */
-.hero { padding: 2rem 0 0.5rem; text-align: center; }
-.hero h1, .profile-head h1 {
+/* ── Page title block: exact GAIDPage.tsx opening ──────────────── */
+.page-title { padding: 2rem 0 0.5rem; margin-bottom: 3rem; text-align: center; }
+.page-title h1 {
   font-family: var(--display);
   font-size: clamp(2.2rem, 5vw, 3.5rem);
   font-weight: 400; letter-spacing: 0.10em;
   color: var(--ink); margin: 0 0 1rem; line-height: 1.15;
 }
-.hero p.lede {
+.author-line {
+  font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em;
+  color: var(--ink); opacity: 0.70; margin: 0 0 0.75rem;
+}
+.lede {
   font-family: var(--serif); font-size: 1rem; font-weight: 400;
   line-height: 1.85; color: var(--ink); max-width: 680px;
-  margin: 0 auto 1rem; text-align: center;
-}
-.meta-line {
-  font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em;
-  color: var(--ink); opacity: 0.70;
+  margin: 0 auto; text-align: center;
 }
 
-section { margin: 3.5rem 0; }
 h2 {
   font-family: var(--display); font-size: 1.6rem; font-weight: 400;
   letter-spacing: 0.06em; color: var(--ink); margin: 0;
 }
-.divider, h2::after {
-  content: ""; display: block; width: 40px; height: 1px;
+.divider {
+  display: block; width: 40px; height: 1px;
   background: var(--ink); opacity: 0.30; margin: 1rem 0 1.4rem;
 }
-h3 { font-family: var(--display); font-size: 1.25rem; font-weight: 500;
-     letter-spacing: 0.04em; margin: 1.4rem 0 0.5rem; }
+
+/* inner-card typography: exact datasetCard content styles */
+.card-title { font-family: var(--serif); font-size: 1.05rem; font-weight: 500;
+              color: var(--ink); margin: 0 0 0.65rem; }
+.card-body  { font-family: var(--serif); font-size: 0.95rem; font-weight: 400;
+              line-height: 1.85; color: var(--ink); margin: 0; }
+.cards-stack { display: flex; flex-direction: column; gap: 1.2rem; }
+.cta-link {
+  display: inline-block; margin-top: 0.85rem;
+  font-family: var(--serif); font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink);
+  border-bottom: 1px solid rgba(var(--ink-rgb), 0.45); text-decoration: none;
+}
 
 /* ── Panels: exact glassPanel / datasetCard from GAIDPage.tsx ──── */
 .card, .glass-panel {
@@ -140,6 +150,7 @@ h3 { font-family: var(--display); font-size: 1.25rem; font-weight: 500;
   border: 1px solid var(--panel-border);
   box-shadow: var(--panel-shadow);
   padding: 2.5rem 3rem;
+  margin-bottom: 1.5rem;
 }
 @media (max-width: 640px) { .card, .glass-panel { padding: 1.5rem 1.25rem; } }
 .tone-card {
@@ -150,10 +161,11 @@ h3 { font-family: var(--display); font-size: 1.25rem; font-weight: 500;
 }
 
 /* ── Stat line ──────────────────────────────────────────────────── */
-.badges { display: flex; gap: 0.75rem 2.2rem; flex-wrap: wrap; justify-content: center; margin: 1.4rem 0 0.5rem; }
-.badge { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.18em;
-         color: var(--ink); opacity: 0.60; }
-.badge b { font-family: var(--display); font-size: 1.5rem; font-weight: 400;
+.stat-line { display: flex; gap: 0.75rem 2.2rem; flex-wrap: wrap;
+             justify-content: center; margin: 0 0 3rem; }
+.badge { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em;
+         font-weight: 600; color: var(--ink); opacity: 0.60; }
+.badge b { font-family: var(--display); font-size: 1.35rem; font-weight: 400;
            letter-spacing: 0.02em; opacity: 1; margin-right: 0.45rem;
            text-transform: none; }
 
@@ -193,23 +205,9 @@ table.data tbody tr:hover td { background: var(--surface); }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .rank { font-weight: 700; }
 
-/* ── Pillar cards ───────────────────────────────────────────────── */
-.pillars { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 0.9rem; }
-.pillar-card { background: var(--panel); border-radius: 16px;
-               border: 1px solid var(--card-border); padding: 1.5rem 1.75rem; }
-.pillar-card b { font-family: var(--display); font-size: 1.25rem; font-weight: 500;
-                 letter-spacing: 0.04em; }
-.pillar-card p { margin: 0.4rem 0 0; font-size: 0.85rem; font-weight: 300;
-                 color: var(--ink); opacity: 0.60; line-height: 1.7; }
-
 /* ── Country profile ────────────────────────────────────────────── */
-.profile-head { text-align: center; padding-top: 2rem; }
-.rank-line { font-family: var(--display); font-size: 1.4rem; font-weight: 400;
-             letter-spacing: 0.06em; margin: 0.9rem 0 0; }
-.rank-line b { font-weight: 600; }
-.scores { display: flex; gap: 0.7rem; flex-wrap: wrap; margin: 1.4rem 0; justify-content: center; }
-.score-chip { background: var(--panel); border: 1px solid var(--card-border);
-              border-radius: 16px; padding: 0.8rem 1.1rem; font-size: 0.8rem;
+.scores { display: flex; gap: 0.7rem; flex-wrap: wrap; margin: 0 0 1.4rem; }
+.score-chip { padding: 0.8rem 1.1rem !important; font-size: 0.8rem;
               letter-spacing: 0.04em; }
 .score-chip b { display: block; font-family: var(--display); font-size: 1.45rem;
                 font-weight: 500; }
@@ -228,8 +226,8 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 details.mcat { background: var(--panel); border: 1px solid var(--card-border);
                border-radius: 16px; margin-bottom: 0.7rem; overflow: hidden; }
 details.mcat summary { padding: 0.85rem 1.4rem; cursor: pointer;
-                       font-family: var(--display); font-weight: 500;
-                       font-size: 1.2rem; letter-spacing: 0.04em; }
+                       font-family: var(--serif); font-weight: 500;
+                       font-size: 1.05rem; }
 details.mcat summary small { font-family: var(--serif); font-weight: 300;
                              font-size: 0.8rem; opacity: 0.55; }
 .metric-row { padding: 0.65rem 1.4rem; border-top: 1px solid rgba(var(--ink-rgb), 0.07);
