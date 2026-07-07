@@ -85,7 +85,7 @@ def _huggingface_candidates(cfg: dict, state: dict) -> list[dict]:
             resp = requests.get(HF_ORG_MODELS.format(org=org), timeout=60)
             resp.raise_for_status()
         except requests.RequestException:
-            continue  # HF hiccup: next weekly run catches up
+            continue  # Hugging Face hiccup: next weekly run catches up
         for m in resp.json():
             mid = m.get("modelId") or m.get("id", "")
             if mid in seen or _excluded(mid, crit["exclude_patterns"]):

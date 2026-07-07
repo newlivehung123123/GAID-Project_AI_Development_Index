@@ -78,6 +78,14 @@ literature; `hedge` to verbalised-uncertainty behaviours. When reporting pilot
 comparisons, always translate pilot acronyms through this table - never quote
 VF/HF rates across the two papers as if the labels were commensurable.
 
+**Canonical abbreviations going forward (papers only; code always uses the
+plain words):** if a future manuscript needs abbreviations, use letters that
+match the expansion exactly - VA (verified accuracy), CF (confident
+fabrication), HR (honest refusal), QH (qualitative hedging), MA
+(misattribution) - each defined at first use. Rule: an abbreviation is the
+initial letters of its expansion, nothing else; never reuse VF/HF/MF, which
+are permanently ambiguous across the two pilots.
+
 ## Standing design rules
 
 - **No auto-spend:** paid eval runs are launched by the researcher with a

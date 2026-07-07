@@ -14,7 +14,7 @@ Living benchmark infrastructure built on the [GAID dataset](https://dataverse.ha
 ## Architecture
 
 ```
-Harvard Dataverse (gaidproject)          OpenRouter /models + HF org feeds
+Harvard Dataverse (gaidproject)          OpenRouter /models + Hugging Face orgs
         │  weekly check                          │  weekly check
         ▼                                        ▼
 1. dataverse.py ── new wave? ──┐        release watcher ── new frontier model?
