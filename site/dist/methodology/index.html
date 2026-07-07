@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" class="eos">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png?v=1783403373">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png?v=1783403373">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png?v=1783403373">
+<link rel="manifest" href="/site.webmanifest?v=1783403373">
+<meta name="theme-color" content="#F0EBE0">
+<meta name="google-site-verification" content="W-FyzGNy5JfYmaq3DHR5sgBjuIpouK9SsGSFuf8VU6A" />
+<title>GAID AI Development Index - Methodology</title>
+<meta name="description" content="How the GAID AI Development Index is built: formative pillars, edition-based normalisation, equal weights, and the robustness behind the global AI rankings and AI data.">
+<meta name="keywords" content="AI Development, AI ranking, global AI ranking, AI Index, AI data">
+<link rel="canonical" href="https://gaid.aiinsocietyhub.com/methodology/">
+<meta property="og:title" content="GAID AI Development Index - Methodology">
+<meta property="og:description" content="How the GAID AI Development Index is built: formative pillars, edition-based normalisation, equal weights, and the robustness behind the global AI rankings and AI data.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gaid.aiinsocietyhub.com/methodology/">
+<meta property="og:site_name" content="Explore the societal impacts of AI">
+<meta property="og:image" content="https://gaid.aiinsocietyhub.com/assets/og-image.png?v=1783403373">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Explore the societal impacts of AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GAID AI Development Index - Methodology">
+<meta name="twitter:description" content="How the GAID AI Development Index is built: formative pillars, edition-based normalisation, equal weights, and the robustness behind the global AI rankings and AI data.">
+<meta name="twitter:image" content="https://gaid.aiinsocietyhub.com/assets/og-image.png?v=1783403373">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,300;1,8..60,400;1,8..60,500;1,8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css?v=1783403373">
+<script src="/assets/theme.js?v=1783403373"></script>
+</head>
+<body>
+<header class="site">
+  <div class="utility">
+    <a class="ubar" href="https://aiinsocietyhub.com/">Subscribe</a>
+    <div class="uright">
+      <span class="ubar">Global Edition</span>
+      <button id="theme-toggle" title="Toggle theme">Νύξ</button>
+    </div>
+  </div>
+  <div class="brandwrap">
+    <a class="brand" href="https://aiinsocietyhub.com/">AI <span class="brand-mid">IN</span> SOCIETY</a>
+  </div>
+  <nav class="top"><ul><li><a href="/">Dashboard</a></li><li><a href="/rankings/">Rankings</a></li><li><a href="/methodology/" class="active">Methodology</a></li>
+    <li><a href="https://aiinsocietyhub.com/">Back to Main Site</a></li></ul></nav>
+</header>
+<main class="wrap">
+
+<div class="page-title">
+  <h1>Global AI Dataset (GAID) Project: GAID AI Development Index</h1>
+  <p class="lede">How the GAID composite indices are constructed, and the robustness results behind them.</p>
+</div><div class="glass-panel"><h2>Construction</h2><div class="divider"></div>
+    <p class="card-body">All values come from the latest version of the
+    <a href="https://doi.org/10.7910/DVN/PUMGYU">GAID dataset</a> (harmonising global AI data
+    from 11 verified international sources, covering 227 countries and territories); no
+    modelled or imputed values anywhere. Six formative pillars, namely (1) Research &amp;
+    Innovation; (2) Talent &amp; Skills; (3) Governance &amp; Regulation; (4) AI Economy &amp;
+    Investment; (5) Infrastructure &amp; Compute; (6) Responsible AI &amp; Society, are
+    designed and built to calculate the GAID AI Development Index (applying equal
+    weighting).</p>
+    <p class="card-body" style="margin-top:1.1rem">Scores are computed per annual edition,
+    where each component contributes its latest observation within a three-year lookback
+    window, and its vintage is recorded. Heavy-tailed counts are log-transformed, winsorised
+    at the 1st/99th percentiles, then min&ndash;max scaled to 0&ndash;100 within each edition.
+    Here, scores measure relative standing among the pool of included countries. A pillar is
+    scored only when at least half its components are present/available. Moreover, the overall
+    GAID AI Development Index requires at least four of six pillars.</p></div><div class="glass-panel"><h2>Robustness Check&mdash;GAID w1 v2 dataset (Edition 2025)</h2><div class="divider"></div>
+    <p class="card-body"><b>Weighting.</b> Equal-weight and PCA-derived scores correlate at
+    &rho; = 0.95&ndash;1.00 across pillars, suggesting that the transparent equal-weight
+    choice is empirically indistinguishable from the data-driven alternative.</p>
+    <p class="card-body" style="margin-top:1.1rem"><b>Normalisation sensitivity.</b> Rankings
+    correlate at &rho; = 0.92&ndash;1.00 across min&ndash;max, z-score and percentile
+    variants.</p>
+    <p class="card-body" style="margin-top:1.1rem"><b>External validity.</b> Against the fully
+    held-out Tortoise Global AI Index: overall &rho; = 0.82; Research 0.76, Talent 0.87,
+    Commercial 0.73. Divergences on the government-strategy and infrastructure pillars
+    represent different constructs.</p>
+    <p class="card-body" style="margin-top:1.1rem"><b>Internal consistency.</b> Reflective
+    component groups reach Cronbach&rsquo;s &alpha; = 0.96 (GovTech; GIRAI). Pillars are
+    formative composites, so cross-facet &alpha; is informational.</p></div><div class="glass-panel"><h2>Data Availability &amp; Reuse</h2><div class="divider"></div>
+    <p class="card-body">The GAID dataset is published on
+    <a href="https://doi.org/10.7910/DVN/PUMGYU">Harvard Dataverse</a> and updated annually;
+    this dashboard rebuilds automatically from the latest wave. The pipeline (sync &rarr;
+    harmonise &rarr; screen &rarr; indices &rarr; site) is open-source Python with per-wave
+    validation reports. It is noteworthy that responsible-AI components incorporate dimension
+    scores from the <a href="https://www.global-index.ai/">Global Index on Responsible AI</a>
+    with attribution.</p></div><div class="glass-panel"><h2>Remark</h2><div class="divider"></div>
+    <p class="card-body">The full paper disclosing and detailing the open-source methodology
+    will be published in due course.</p></div>
+</main>
+<footer class="site"><div class="wrap">
+  <p>Global AI Dataset (GAID) Project ·
+  Data availability: <a href="https://doi.org/10.7910/DVN/PUMGYU">Harvard Dataverse (GAID w1 v2)</a> ·
+  part of <a href="https://aiinsocietyhub.com/">AI in Society</a>.</p>
+</div></footer>
+</body>
+</html>

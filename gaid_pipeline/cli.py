@@ -18,7 +18,7 @@ import yaml
 from . import (client, dashboard_data, dataverse, harmonise as harmonise_mod,
                indices as indices_mod, queries as queries_mod,
                results as results_mod, screening, site_build,
-               validate as validate_mod)
+               stats as stats_mod, validate as validate_mod, watch as watch_mod)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = REPO_ROOT / "data"
@@ -144,6 +144,59 @@ def cmd_run_eval(args) -> int:
     return 0
 
 
+def cmd_run_panel(args) -> int:
+    """Run every `active` panel model in sequence, one budget cap each.
+    Free endpoints by default; resumable exactly like run-eval."""
+    tag = _installed_tag()
+    qpath = DATA_DIR / "processed" / tag / "queries.parquet"
+    if tag is None or not qpath.exists():
+        print("Run the pipeline through `queries` first.", file=sys.stderr)
+        return 1
+    import pandas as pd
+    queries = pd.read_parquet(qpath)
+    panel = yaml.safe_load(
+        (REPO_ROOT / "config" / "models.yaml").read_text())["panel"]
+    generation = yaml.safe_load(
+        (REPO_ROOT / "config" / "prompts.yaml").read_text())["generation"]
+    active = [m for m in panel if m.get("status") == "active"]
+    summaries = []
+    for model in active:
+        print(f"--- {model['id']} ---", file=sys.stderr)
+        summary = client.run_eval(
+            queries, model, REPO_ROOT, budget_usd=args.budget_per_model,
+            generation=generation, dry_run=args.dry_run,
+            use_free_endpoint=not args.paid)
+        summaries.append(summary)
+        print(json.dumps(summary, indent=2), file=sys.stderr)
+    total = sum(s["spent_usd"] for s in summaries)
+    done = all(s["remaining"] == 0 for s in summaries)
+    print(json.dumps({
+        "models_run": [s["model"] for s in summaries],
+        "total_spent_usd": round(total, 4),
+        "panel_complete": done,
+        "resume": None if done else "re-run the same command to continue "
+                                    "from the cache",
+        "sessions": summaries}, indent=2))
+    return 0
+
+
+def cmd_stats(args) -> int:
+    tag = _installed_tag()
+    if tag is None:
+        print("Run sync first.", file=sys.stderr)
+        return 1
+    print(json.dumps(stats_mod.run_stats(
+        tag, REPO_ROOT, dry_run=args.dry_run, mixed=args.mixed), indent=2))
+    return 0
+
+
+def cmd_watch(args) -> int:
+    summary = watch_mod.run_watch(REPO_ROOT, bootstrap=args.bootstrap)
+    print(json.dumps(summary, indent=2))
+    # exit 2 signals "candidates found" so CI can open a notification issue
+    return 2 if summary.get("new_candidates") else 0
+
+
 def cmd_classify(args) -> int:
     tag = _installed_tag()
     qpath = DATA_DIR / "processed" / tag / "queries.parquet"
@@ -201,8 +254,21 @@ def main(argv: list[str] | None = None) -> int:
                        help="synthetic responses, $0, separate cache")
     p_run.add_argument("--paid", action="store_true",
                        help="use the paid endpoint instead of the free tier")
+    p_panel = sub.add_parser("run-panel", help="run every active panel model "
+                                               "(sequential, budget-capped each)")
+    p_panel.add_argument("--budget-per-model", type=float, default=5.0)
+    p_panel.add_argument("--dry-run", action="store_true")
+    p_panel.add_argument("--paid", action="store_true")
     p_cls = sub.add_parser("classify", help="classify cached responses ($0)")
     p_cls.add_argument("--dry-run", action="store_true")
+    p_stats = sub.add_parser("stats", help="statistical analysis of results ($0)")
+    p_stats.add_argument("--dry-run", action="store_true")
+    p_stats.add_argument("--mixed", action="store_true",
+                         help="also fit the (slow) mixed-effects robustness model")
+    p_watch = sub.add_parser("watch", help="flag new frontier releases "
+                                           "(flag-and-wait; never runs anything)")
+    p_watch.add_argument("--bootstrap", action="store_true",
+                         help="record the current catalogue as baseline")
     p_vex = sub.add_parser("validate-export",
                            help="export blind-coding CSV for human validation")
     p_vex.add_argument("--dry-run", action="store_true")
@@ -213,7 +279,8 @@ def main(argv: list[str] | None = None) -> int:
             "screen": cmd_screen, "indices": cmd_indices,
             "site-data": cmd_site_data, "site-build": cmd_site_build,
             "queries": cmd_queries,
-            "run-eval": cmd_run_eval, "classify": cmd_classify,
+            "run-eval": cmd_run_eval, "run-panel": cmd_run_panel,
+            "classify": cmd_classify, "stats": cmd_stats, "watch": cmd_watch,
             "validate-export": cmd_validate_export,
             "validate-kappa": cmd_validate_kappa,
             "status": cmd_status}[args.command](args)

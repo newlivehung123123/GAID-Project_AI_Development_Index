@@ -1,0 +1,16 @@
+# Clean URLs: the server serves rankings/index.html at /rankings/ automatically.
+# These rules 301-redirect the legacy .html paths to the clean URLs so old links
+# and any already-indexed URLs consolidate onto one canonical address.
+Options +FollowSymLinks
+RewriteEngine On
+
+# /index.html -> /
+RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
+RewriteRule ^index\.html$ / [R=301,L]
+
+# legacy page URLs -> clean directory URLs
+RewriteRule ^rankings\.html$ /rankings/ [R=301,L]
+RewriteRule ^methodology\.html$ /methodology/ [R=301,L]
+
+# "dashboard" alias -> home (the dashboard IS the landing page)
+RewriteRule ^dashboard/?$ / [R=301,L]

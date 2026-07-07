@@ -3,10 +3,9 @@
    all six pillar scores with mini bars. Works across every view — map,
    scatter plot, and ranking tables (any element carrying data-iso3). */
 (async function () {
-  const depth = location.pathname.includes("/countries/") ? "../" : "";
   const [meta, indices] = await Promise.all([
-    fetch(depth + "data/meta.json").then(r => r.json()),
-    fetch(depth + "data/indices.json").then(r => r.json()),
+    fetch("/data/meta.json").then(r => r.json()),
+    fetch("/data/indices.json").then(r => r.json()),
   ]);
   const names = Object.fromEntries(meta.countries.map(c => [c.iso3, c.name]));
   const ranks = Object.fromEntries(meta.countries.filter(c => c.overall)

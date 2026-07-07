@@ -60,9 +60,11 @@ def cached_ids(conn: sqlite3.Connection, model_id: str) -> set[str]:
     return {r[0] for r in rows}
 
 
-def _dry_response(row: pd.Series) -> str:
-    """Deterministic synthetic response so downstream stages are testable."""
-    rng = random.Random(row["query_id"])
+def _dry_response(row: pd.Series, model_id: str = "") -> str:
+    """Deterministic synthetic response so downstream stages are testable.
+    Seeded by (query_id, model_id) so panel models differ, which exercises
+    the cross-model analyses in stats.py."""
+    rng = random.Random(f"{row['query_id']}|{model_id}")
     roll = rng.random()
     if row["variant"] == "v5_structured":
         if roll < 0.5:
@@ -136,8 +138,8 @@ def run_eval(queries: pd.DataFrame, model: dict, repo_root: Path, *,
 
     def work(row: pd.Series) -> tuple[pd.Series, str, dict]:
         if dry_run:
-            return row, _dry_response(row), {"cost": 0.0, "prompt_tokens": 0,
-                                             "completion_tokens": 0}
+            return row, _dry_response(row, model_id), {
+                "cost": 0.0, "prompt_tokens": 0, "completion_tokens": 0}
         body = _call_openrouter(endpoint, row["prompt"],
                                 generation["temperature"],
                                 generation["max_tokens"], api_key)

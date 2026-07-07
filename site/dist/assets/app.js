@@ -3,9 +3,9 @@
    (profile.js), as on the CORDA dashboard. */
 (async function () {
   const [meta, indices, world] = await Promise.all([
-    fetch("data/meta.json").then(r => r.json()),
-    fetch("data/indices.json").then(r => r.json()),
-    fetch("assets/world.geo.json").then(r => r.json()),
+    fetch("/data/meta.json").then(r => r.json()),
+    fetch("/data/indices.json").then(r => r.json()),
+    fetch("/assets/world.geo.json").then(r => r.json()),
   ]);
 
   const names = Object.fromEntries(meta.countries.map(c => [c.iso3, c.name]));
@@ -57,7 +57,7 @@
     .attr("d", geopath)
     .attr("stroke-width", 0.5)
     .style("cursor", "pointer")
-    .on("click", (_, d) => { if (names[d.id]) location.href = "countries/" + d.id + ".html"; })
+    .on("click", (_, d) => { if (names[d.id]) location.href = "/countries/" + d.id + ".html"; })
     .on("mousemove", (ev, d) => {
       if (window.gaidProfile && names[d.id]) window.gaidProfile.show(d.id, ev);
     })
@@ -94,7 +94,7 @@
       .attr("class", "scatter-dot")
       .attr("cx", d => xScale(d.x)).attr("cy", d => yScale(d.y)).attr("r", 6)
       .style("cursor", "pointer")
-      .on("click", (_, d) => location.href = "countries/" + d.iso + ".html")
+      .on("click", (_, d) => location.href = "/countries/" + d.iso + ".html")
       .on("mousemove", (ev, d) => window.gaidProfile && window.gaidProfile.show(d.iso, ev))
       .on("mouseleave", () => window.gaidProfile && window.gaidProfile.hide());
     document.getElementById("scatter-note").textContent =

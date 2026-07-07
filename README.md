@@ -92,15 +92,25 @@ report rather than silently producing a wrong benchmark.
       weights; per-wave dimensionality audit (group-level Cronbach's alpha,
       equal-vs-PCA weighting check), normalisation sensitivity variants,
       convergent validity vs held-out Tortoise + GIRAI indices
-- [ ] Stats module: mixed-effects logistic regression, DiD, PCA, World Bank
-      income-tier stratification, built-in threshold sensitivity
-- [ ] Release watcher (OpenRouter /models + Hugging Face org diff → candidates)
+- [x] Stats module (`stats`): multi-threshold headline rates + Kendall
+      ranking stability, logistic regression with cluster-robust SEs by
+      country (+ optional `--mixed` Bayesian GLMM with country random
+      intercepts), income-tier stratification with chi-square, documented-vs-
+      estimated cutoff sensitivity, balanced-subset check, scale-invariant
+      |log10 ratio| error; emits reports/<tag>/stats_report.md + stats.json
+- [x] Release watcher (`watch`): diffs OpenRouter /models + Hugging Face orgs
+      against the registry, flag-and-wait (exit 2 -> CI opens an issue);
+      `watch --bootstrap` records the baseline catalogue
 - [x] Dashboard static build (`site-data` + `site-build`): 230 SEO-indexable
       HTML pages — home with interactive choropleth + edition slider, full
       rankings, methodology, 227 country profiles (server-rendered radar,
       full metric browser) — design harmonised with aiinsocietyhub.com;
       sitemap.xml + robots.txt included; verified in browser preview
-- [ ] Hostinger deploy of site/dist to gaid.aiinsocietyhub.com (subdomain
-      document root only; WordPress never touched)
-- [ ] GitHub Actions: weekly wave check (free path), manual `workflow_dispatch`
-      eval runs (paid path, budget-capped)
+- [x] Hostinger deploy of site/dist to gaid.aiinsocietyhub.com (subdomain
+      document root only; WordPress never touched) — LIVE; Search Console
+      verified; clean URLs (/rankings/, /methodology/) + favicon + og cards
+- [x] `run-panel`: every active model in one command, per-model budget caps,
+      fully resumable from the response cache
+- [x] GitHub Actions: weekly wave + release watch (opens an issue, never
+      spends) and manual `workflow_dispatch` eval runs (budget input,
+      response cache persisted as artifact, OPENROUTER_API_KEY secret)

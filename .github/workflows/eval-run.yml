@@ -1,0 +1,88 @@
+# Manual eval run: ONLY triggered by hand (workflow_dispatch), with an
+# explicit budget input. Requires the OPENROUTER_API_KEY repository secret.
+# The response cache is persisted as a workflow artifact between runs, so a
+# free-tier run interrupted by the daily limit resumes on the next dispatch.
+name: eval-run
+
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: "Panel model id (config/models.yaml), or ALL for run-panel"
+        required: true
+        default: "ALL"
+      budget:
+        description: "Hard USD cap (per model when ALL)"
+        required: true
+        default: "5"
+      paid:
+        description: "Use paid endpoints (true) or free tiers (false)"
+        required: true
+        default: "false"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      - name: Restore response cache from the last run
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: response-cache
+          path: data/eval/
+
+      - name: Sync data and rebuild inputs
+        run: |
+          python -m gaid_pipeline sync
+          python -m gaid_pipeline harmonise
+          python -m gaid_pipeline screen
+          python -m gaid_pipeline queries
+
+      - name: Run eval (budget-capped)
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          PAID_FLAG=""
+          if [ "${{ inputs.paid }}" = "true" ]; then PAID_FLAG="--paid"; fi
+          if [ "${{ inputs.model }}" = "ALL" ]; then
+            python -m gaid_pipeline run-panel \
+              --budget-per-model "${{ inputs.budget }}" $PAID_FLAG
+          else
+            python -m gaid_pipeline run-eval --model "${{ inputs.model }}" \
+              --budget "${{ inputs.budget }}" $PAID_FLAG
+          fi
+
+      - name: Classify + stats (always $0)
+        run: |
+          python -m gaid_pipeline classify
+          python -m gaid_pipeline stats
+
+      - name: Persist response cache
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: response-cache
+          path: data/eval/
+          retention-days: 90
+          overwrite: true
+
+      - name: Publish reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-reports
+          path: reports/
+          retention-days: 90
+          overwrite: true

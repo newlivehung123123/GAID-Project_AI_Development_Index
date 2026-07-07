@@ -2,7 +2,7 @@
    metric browser (all analytical GAID metrics, grouped by category). */
 (async function () {
   const iso3 = document.body.dataset.iso3;
-  const data = await fetch("../data/countries/" + iso3 + ".json").then(r => r.json());
+  const data = await fetch("/data/countries/" + iso3 + ".json").then(r => r.json());
 
   const byCat = {};
   Object.entries(data.metrics).forEach(([name, m]) => {

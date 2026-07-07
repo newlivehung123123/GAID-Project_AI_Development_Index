@@ -23,6 +23,24 @@ BUILD = str(int(time.time()))  # cache-buster stamped on every asset URL
 
 BASE_URL = "https://gaid.aiinsocietyhub.com"
 MAIN_SITE = "https://aiinsocietyhub.com"
+KEYWORDS = "AI Development, AI ranking, global AI ranking, AI Index, AI data"
+HTACCESS = """# Clean URLs: the server serves rankings/index.html at /rankings/ automatically.
+# These rules 301-redirect the legacy .html paths to the clean URLs so old links
+# and any already-indexed URLs consolidate onto one canonical address.
+Options +FollowSymLinks
+RewriteEngine On
+
+# /index.html -> /
+RewriteCond %{THE_REQUEST} \\s/+index\\.html[\\s?] [NC]
+RewriteRule ^index\\.html$ / [R=301,L]
+
+# legacy page URLs -> clean directory URLs
+RewriteRule ^rankings\\.html$ /rankings/ [R=301,L]
+RewriteRule ^methodology\\.html$ /methodology/ [R=301,L]
+
+# "dashboard" alias -> home (the dashboard IS the landing page)
+RewriteRule ^dashboard/?$ / [R=301,L]
+"""
 WORLD_GEOJSON = "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"
 PILLAR_BLURBS = {
     "P1": "Publications, citation impact, patents, and responsible-AI research output.",
@@ -52,28 +70,46 @@ def panel(title: str, inner: str, anchor: str | None = None) -> str:
 
 
 def layout(title: str, description: str, body: str, *, depth: int = 0,
-           canonical: str = "", active: str = "", body_attrs: str = "") -> str:
-    p = "../" * depth
+           canonical: str = "", active: str = "", body_attrs: str = "",
+           keywords: str = KEYWORDS) -> str:
     nav = "".join(
-        f'<li><a href="{p}{href}"{" class=\"active\"" if key == active else ""}>{label}</a></li>'
-        for key, href, label in [("home", "index.html", "Dashboard"),
-                                 ("rankings", "rankings.html", "Rankings"),
-                                 ("methodology", "methodology.html", "Methodology")])
+        f'<li><a href="{href}"{" class=\"active\"" if key == active else ""}>{label}</a></li>'
+        for key, href, label in [("home", "/", "Dashboard"),
+                                 ("rankings", "/rankings/", "Rankings"),
+                                 ("methodology", "/methodology/", "Methodology")])
     return f"""<!DOCTYPE html>
 <html lang="en" class="eos">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png?v={BUILD}">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png?v={BUILD}">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png?v={BUILD}">
+<link rel="manifest" href="/site.webmanifest?v={BUILD}">
+<meta name="theme-color" content="#F0EBE0">
+<meta name="google-site-verification" content="W-FyzGNy5JfYmaq3DHR5sgBjuIpouK9SsGSFuf8VU6A" />
 <title>{title}</title>
 <meta name="description" content="{description}">
+<meta name="keywords" content="{keywords}">
 <link rel="canonical" href="{canonical}">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{description}">
 <meta property="og:type" content="website">
+<meta property="og:url" content="{canonical}">
+<meta property="og:site_name" content="Explore the societal impacts of AI">
+<meta property="og:image" content="{BASE_URL}/assets/og-image.png?v={BUILD}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Explore the societal impacts of AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{title}">
+<meta name="twitter:description" content="{description}">
+<meta name="twitter:image" content="{BASE_URL}/assets/og-image.png?v={BUILD}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,300;1,8..60,400;1,8..60,500;1,8..60,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{p}assets/style.css?v={BUILD}">
-<script src="{p}assets/theme.js?v={BUILD}"></script>
+<link rel="stylesheet" href="/assets/style.css?v={BUILD}">
+<script src="/assets/theme.js?v={BUILD}"></script>
 </head>
 <body{body_attrs}>
 <header class="site">
@@ -149,7 +185,7 @@ def build_home(meta: dict, indices: dict, latest: int) -> str:
                     key=lambda c: c["overall"]["rank"])
     rows = "".join(
         f'<tr data-iso3="{c["iso3"]}"><td class="rank num">#{c["overall"]["rank"]}</td>'
-        f'<td><a href="countries/{c["iso3"]}.html">{c["name"]}</a></td>'
+        f'<td><a href="/countries/{c["iso3"]}.html">{c["name"]}</a></td>'
         f'<td class="num">{c["overall"]["score"]:.1f}</td></tr>'
         for c in ranked[:20])
     pillar_cards = "".join(
@@ -185,14 +221,14 @@ def build_home(meta: dict, indices: dict, latest: int) -> str:
     top20_inner = f"""
     <table class="data"><thead><tr><th class="num">Rank</th><th>Country</th>
     <th class="num">Score</th></tr></thead><tbody>{rows}</tbody></table>
-    <a class="cta-link" href="rankings.html">Full rankings with all six pillars →</a>"""
+    <a class="cta-link" href="/rankings/">Full rankings with all six pillars →</a>"""
     pillars_inner = f"""
     <div class="cards-stack">{pillar_cards}</div>
     <p class="card-body" style="margin-top:1.1rem">Pillars are formative composites with nested
     equal weights; scores are min&ndash;max normalised within each annual edition.</p>
-    <a class="cta-link" href="methodology.html">Full methodology and robustness results →</a>"""
+    <a class="cta-link" href="/methodology/">Full methodology and robustness results →</a>"""
     body = page_title_block(
-        "Global AI Dataset (GAID) Project",
+        "Global AI Dataset (GAID) Project: GAID AI Development Index",
         "The GAID dashboard turns the latest version of the GAID dataset (verified indicators "
         "from 11 international sources) into national AI development profiles, composite "
         "indices, and a living benchmark of how equitably AI capability is distributed "
@@ -210,12 +246,12 @@ def build_home(meta: dict, indices: dict, latest: int) -> str:
 {panel(f"Top 20 — GAID AI Development Index, {latest}", top20_inner, anchor="global-ranking")}
 {panel("Six Measurement Pillars", pillars_inner, anchor="pillars")}
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script src="assets/app.js?v={BUILD}"></script>
-<script src="assets/profile.js?v={BUILD}"></script>"""
+<script src="/assets/app.js?v={BUILD}"></script>
+<script src="/assets/profile.js?v={BUILD}"></script>"""
     return layout(
-        "Global AI Dataset (GAID) Project — dashboard | AI in Society",
-        "Interactive dashboard of the Global AI Dataset (GAID): AI development indices, "
-        "country profiles and verified indicators for 227 countries and territories.",
+        "Global AI Dataset (GAID) Project: GAID AI Development Index",
+        "GAID AI Development Index uses global panel data to inform global countries' AI "
+        "readiness, fairness, development, capacity and beyond.",
         body, canonical=f"{BASE_URL}/", active="home")
 
 
@@ -253,7 +289,7 @@ def build_country_page(c: dict, profile: dict, meta: dict, latest: int) -> str:
     body = page_title_block(name, rank_lede, byline=byline) + f"""
 {panel("AI Development Profile", profile_inner)}
 {panel(f"All GAID Indicators for {name}", browser_inner)}
-<script src="../assets/country.js?v={BUILD}"></script>"""
+<script src="/assets/country.js?v={BUILD}"></script>"""
     return layout(
         f"{name} — AI development profile | GAID | AI in Society",
         f"AI development profile of {name}: {c['metrics']:,} verified indicators across "
@@ -275,7 +311,7 @@ def build_rankings(meta: dict, indices: dict, latest: int) -> str:
             v = indices.get(col, {}).get(c["iso3"], {}).get(str(latest))
             cells += f'<td class="num">{fmt_score(v)}</td>'
         rows.append(f'<tr data-iso3="{c["iso3"]}"><td class="rank num">#{c["overall"]["rank"]}</td>'
-                    f'<td><a href="countries/{c["iso3"]}.html">{c["name"]}</a></td>{cells}</tr>')
+                    f'<td><a href="/countries/{c["iso3"]}.html">{c["name"]}</a></td>{cells}</tr>')
     table_inner = f"""
     <table class="data" id="rank-table"><thead><tr>
     <th class="num">Rank</th><th>Country</th>{heads}</tr></thead>
@@ -292,16 +328,18 @@ def build_rankings(meta: dict, indices: dict, latest: int) -> str:
       }}).forEach(r => tb.appendChild(r));
     }})));
     </script>
-    <script src="assets/profile.js?v={BUILD}"></script>"""
+    <script src="/assets/profile.js?v={BUILD}"></script>"""
     body = page_title_block(
-        "Global AI Dataset (GAID) Project",
+        "Global AI Dataset (GAID) Project: GAID AI Development Index",
         f"Country rankings on the GAID AI Development Index, edition {latest}. All countries "
         "with sufficient coverage for the overall index (≥4 of 6 pillars); click a column "
         "header to sort, click a country for its profile.",
     ) + panel(f"Rankings — Edition {latest}", table_inner)
-    return layout(f"GAID AI Development Index rankings, {latest} | AI in Society",
-                  f"Country rankings on the GAID AI Development Index and its six pillars, edition {latest}.",
-                  body, canonical=f"{BASE_URL}/rankings.html", active="rankings")
+    return layout("GAID AI Development Index - Rankings",
+                  "Global AI rankings on the GAID AI Development Index and its six pillars — "
+                  f"compare AI development and verified AI data across {len(meta['countries'])} "
+                  "countries and territories.",
+                  body, canonical=f"{BASE_URL}/rankings/", active="rankings")
 
 
 def build_methodology(meta: dict, latest: int) -> str:
@@ -344,18 +382,23 @@ def build_methodology(meta: dict, latest: int) -> str:
     validation reports. It is noteworthy that responsible-AI components incorporate dimension
     scores from the <a href="https://www.global-index.ai/">Global Index on Responsible AI</a>
     with attribution.</p>"""
+    remark = """
+    <p class="card-body">The full paper disclosing and detailing the open-source methodology
+    will be published in due course.</p>"""
     body = page_title_block(
-        "Global AI Dataset (GAID) Project",
+        "Global AI Dataset (GAID) Project: GAID AI Development Index",
         "How the GAID composite indices are constructed, and the robustness results behind "
         "them.",
     ) + (panel("Construction", construction)
          + panel(f"Robustness Check&mdash;GAID {tag_spaced} dataset (Edition {latest})",
                  robustness)
-         + panel("Data Availability &amp; Reuse", availability))
-    return layout("GAID methodology: composite index construction and robustness | AI in Society",
-                  "How GAID composite AI indices are constructed: formative pillars, "
-                  "edition-based normalisation, equal weights, and robustness results.",
-                  body, canonical=f"{BASE_URL}/methodology.html", active="methodology")
+         + panel("Data Availability &amp; Reuse", availability)
+         + panel("Remark", remark))
+    return layout("GAID AI Development Index - Methodology",
+                  "How the GAID AI Development Index is built: formative pillars, edition-based "
+                  "normalisation, equal weights, and the robustness behind the global AI "
+                  "rankings and AI data.",
+                  body, canonical=f"{BASE_URL}/methodology/", active="methodology")
 
 
 def build_site(repo_root: Path) -> dict:
@@ -373,10 +416,29 @@ def build_site(repo_root: Path) -> dict:
     shutil.copytree(data_dir, dist / "data")
 
     (dist / "index.html").write_text(build_home(meta, indices, latest))
-    (dist / "rankings.html").write_text(build_rankings(meta, indices, latest))
-    (dist / "methodology.html").write_text(build_methodology(meta, latest))
+    (dist / "rankings").mkdir()
+    (dist / "rankings" / "index.html").write_text(build_rankings(meta, indices, latest))
+    (dist / "methodology").mkdir()
+    (dist / "methodology" / "index.html").write_text(build_methodology(meta, latest))
+    (dist / ".htaccess").write_text(HTACCESS)
+    # favicon.ico at the root (browsers auto-request /favicon.ico) + PWA manifest
+    shutil.copy(dist / "assets" / "favicon.ico", dist / "favicon.ico")
+    (dist / "site.webmanifest").write_text(json.dumps({
+        "name": "Global AI Dataset (GAID) Project: GAID AI Development Index",
+        "short_name": "GAID Index",
+        "description": "GAID AI Development Index uses global panel data to inform global "
+                       "countries' AI readiness, fairness, development, capacity and beyond.",
+        "start_url": "/",
+        "display": "browser",
+        "background_color": "#F0EBE0",
+        "theme_color": "#F0EBE0",
+        "icons": [
+            {"src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png"},
+            {"src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png"},
+        ],
+    }, indent=2))
 
-    urls = [f"{BASE_URL}/", f"{BASE_URL}/rankings.html", f"{BASE_URL}/methodology.html"]
+    urls = [f"{BASE_URL}/", f"{BASE_URL}/rankings/", f"{BASE_URL}/methodology/"]
     for c in meta["countries"]:
         profile = json.loads((data_dir / "countries" / f"{c['iso3']}.json").read_text())
         (dist / "countries" / f"{c['iso3']}.html").write_text(

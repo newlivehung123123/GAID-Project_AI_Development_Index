@@ -1,0 +1,21 @@
+{
+  "name": "Global AI Dataset (GAID) Project: GAID AI Development Index",
+  "short_name": "GAID Index",
+  "description": "GAID AI Development Index uses global panel data to inform global countries' AI readiness, fairness, development, capacity and beyond.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#F0EBE0",
+  "theme_color": "#F0EBE0",
+  "icons": [
+    {
+      "src": "/assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

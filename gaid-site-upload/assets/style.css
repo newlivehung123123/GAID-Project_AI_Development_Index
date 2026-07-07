@@ -1,0 +1,313 @@
+/* GAID dashboard — EXACT design system of aiinsocietyhub.com, taken from the
+   theme's tailwind-input.css, Header.tsx and GAIDPage.tsx (values copied
+   verbatim, not approximated).
+   EOS (light, default here): bg #F0EBE0 | ink #141414
+   NYX (dark, via .nyx on <html>): bg #080808 | ink #F5F0E8
+   Fonts: Cormorant Garamond for the brand + page/section titles;
+   Source Serif 4 for everything else. Monochrome ink — no accent colours. */
+
+:root {
+  --bg:           #F0EBE0;
+  --bg-rgb:       240, 235, 224;
+  --ink:          #141414;
+  --ink-rgb:      20, 20, 20;
+  --surface:      rgba(20, 20, 20, 0.06);
+  --border:       rgba(20, 20, 20, 0.12);
+  --raised:       #E4DDD2;
+  --lift:         #D9D2C7;
+  --panel:        rgba(20, 20, 20, 0.05);
+  --panel-border: rgba(20, 20, 20, 0.12);
+  --card-border:  rgba(20, 20, 20, 0.10);
+  --panel-shadow: 0 8px 32px rgba(0,0,0,0.07), inset 0 1px 0 rgba(255,255,255,0.60);
+  --display: 'Cormorant Garamond', Georgia, serif;
+  --serif: 'Source Serif 4', Georgia, serif;
+}
+.nyx {
+  --bg:           #080808;
+  --bg-rgb:       8, 8, 8;
+  --ink:          #F5F0E8;
+  --ink-rgb:      245, 240, 232;
+  --surface:      rgba(245, 240, 232, 0.06);
+  --border:       rgba(245, 240, 232, 0.12);
+  --raised:       #111111;
+  --lift:         #161616;
+  --panel:        rgba(255, 255, 255, 0.06);
+  --panel-border: rgba(255, 255, 255, 0.10);
+  --card-border:  rgba(255, 255, 255, 0.08);
+  --panel-shadow: 0 20px 60px rgba(0,0,0,0.80), inset 0 1px 0 rgba(255,255,255,0.10);
+}
+
+* { box-sizing: border-box; }
+html { background-color: var(--bg); transition: background-color 0.4s ease, color 0.4s ease; }
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+a { color: var(--ink); text-decoration: none; transition: opacity 0.3s ease; }
+a:hover { opacity: 0.65; }
+
+.wrap { max-width: 72rem; margin: 0 auto; padding: 0 1rem; }
+@media (min-width: 640px) { .wrap { padding: 0 2.5rem; } }
+
+/* ── Header: exact structure of Header.tsx ─────────────────────── */
+header.site { width: 100%; }
+.utility {
+  padding: 0.375rem 1rem; display: flex; justify-content: space-between;
+  align-items: center; font-size: 0.75rem;
+}
+@media (min-width: 640px) { .utility { padding: 0.375rem 2.5rem; } }
+.ubar {
+  text-transform: uppercase; letter-spacing: 0.18em; font-weight: 700;
+  color: var(--ink);
+}
+.uright { display: flex; align-items: center; gap: 1.5rem; }
+#theme-toggle {
+  background: var(--surface);
+  border: 1.5px solid rgba(var(--ink-rgb), 0.50);
+  cursor: pointer; display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.40rem 0.85rem; border-radius: 5px; color: var(--ink);
+  transition: border-color 0.3s ease, background 0.3s ease;
+  font-family: var(--display); font-size: 0.85rem; font-weight: 600;
+  letter-spacing: 0.16em; font-style: italic; text-transform: uppercase;
+}
+#theme-toggle:hover { border-color: var(--ink); }
+
+.brandwrap { padding: 2rem 1rem; text-align: center; }
+.brand {
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  font-weight: 400; letter-spacing: 0.22em; line-height: 1;
+  color: var(--ink); cursor: pointer;
+}
+.brand:hover { opacity: 0.80; }
+.brand-mid { font-style: italic; font-weight: 300; letter-spacing: 0.28em; font-size: 0.78em; }
+
+nav.top { position: sticky; top: 0; z-index: 50; background-color: var(--bg);
+          transition: background-color 0.4s ease; }
+nav.top ul { list-style: none; margin: 0; padding: 0.875rem 0; display: flex;
+             flex-wrap: wrap; justify-content: center; gap: 2rem; }
+@media (min-width: 640px) { nav.top ul { gap: 3rem; } }
+nav.top a {
+  text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.75rem;
+  font-weight: 500; color: var(--ink); padding: 0.25rem 0;
+}
+nav.top a:hover, nav.top a.active { opacity: 0.65; }
+
+/* ── Page title block: exact GAIDPage.tsx opening ──────────────── */
+.page-title { padding: 2rem 0 0.5rem; margin-bottom: 3rem; text-align: center; }
+.page-title h1 {
+  font-family: var(--display);
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 400; letter-spacing: 0.10em;
+  color: var(--ink); margin: 0 0 1rem; line-height: 1.15;
+}
+.author-line {
+  font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em;
+  color: var(--ink); opacity: 0.70; margin: 0 0 0.75rem;
+}
+.lede {
+  font-family: var(--serif); font-size: 1rem; font-weight: 400;
+  line-height: 1.85; color: var(--ink); max-width: 680px;
+  margin: 0 auto; text-align: center;
+}
+
+h2 {
+  font-family: var(--display); font-size: 1.6rem; font-weight: 400;
+  letter-spacing: 0.06em; color: var(--ink); margin: 0;
+}
+.divider {
+  display: block; width: 40px; height: 1px;
+  background: var(--ink); opacity: 0.30; margin: 1rem 0 1.4rem;
+}
+
+/* inner-card typography: exact datasetCard content styles */
+.card-title { font-family: var(--serif); font-size: 1.05rem; font-weight: 500;
+              color: var(--ink); margin: 0 0 0.65rem; }
+.card-body  { font-family: var(--serif); font-size: 0.95rem; font-weight: 400;
+              line-height: 1.85; color: var(--ink); margin: 0; }
+.cards-stack { display: flex; flex-direction: column; gap: 1.2rem; }
+.cta-link {
+  display: inline-block; margin-top: 0.85rem;
+  font-family: var(--serif); font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink);
+  border-bottom: 1px solid rgba(var(--ink-rgb), 0.45); text-decoration: none;
+}
+
+/* ── Panels: exact glassPanel / datasetCard from GAIDPage.tsx ──── */
+.card, .glass-panel {
+  background: var(--panel);
+  backdrop-filter: blur(60px) saturate(180%);
+  -webkit-backdrop-filter: blur(60px) saturate(180%);
+  border-radius: 24px;
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--panel-shadow);
+  padding: 2.5rem 3rem;
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 640px) { .card, .glass-panel { padding: 1.5rem 1.25rem; } }
+.tone-card {
+  background: var(--panel);
+  border-radius: 16px;
+  border: 1px solid var(--card-border);
+  padding: 1.5rem 1.75rem;
+}
+
+/* ── Stat line ──────────────────────────────────────────────────── */
+.stat-line { display: flex; gap: 0.75rem 2.2rem; flex-wrap: wrap;
+             justify-content: center; margin: 0 0 2rem; }
+
+/* ── Section tabs (jump-to-section) ─────────────────────────────── */
+.section-tabs { display: flex; flex-wrap: wrap; justify-content: center;
+                gap: 0.5rem; margin: 0 0 2.5rem; }
+.section-tabs a {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--ink);
+  padding: 0.6rem 1.25rem; border-radius: 999px;
+  background: var(--panel); border: 1px solid var(--panel-border);
+  transition: background 0.2s ease, opacity 0.2s ease;
+}
+.section-tabs a:hover { background: var(--raised); text-decoration: none; opacity: 1; }
+.glass-panel[id] { scroll-margin-top: 90px; }
+.badge { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.16em;
+         font-weight: 600; color: var(--ink); opacity: 0.60; }
+.badge b { font-family: var(--display); font-size: 1.35rem; font-weight: 400;
+           letter-spacing: 0.02em; opacity: 1; margin-right: 0.45rem;
+           text-transform: none; }
+
+/* ── Map ────────────────────────────────────────────────────────── */
+#map-controls { display: flex; gap: 1.6rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; font-size: 0.9rem; }
+#map-controls label { display: flex; align-items: center; gap: 0.6rem; }
+#map-controls label span { font-size: 0.58rem; font-weight: 600; letter-spacing: 0.22em;
+                           text-transform: uppercase; color: var(--ink); opacity: 0.45; }
+#map-controls select, #map-controls input[type=range] { font-family: var(--serif); font-size: 0.9rem; accent-color: var(--ink); }
+#map-controls select {
+  padding: 0.45rem 0.8rem; border: none; outline: none; border-radius: 10px;
+  background-color: var(--raised); color: var(--ink);
+}
+#choropleth { width: 100%; }
+#choropleth svg { display: block; width: 100%; height: auto; }
+.map-tooltip {
+  position: absolute; pointer-events: none;
+  background: var(--raised); color: var(--ink);
+  border: 1px solid var(--card-border);
+  padding: 0.35rem 0.75rem; border-radius: 10px; font-size: 0.85rem;
+  opacity: 0; transition: opacity .12s;
+}
+#legend { font-size: 0.8rem; color: var(--ink); opacity: 0.55; margin-top: 0.6rem; }
+
+/* ── Structured listings ────────────────────────────────────────── */
+table.data { width: 100%; border-collapse: collapse; font-size: 0.95rem; background: transparent; }
+table.data th, table.data td { padding: 0.8rem 0.75rem; text-align: left; }
+table.data th {
+  font-size: 0.58rem; font-weight: 600; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--ink); opacity: 0.45;
+  border-bottom: 1px solid var(--border); cursor: pointer; white-space: nowrap;
+}
+table.data th:hover { opacity: 1; }
+table.data td { border-bottom: 1px solid rgba(var(--ink-rgb), 0.07); }
+table.data tr:last-child td { border-bottom: none; }
+table.data tbody tr:hover td { background: var(--surface); }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.rank { font-weight: 700; }
+
+/* ── Country profile ────────────────────────────────────────────── */
+.scores { display: flex; gap: 0.7rem; flex-wrap: wrap; margin: 0 0 1.4rem; }
+.score-chip { padding: 0.8rem 1.1rem !important; font-size: 0.8rem;
+              letter-spacing: 0.04em; }
+.score-chip b { display: block; font-family: var(--display); font-size: 1.45rem;
+                font-weight: 500; }
+.radar-wrap { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; justify-content: center; }
+.radar-grid { stroke: rgba(var(--ink-rgb), 0.18); fill: none; }
+.radar-shape { fill: rgba(var(--ink-rgb), 0.13); stroke: rgba(var(--ink-rgb), 0.75); stroke-width: 1.5; }
+.radar-label { fill: var(--ink); opacity: 0.55; font-family: var(--serif); }
+
+/* ── Metric browser ─────────────────────────────────────────────── */
+#metric-search {
+  width: 100%; padding: 0.8rem 1.1rem; font-family: var(--serif); font-size: 0.95rem;
+  border: none; outline: none; border-radius: 12px;
+  background-color: var(--raised); color: var(--ink); margin-bottom: 0.9rem;
+}
+#metric-search::placeholder { color: rgba(var(--ink-rgb), 0.35); }
+details.mcat { background: var(--panel); border: 1px solid var(--card-border);
+               border-radius: 16px; margin-bottom: 0.7rem; overflow: hidden; }
+details.mcat summary { padding: 0.85rem 1.4rem; cursor: pointer;
+                       font-family: var(--serif); font-weight: 500;
+                       font-size: 1.05rem; }
+details.mcat summary small { font-family: var(--serif); font-weight: 300;
+                             font-size: 0.8rem; opacity: 0.55; }
+.metric-row { padding: 0.65rem 1.4rem; border-top: 1px solid rgba(var(--ink-rgb), 0.07);
+              font-size: 0.88rem; display: flex; justify-content: space-between;
+              gap: 0.9rem; flex-wrap: wrap; }
+.metric-row .mname { max-width: 62%; }
+.metric-row .msrc { font-size: 0.76rem; font-weight: 300; opacity: 0.60; }
+.metric-vals { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ── Typewriter caret (TypewriterText clone: w-2 h-[1em] ml-1 blue-500,
+      animate-pulse) ─────────────────────────────────────────────── */
+.tw-caret {
+  display: inline-block; width: 0.5rem; height: 1em; margin-left: 0.25rem;
+  background: #3b82f6; vertical-align: middle;
+  animation: tw-pulse 2s cubic-bezier(.4, 0, .6, 1) infinite;
+}
+@keyframes tw-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+
+/* ── National profile hover card (CORDA CountryCard clone) ──────── */
+.profile-card {
+  position: absolute; z-index: 300; width: min(300px, calc(100vw - 24px)); pointer-events: none;
+  background: var(--bg); border: 1px solid var(--panel-border);
+  border-radius: 16px; padding: 0.95rem 1.1rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.14);
+  opacity: 0; transition: opacity .12s ease;
+}
+.profile-card.on { opacity: 1; }
+.pc-head { margin-bottom: 0.55rem; }
+.pc-head b { display: block; font-family: var(--serif); font-size: 1rem;
+             font-weight: 600; }
+.pc-head span { font-size: 0.74rem; opacity: 0.65; }
+.pc-head span b { display: inline; font-size: 0.8rem; }
+.pc-row { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.42rem; }
+.pc-label { flex: 0 0 132px; font-size: 0.66rem; letter-spacing: 0.03em;
+            opacity: 0.70; line-height: 1.3; }
+.pc-bar { flex: 1; height: 6px; background: rgba(var(--ink-rgb), 0.12);
+          border-radius: 3px; overflow: hidden; }
+.pc-bar span { display: block; height: 100%; border-radius: 3px;
+               background: rgba(var(--ink-rgb), 0.72);
+               transition: width 0.3s ease; }
+.pc-val { flex: 0 0 34px; text-align: right; font-size: 0.72rem;
+          font-variant-numeric: tabular-nums; }
+
+/* ── Scatter plot ────────────────────────────────────────────────── */
+#scatterplot svg { display: block; width: 100%; height: auto; }
+.scatter-dot { fill: rgba(var(--ink-rgb), 0.50);
+               stroke: rgba(var(--ink-rgb), 0.75); stroke-width: 0.75; }
+.scatter-dot:hover { fill: rgba(var(--ink-rgb), 0.85); }
+.axis path { stroke: rgba(var(--ink-rgb), 0.30); }
+.axis line { stroke: rgba(var(--ink-rgb), 0.10); }
+.axis text { fill: var(--ink); opacity: 0.55; font-family: var(--serif);
+             font-size: 11px; }
+.axis-title { fill: var(--ink); opacity: 0.60; font-family: var(--serif);
+              font-size: 12px; letter-spacing: 0.06em; }
+
+/* ── Footer ─────────────────────────────────────────────────────── */
+footer.site { margin-top: 5rem; padding: 2rem 0 3rem; font-size: 0.85rem;
+              text-align: center; }
+footer.site p { opacity: 0.60; }
+footer.site a { font-weight: 500; }
+
+.note { font-size: 0.85rem; font-weight: 300; opacity: 0.60; }
+.prose { max-width: 720px; margin: 0 auto; text-align: left; }
+.prose li { margin-bottom: 0.5rem; }
+.prose ul { padding-left: 1.2rem; }
+
+@media (max-width: 640px) {
+  table.data { font-size: 0.8rem; }
+  table.data th, table.data td { padding: 0.5rem 0.4rem; }
+}
