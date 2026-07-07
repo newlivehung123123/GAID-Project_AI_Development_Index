@@ -24,6 +24,20 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = REPO_ROOT / "data"
 
 
+def _load_dotenv() -> None:
+    """Load KEY=VALUE lines from .env (gitignored) so secrets never live in
+    code and never need a manual `export`. Real env vars take precedence."""
+    import os
+    env = REPO_ROOT / ".env"
+    if not env.exists():
+        return
+    for line in env.read_text().splitlines():
+        line = line.strip()
+        if line and not line.startswith("#") and "=" in line:
+            key, _, value = line.partition("=")
+            os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
+
+
 def cmd_check(_args) -> int:
     latest, manifest, new = dataverse.check(DATA_DIR)
     installed = manifest["installed"]["filename"] if manifest else "nothing"
@@ -231,6 +245,7 @@ def cmd_status(_args) -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
+    _load_dotenv()
     parser = argparse.ArgumentParser(prog="gaid_pipeline")
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("check", help="compare Dataverse against local install")
