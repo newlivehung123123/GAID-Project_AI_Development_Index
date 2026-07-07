@@ -19,6 +19,7 @@ import json
 import os
 import random
 import sqlite3
+import sys
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
@@ -135,6 +136,10 @@ def run_eval(queries: pd.DataFrame, model: dict, repo_root: Path, *,
     spent = 0.0
     completed = 0
     stop_reason = "finished"
+    if not dry_run:
+        print(f"[{model_id}] {len(todo)} queries to run on {endpoint} "
+              f"({len(done)} already cached) — budget ${budget_usd}",
+              file=sys.stderr)
 
     def work(row: pd.Series) -> tuple[pd.Series, str, dict]:
         if dry_run:
@@ -164,6 +169,9 @@ def run_eval(queries: pd.DataFrame, model: dict, repo_root: Path, *,
                      datetime.now(timezone.utc).isoformat(timespec="seconds")))
                 conn.commit()
                 completed += 1
+                if not dry_run and completed % 100 == 0:
+                    print(f"[{model_id}] {completed}/{len(todo)} done — "
+                          f"${spent:.2f} spent", file=sys.stderr)
                 if spent >= budget_usd:
                     stop_reason = f"budget cap ${budget_usd} reached"
                     for f in futures:
