@@ -29,7 +29,9 @@ import pandas as pd
 import requests
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-MAX_RETRIES = 5
+MAX_RETRIES = 3            # under-retrying is cheap: the cache resumes anything
+REQUEST_TIMEOUT = 60       # healthy endpoints answer in ~2-5 s
+MAX_CONSECUTIVE_ERRORS = 8 # then skip this model for now and move on
 
 
 def _db(repo_root: Path, dry_run: bool) -> sqlite3.Connection:
@@ -95,12 +97,15 @@ def _call_openrouter(endpoint: str, prompt: str, temperature: float,
     delay = 2.0
     for attempt in range(MAX_RETRIES):
         resp = requests.post(OPENROUTER_URL, json=payload, headers=headers,
-                             timeout=180)
+                             timeout=REQUEST_TIMEOUT)
         if resp.status_code == 429:
             body = resp.text.lower()
             if "free" in body and ("day" in body or "daily" in body):
                 raise DailyLimitReached(resp.text[:300])
-            time.sleep(delay)
+            retry_after = resp.headers.get("Retry-After", "")
+            wait = float(retry_after) if retry_after.replace(".", "", 1).isdigit() \
+                else delay
+            time.sleep(min(wait, 120))
             delay = min(delay * 2, 60)
             continue
         if resp.status_code >= 500:
@@ -114,6 +119,10 @@ def _call_openrouter(endpoint: str, prompt: str, temperature: float,
 
 class DailyLimitReached(RuntimeError):
     """Free-tier daily quota hit: stop gracefully, resume tomorrow."""
+
+
+class EndpointStalled(RuntimeError):
+    """Endpoint hanging or erroring repeatedly: skip this model for now."""
 
 
 def run_eval(queries: pd.DataFrame, model: dict, repo_root: Path, *,
@@ -152,11 +161,34 @@ def run_eval(queries: pd.DataFrame, model: dict, repo_root: Path, *,
         usage = body.get("usage", {}) or {}
         return row, text, usage
 
+    failed = 0
+    consecutive_errors = 0
     try:
         with ThreadPoolExecutor(max_workers=1 if dry_run else workers) as pool:
             futures = [pool.submit(work, row) for _, row in todo.iterrows()]
             for fut in as_completed(futures):
-                row, text, usage = fut.result()
+                try:
+                    row, text, usage = fut.result()
+                except DailyLimitReached:
+                    raise
+                except Exception as exc:
+                    # one bad query never crashes a run: count it, keep going;
+                    # a WALL of failures means the endpoint itself is sick
+                    failed += 1
+                    consecutive_errors += 1
+                    print(f"[{model_id}] query failed "
+                          f"({type(exc).__name__}: {str(exc)[:80]}) — "
+                          f"{consecutive_errors} consecutive", file=sys.stderr)
+                    if consecutive_errors >= MAX_CONSECUTIVE_ERRORS:
+                        stop_reason = (
+                            f"endpoint stalling/erroring "
+                            f"({consecutive_errors} consecutive failures) — "
+                            f"skipped for now; re-run later to resume")
+                        for f in futures:
+                            f.cancel()
+                        break
+                    continue
+                consecutive_errors = 0
                 cost = float(usage.get("cost") or 0.0)
                 spent += cost
                 conn.execute(
@@ -185,6 +217,7 @@ def run_eval(queries: pd.DataFrame, model: dict, repo_root: Path, *,
     return {
         "model": model_id, "endpoint": endpoint, "dry_run": dry_run,
         "already_cached": len(done), "completed_this_session": completed,
+        "failed_this_session": failed,
         "remaining": len(todo) - completed, "spent_usd": round(spent, 4),
         "stop_reason": stop_reason,
         "resume": "re-run the same command; cached queries are skipped",
