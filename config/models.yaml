@@ -54,6 +54,37 @@ panel:
     weights: proprietary
     training_cutoff: { date: "2025", status: documented, source: "Anthropic model card" }
     status: inactive   # pilot already run in Apart study; activate for annex rounds
+  # further annex candidates (live OpenRouter slugs + prices checked 2026-07-08;
+  # cost estimates at observed usage ~46 tok in / ~80 tok out x 6,658 queries).
+  # Flip status to `active` and fill a documented cutoff before running.
+  - id: claude-sonnet-5
+    endpoint: anthropic/claude-sonnet-5          # ~$6/run
+    developer: Anthropic
+    developer_origin: US
+    weights: proprietary
+    training_cutoff: { date: "TBC", status: estimated, source: "verify Anthropic model card" }
+    status: inactive
+  - id: gpt-5-1
+    endpoint: openai/gpt-5.1                     # ~$6/run
+    developer: OpenAI
+    developer_origin: US
+    weights: proprietary
+    training_cutoff: { date: "TBC", status: estimated, source: "verify OpenAI model card" }
+    status: inactive
+  - id: gemini-3-1-pro
+    endpoint: google/gemini-3.1-pro-preview      # ~$7/run; preview endpoint
+    developer: Google DeepMind
+    developer_origin: US
+    weights: proprietary
+    training_cutoff: { date: "TBC", status: estimated, source: "verify Google model card" }
+    status: inactive
+  - id: grok-4-3
+    endpoint: x-ai/grok-4.3                      # ~$2/run
+    developer: xAI
+    developer_origin: US
+    weights: proprietary
+    training_cutoff: { date: "TBC", status: estimated, source: "verify xAI model card" }
+    status: inactive
 
 watch:
   # Weekly GitHub Actions job diffs OpenRouter's /api/v1/models list and the
