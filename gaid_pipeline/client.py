@@ -84,7 +84,8 @@ def _dry_response(row: pd.Series, model_id: str = "") -> str:
 
 def _call_openrouter(endpoint: str, prompt: str, temperature: float,
                      max_tokens: int, api_key: str,
-                     reasoning: str | None = None) -> dict:
+                     reasoning: str | None = None,
+                     provider_order: list[str] | None = None) -> dict:
     payload = {
         "model": endpoint,
         "messages": [{"role": "user", "content": prompt}],
@@ -99,6 +100,11 @@ def _call_openrouter(endpoint: str, prompt: str, temperature: float,
         payload["reasoning"] = {"enabled": False}
     elif reasoning == "minimal":
         payload["reasoning"] = {"effort": "minimal"}
+    # Some models are load-balanced across many providers that implement
+    # reasoning controls inconsistently; pinning (e.g. glm-5.2 -> Z.AI, the
+    # model's own developer) makes the elicitation deterministic.
+    if provider_order:
+        payload["provider"] = {"order": provider_order, "allow_fallbacks": False}
     headers = {"Authorization": f"Bearer {api_key}",
                "HTTP-Referer": "https://aiinsocietyhub.com",
                "X-Title": "GAID eval pipeline"}
@@ -173,7 +179,8 @@ def run_eval(queries: pd.DataFrame, model: dict, repo_root: Path, *,
                 "cost": 0.0, "prompt_tokens": 0, "completion_tokens": 0}
         body = _call_openrouter(endpoint, row["prompt"],
                                 gen["temperature"], gen["max_tokens"],
-                                api_key, reasoning=gen.get("reasoning"))
+                                api_key, reasoning=gen.get("reasoning"),
+                                provider_order=gen.get("provider_order"))
         text = body["choices"][0]["message"]["content"]
         usage = body.get("usage", {}) or {}
         if text is None or not text.strip():
