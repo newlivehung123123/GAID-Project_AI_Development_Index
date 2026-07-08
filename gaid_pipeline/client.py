@@ -175,10 +175,13 @@ def run_eval(queries: pd.DataFrame, model: dict, repo_root: Path, *,
                                 gen["temperature"], gen["max_tokens"],
                                 api_key, reasoning=gen.get("reasoning"))
         text = body["choices"][0]["message"]["content"]
-        if text is None or not text.strip():
-            raise EmptyResponse(
-                "no visible content — reasoning likely consumed max_tokens")
         usage = body.get("usage", {}) or {}
+        if text is None or not text.strip():
+            # still billed! attach usage so the failure path counts the cost
+            exc = EmptyResponse(
+                "no visible content — reasoning likely consumed max_tokens")
+            exc.usage = usage
+            raise exc
         return row, text, usage
 
     failed = 0
@@ -196,9 +199,16 @@ def run_eval(queries: pd.DataFrame, model: dict, repo_root: Path, *,
                     # a WALL of failures means the endpoint itself is sick
                     failed += 1
                     consecutive_errors += 1
+                    # billed-but-unusable responses still consume budget
+                    spent += float(getattr(exc, "usage", {}).get("cost") or 0.0)
                     print(f"[{model_id}] query failed "
                           f"({type(exc).__name__}: {str(exc)[:80]}) — "
                           f"{consecutive_errors} consecutive", file=sys.stderr)
+                    if spent >= budget_usd:
+                        stop_reason = f"budget cap ${budget_usd} reached"
+                        for f in futures:
+                            f.cancel()
+                        break
                     if consecutive_errors >= MAX_CONSECUTIVE_ERRORS:
                         stop_reason = (
                             f"endpoint stalling/erroring "

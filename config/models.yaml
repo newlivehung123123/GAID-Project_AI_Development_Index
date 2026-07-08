@@ -52,8 +52,9 @@ panel:
     developer_origin: CN
     weights: open
     training_cutoff: { date: "TBC", status: estimated, source: "verify Z.ai model card" }
-    generation_overrides: { reasoning: "off" }     # thinking on by default; provider
-                                                 # truncates content at max_tokens
+    generation_overrides: { reasoning: "off", max_tokens: 800 }
+    # thinking on by default; one routed provider ignores the off-switch and
+    # truncates at max_tokens — 800 gives the answer room either way
     status: active
 
   # --- proprietary annex (optional; clearly separated in analysis; goes
