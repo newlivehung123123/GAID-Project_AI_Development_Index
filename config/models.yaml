@@ -44,6 +44,13 @@ panel:
     weights: open
     training_cutoff: { date: "2024-07", status: estimated, source: "Knostic system-prompt extraction" }
     status: active
+  - id: glm-5-2
+    endpoint: z-ai/glm-5.2                       # weights: huggingface.co/zai-org/GLM-5.2
+    developer: Zhipu AI (Z.ai)
+    developer_origin: CN
+    weights: open
+    training_cutoff: { date: "TBC", status: estimated, source: "verify Z.ai model card" }
+    status: active
 
   # --- proprietary annex (optional; clearly separated in analysis; goes
   #     through provider batch endpoints at 50% off when run) ---
@@ -54,22 +61,44 @@ panel:
     weights: proprietary
     training_cutoff: { date: "2025", status: documented, source: "Anthropic model card" }
     status: inactive   # pilot already run in Apart study; activate for annex rounds
-  # further annex candidates (live OpenRouter slugs + prices checked 2026-07-08;
-  # cost estimates at observed usage ~46 tok in / ~80 tok out x 6,658 queries).
-  # Flip status to `active` and fill a documented cutoff before running.
-  - id: claude-sonnet-5
-    endpoint: anthropic/claude-sonnet-5          # ~$6/run
-    developer: Anthropic
-    developer_origin: US
-    weights: proprietary
-    training_cutoff: { date: "TBC", status: estimated, source: "verify Anthropic model card" }
-    status: inactive
-  - id: gpt-5-1
-    endpoint: openai/gpt-5.1                     # ~$6/run
+  # further annex candidates (live OpenRouter slugs verified 2026-07-08).
+  # NOTE: gpt-5.6 / grok-4.4 / grok-4.5 do NOT exist on OpenRouter; the two
+  # most current per lab are registered instead. Flip status to `active` and
+  # fill a documented cutoff before running.
+  - id: gpt-5-5
+    endpoint: openai/gpt-5.5                     # ~$17.5/run (2026-04-24)
     developer: OpenAI
     developer_origin: US
     weights: proprietary
     training_cutoff: { date: "TBC", status: estimated, source: "verify OpenAI model card" }
+    status: inactive
+  - id: gpt-5-4
+    endpoint: openai/gpt-5.4                     # ~$8.8/run (2026-03-05)
+    developer: OpenAI
+    developer_origin: US
+    weights: proprietary
+    training_cutoff: { date: "TBC", status: estimated, source: "verify OpenAI model card" }
+    status: inactive
+  - id: grok-4-3
+    endpoint: x-ai/grok-4.3                      # ~$1.7/run (2026-04-30, newest Grok)
+    developer: xAI
+    developer_origin: US
+    weights: proprietary
+    training_cutoff: { date: "TBC", status: estimated, source: "verify xAI model card" }
+    status: inactive
+  - id: grok-4-20
+    endpoint: x-ai/grok-4.20                     # ~$1.7/run (2026-03-31)
+    developer: xAI
+    developer_origin: US
+    weights: proprietary
+    training_cutoff: { date: "TBC", status: estimated, source: "verify xAI model card" }
+    status: inactive
+  - id: claude-opus-4-8
+    endpoint: anthropic/claude-opus-4.8          # ~$14.9/run (2026-05-27)
+    developer: Anthropic
+    developer_origin: US
+    weights: proprietary
+    training_cutoff: { date: "TBC", status: estimated, source: "verify Anthropic model card" }
     status: inactive
   - id: gemini-3-1-pro
     endpoint: google/gemini-3.1-pro-preview      # ~$7/run; preview endpoint
@@ -77,13 +106,6 @@ panel:
     developer_origin: US
     weights: proprietary
     training_cutoff: { date: "TBC", status: estimated, source: "verify Google model card" }
-    status: inactive
-  - id: grok-4-3
-    endpoint: x-ai/grok-4.3                      # ~$2/run
-    developer: xAI
-    developer_origin: US
-    weights: proprietary
-    training_cutoff: { date: "TBC", status: estimated, source: "verify xAI model card" }
     status: inactive
 
 watch:
