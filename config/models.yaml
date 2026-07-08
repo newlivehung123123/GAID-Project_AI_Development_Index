@@ -72,7 +72,9 @@ panel:
   # most current per lab are registered instead. Flip status to `active` and
   # fill a documented cutoff before running.
   - id: gpt-5-5
-    generation_overrides: { reasoning: minimal, max_tokens: 400 }
+    # minimal effort still reasons ~200-400 tok on hard factual queries;
+    # 2000-token ceiling verified 2026-07-08 (probe: answer present)
+    generation_overrides: { reasoning: minimal, max_tokens: 2000 }
     endpoint: openai/gpt-5.5                     # ~$17.5/run (2026-04-24)
     developer: OpenAI
     developer_origin: US
@@ -80,7 +82,9 @@ panel:
     training_cutoff: { date: "TBC", status: estimated, source: "verify OpenAI model card" }
     status: inactive
   - id: gpt-5-4
-    generation_overrides: { reasoning: minimal, max_tokens: 400 }
+    # minimal effort still reasons ~200-400 tok on hard factual queries;
+    # 2000-token ceiling verified 2026-07-08 (probe: answer present)
+    generation_overrides: { reasoning: minimal, max_tokens: 2000 }
     endpoint: openai/gpt-5.4                     # ~$8.8/run (2026-03-05)
     developer: OpenAI
     developer_origin: US
@@ -111,7 +115,9 @@ panel:
     training_cutoff: { date: "TBC", status: estimated, source: "verify Anthropic model card" }
     status: inactive
   - id: gemini-3-1-pro
-    generation_overrides: { reasoning: minimal, max_tokens: 800 }
+    # reasoning cannot be disabled on this endpoint (HTTP 400); minimal effort
+    # still bills ~460 reasoning tok/query -> real cost ~$40/full run
+    generation_overrides: { reasoning: minimal, max_tokens: 1500 }
     endpoint: google/gemini-3.1-pro-preview      # ~$7/run; preview endpoint
     developer: Google DeepMind
     developer_origin: US
