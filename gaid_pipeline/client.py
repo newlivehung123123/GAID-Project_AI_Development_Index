@@ -83,7 +83,8 @@ def _dry_response(row: pd.Series, model_id: str = "") -> str:
 
 
 def _call_openrouter(endpoint: str, prompt: str, temperature: float,
-                     max_tokens: int, api_key: str) -> dict:
+                     max_tokens: int, api_key: str,
+                     reasoning: str | None = None) -> dict:
     payload = {
         "model": endpoint,
         "messages": [{"role": "user", "content": prompt}],
@@ -91,6 +92,13 @@ def _call_openrouter(endpoint: str, prompt: str, temperature: float,
         "max_tokens": max_tokens,
         "usage": {"include": True},
     }
+    # Reasoning models bill hidden thinking tokens against max_tokens; left
+    # at provider defaults that can consume the whole budget and return
+    # EMPTY content (glm-5.2 / gpt-5.5 incident, 2026-07-08).
+    if reasoning == "off":
+        payload["reasoning"] = {"enabled": False}
+    elif reasoning == "minimal":
+        payload["reasoning"] = {"effort": "minimal"}
     headers = {"Authorization": f"Bearer {api_key}",
                "HTTP-Referer": "https://aiinsocietyhub.com",
                "X-Title": "GAID eval pipeline"}
@@ -125,6 +133,13 @@ class EndpointStalled(RuntimeError):
     """Endpoint hanging or erroring repeatedly: skip this model for now."""
 
 
+class EmptyResponse(RuntimeError):
+    """No visible content — on reasoning models this means max_tokens was
+    consumed by internal thinking. Counted as a failure (never cached), so
+    the consecutive-failure breaker aborts a broken elicitation within
+    pennies instead of a full budget."""
+
+
 def run_eval(queries: pd.DataFrame, model: dict, repo_root: Path, *,
              budget_usd: float, generation: dict, dry_run: bool = False,
              limit: int | None = None, use_free_endpoint: bool = True,
@@ -150,14 +165,19 @@ def run_eval(queries: pd.DataFrame, model: dict, repo_root: Path, *,
               f"({len(done)} already cached) — budget ${budget_usd}",
               file=sys.stderr)
 
+    gen = {**generation, **(model.get("generation_overrides") or {})}
+
     def work(row: pd.Series) -> tuple[pd.Series, str, dict]:
         if dry_run:
             return row, _dry_response(row, model_id), {
                 "cost": 0.0, "prompt_tokens": 0, "completion_tokens": 0}
         body = _call_openrouter(endpoint, row["prompt"],
-                                generation["temperature"],
-                                generation["max_tokens"], api_key)
+                                gen["temperature"], gen["max_tokens"],
+                                api_key, reasoning=gen.get("reasoning"))
         text = body["choices"][0]["message"]["content"]
+        if text is None or not text.strip():
+            raise EmptyResponse(
+                "no visible content — reasoning likely consumed max_tokens")
         usage = body.get("usage", {}) or {}
         return row, text, usage
 
@@ -195,7 +215,7 @@ def run_eval(queries: pd.DataFrame, model: dict, repo_root: Path, *,
                     "INSERT OR REPLACE INTO responses VALUES (?,?,?,?,?,?,?,?,?,?,?)",
                     (row["query_id"], model_id,
                      hashlib.sha1(row["prompt"].encode()).hexdigest()[:16],
-                     generation["temperature"], text, "stop",
+                     gen["temperature"], text, "stop",
                      usage.get("prompt_tokens"), usage.get("completion_tokens"),
                      cost, endpoint,
                      datetime.now(timezone.utc).isoformat(timespec="seconds")))
