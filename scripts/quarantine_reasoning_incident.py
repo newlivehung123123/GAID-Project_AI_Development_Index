@@ -27,6 +27,13 @@ conn = sqlite3.connect(DB)
 ph = ",".join("?" * len(MODELS))
 df = pd.read_sql_query(
     f"SELECT * FROM responses WHERE model_id IN ({ph})", conn, params=MODELS)
+if not df.empty:
+    empty_share = (df["response"].isna() | (df["response"].str.strip() == "")).mean()
+    if empty_share < 0.5:
+        raise SystemExit(
+            f"REFUSING to quarantine: {len(df)} cached rows are "
+            f"{1 - empty_share:.0%} non-empty — this looks like HEALTHY data "
+            "from the fixed elicitation, not the incident. Nothing deleted.")
 if df.empty:
     print("nothing to quarantine — cache already clean")
 else:
