@@ -1,7 +1,5 @@
 # GAID eval statistics — w1_v2
 
-> **Excluded as incomplete** (coverage-biased; finish the run or drop the model): gpt-5-5 (4359/6658)
-
 ## Headline category rates (primary threshold ±10%)
 
 | model | n | correct | fabrication | refusal | hedge | misattr. |
@@ -11,6 +9,7 @@
 | gemini-3-1-pro | 6658 | 13.2% | 45.7% | 35.4% | 4.9% | 0.9% |
 | glm-5-2 | 6658 | 17.6% | 49.2% | 31.2% | 0.7% | 1.4% |
 | gpt-5-4 | 6658 | 12.4% | 59.4% | 13.9% | 14.3% | 0.0% |
+| gpt-5-5 | 6658 | 18.2% | 55.4% | 13.1% | 13.1% | 0.2% |
 | grok-4-20 | 6658 | 20.8% | 50.3% | 27.2% | 0.2% | 1.4% |
 | grok-4-3 | 6658 | 15.2% | 41.8% | 33.9% | 8.0% | 1.1% |
 | llama-4-maverick | 6658 | 7.4% | 28.8% | 58.3% | 5.1% | 0.3% |
@@ -26,6 +25,7 @@
 | gemini-3-1-pro | 47.9% | 45.7% | 41.9% | 33.5% |
 | glm-5-2 | 52.8% | 49.2% | 42.5% | 32.0% |
 | gpt-5-4 | 60.6% | 59.4% | 56.1% | 44.1% |
+| gpt-5-5 | 58.2% | 55.4% | 50.6% | 38.3% |
 | grok-4-20 | 54.4% | 50.3% | 42.3% | 30.2% |
 | grok-4-3 | 43.9% | 41.8% | 37.1% | 28.0% |
 | llama-4-maverick | 30.6% | 28.8% | 25.2% | 19.9% |
@@ -83,6 +83,18 @@
   - `binary[T.True]` OR=0.1963 (p=0.0)***
   - `log10_magnitude` OR=1.2962 (p=0.0031)**
   - `year_c` OR=0.9597 (p=0.0022)**
+- **gpt-5-5** (n=4900):
+  - `C(income_tier)[T.LIC]` OR=0.8899 (p=0.6815)
+  - `C(income_tier)[T.LMC]` OR=0.7977 (p=0.2012)
+  - `C(income_tier)[T.UMC]` OR=0.829 (p=0.2227)
+  - `C(income_tier)[T.UNCLASSIFIED]` OR=3.7976 (p=0.1002)
+  - `C(variant)[T.v2_hedged]` OR=2.9987 (p=0.0)***
+  - `C(variant)[T.v3_anchored]` OR=1.0133 (p=0.8746)
+  - `C(variant)[T.v4_comparative]` OR=0.8117 (p=0.0062)**
+  - `C(variant)[T.v5_structured]` OR=0.2067 (p=0.0)***
+  - `binary[T.True]` OR=0.2745 (p=0.0011)**
+  - `log10_magnitude` OR=1.2413 (p=0.0054)**
+  - `year_c` OR=0.9594 (p=0.0016)**
 - **grok-4-20** (n=4739):
   - `C(income_tier)[T.LIC]` OR=1.0623 (p=0.7917)
   - `C(income_tier)[T.LMC]` OR=0.8402 (p=0.1558)
@@ -140,6 +152,7 @@
 - **gemini-3-1-pro**: median 0.3438, within half an order of magnitude 43.1% (n=3168)
 - **glm-5-2**: median 0.1308, within half an order of magnitude 54.2% (n=3585)
 - **gpt-5-4**: median 1.1814, within half an order of magnitude 35.9% (n=3706)
+- **gpt-5-5**: median 0.2275, within half an order of magnitude 46.7% (n=3791)
 - **grok-4-20**: median 0.1139, within half an order of magnitude 57.1% (n=3869)
 - **grok-4-3**: median 0.2102, within half an order of magnitude 47.2% (n=2908)
 - **llama-4-maverick**: median 0.1734, within half an order of magnitude 50.1% (n=2081)

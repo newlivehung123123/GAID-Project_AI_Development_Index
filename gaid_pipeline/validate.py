@@ -23,17 +23,26 @@ CATEGORIES = ["correct", "fabrication", "refusal", "hedge", "misattribution"]
 
 
 def export_sample(results_parquet: Path, out_csv: Path, per_stratum: int = 10,
-                  seed: int = 42) -> dict:
+                  flagged_per_stratum: int = 3, seed: int = 42) -> dict:
     df = pd.read_parquet(results_parquet)
     sampled = (
         df.groupby(["model_id", "category"], group_keys=False)
         .apply(lambda g: g.sample(n=min(per_stratum, len(g)), random_state=seed),
                include_groups=False)
     )
-    flagged = df[df["needs_review"]]
+    # needs_review rows are over-sampled but CAPPED per stratum — with a
+    # full panel the flag count runs to five figures, far beyond what a
+    # human can code
+    flagged = (
+        df[df["needs_review"]]
+        .groupby(["model_id", "category"], group_keys=False)
+        .apply(lambda g: g.sample(n=min(flagged_per_stratum, len(g)),
+                                  random_state=seed), include_groups=False)
+    )
     sample = (
-        pd.concat([df.loc[sampled.index], flagged])
+        pd.concat([df.loc[sampled.index], df.loc[flagged.index]])
         .drop_duplicates(subset=["query_id", "model_id"])
+        .sample(frac=1, random_state=seed)   # shuffle so coding isn't blocked by model
     )
     # blind coding: the human sees the prompt, response, and ground truth,
     # but NOT the classifier's category
