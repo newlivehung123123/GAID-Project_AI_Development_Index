@@ -328,3 +328,12 @@ footer.site a { font-weight: 500; }
 @media (max-width: 640px) {
   .eval-name { flex-basis: 118px; }
 }
+
+.eval-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.3rem 0 1.1rem; }
+.chip { font-family: var(--serif); font-size: 0.66rem; letter-spacing: 0.16em;
+        text-transform: uppercase; padding: 0.42rem 1.05rem; border-radius: 999px;
+        border: 1px solid rgba(var(--ink-rgb), 0.28); background: transparent;
+        color: var(--ink); cursor: pointer; opacity: 0.75; }
+.chip:hover { opacity: 1; }
+.chip.on { background: var(--ink); color: var(--bg); border-color: transparent;
+           opacity: 1; }

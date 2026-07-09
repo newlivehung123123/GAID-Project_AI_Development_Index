@@ -424,6 +424,36 @@ EVAL_CATEGORIES = [  # display order + monochrome ink-alpha shade (theme-safe)
 ]
 
 
+def _evals_data(stats: dict) -> list[dict]:
+    """Per-model metrics payload for the interactive charts."""
+    rates = stats["headline_rates"]
+    ce = stats.get("continuous_error", {})
+    inc = stats.get("income_stratification", {})
+    out = []
+    for m in sorted(rates, key=lambda x: rates[x]["primary"]["fabrication"]):
+        p = rates[m]["primary"]
+        name, dev, weights = EVAL_MODEL_LABELS.get(m, (m, "", ""))
+        attempted = p["correct"] + p["fabrication"] + p["misattribution"]
+        decisions = p["correct"] + p["fabrication"]
+        e = ce.get(m, {})
+        out.append({
+            "id": m, "label": name, "dev": dev, "weights": weights,
+            "correct": p["correct"], "fabrication": p["fabrication"],
+            "refusal": p["refusal"], "hedge": p["hedge"],
+            "misattribution": p["misattribution"],
+            "attempt": round(attempted, 4),
+            "precision": round(p["correct"] / decisions, 4) if decisions else None,
+            "within_half": e.get("within_half_order_of_magnitude"),
+            "median_log": e.get("median_abs_log10_ratio"),
+            "thresholds": {str(t): rates[m][f"pct_{t}"]["fabrication"]
+                           for t in (5, 10, 20, 30)},
+            "tiers": {t: v["fabrication"] for t, v in
+                      inc.get(m, {}).get("by_tier", {}).items()
+                      if t in ("LIC", "LMC", "UMC", "HIC")},
+        })
+    return out
+
+
 def build_evals(stats: dict) -> str:
     rates = stats["headline_rates"]
     order = sorted(rates, key=lambda m: rates[m]["primary"]["fabrication"])
@@ -472,6 +502,31 @@ def build_evals(stats: dict) -> str:
     (a blind human-validation round is scheduled and will be reported
     alongside these results).</p>"""
 
+    explore_inner = """
+    <p class="card-body">Every model as a point in metric space &mdash; choose the
+    axes, filter by weight class, hover a point for the full profile.</p>
+    <div id="map-controls">
+      <label><span>X axis</span> <select id="ev-x"></select></label>
+      <label><span>Y axis</span> <select id="ev-y"></select></label>
+    </div>
+    <div class="eval-chips" id="ev-filter">
+      <button class="chip on" data-w="all">All models</button>
+      <button class="chip" data-w="open">Open weights</button>
+      <button class="chip" data-w="proprietary">Proprietary</button>
+    </div>
+    <div id="eval-scatter"></div>
+    <p class="note" id="ev-note" style="margin-top:0.8rem"></p>"""
+
+    tiers_inner = """
+    <p class="card-body">Do models fabricate more about some countries than
+    others? Fabrication rates stratified by World Bank income tier, from
+    low-income (LIC) to high-income (HIC) countries. Hover a line to isolate
+    a model.</p>
+    <div id="eval-tiers"></div>
+    <p class="note" style="margin-top:0.8rem">LIC = low income &middot; LMC =
+    lower-middle &middot; UMC = upper-middle &middot; HIC = high income
+    (World Bank classification).</p>"""
+
     thr_rows = "".join(
         f'<tr><td>{label(m)[0]}</td>'
         + "".join(f'<td class="num">{rates[m][f"pct_{t}"]["fabrication"]:.1%}</td>'
@@ -482,8 +537,11 @@ def build_evals(stats: dict) -> str:
     robust_inner = f"""
     <p class="card-body">Fabrication is scored at four tolerance thresholds plus a
     threshold-free, scale-invariant check (share of numeric answers within half an
-    order of magnitude of the truth), so no single scoring rule drives the ranking.</p>
-    <table class="data"><thead><tr><th>Model</th><th class="num">&plusmn;5%</th>
+    order of magnitude of the truth), so no single scoring rule drives the ranking.
+    Hover a curve to isolate a model.</p>
+    <div id="eval-thresholds"></div>
+    <table class="data" style="margin-top:1.2rem"><thead><tr><th>Model</th>
+    <th class="num">&plusmn;5%</th>
     <th class="num">&plusmn;10%</th><th class="num">&plusmn;20%</th>
     <th class="num">&plusmn;30%</th><th class="num">&frac12; order of magnitude</th></tr>
     </thead><tbody>{thr_rows}</tbody></table>"""
@@ -522,9 +580,14 @@ def build_evals(stats: dict) -> str:
 <span class="badge"><b>{n_queries:,}</b>queries per model</span>
 <span class="badge"><b>5</b>response categories</span></div>
 {panel("Honesty–Helpfulness Profile", profile_inner)}
-{panel("Category Rates by Model", table_inner)}
+{panel("Explore the Model Space", explore_inner)}
+{panel("Fabrication by Country Income Tier", tiers_inner)}
 {panel("Robustness — Threshold Sensitivity", robust_inner)}
-{panel("How the Evaluation Works", method_inner)}"""
+{panel("Category Rates by Model", table_inner)}
+{panel("How the Evaluation Works", method_inner)}
+<script>const EVALS = {json.dumps(_evals_data(stats))};</script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="/assets/evals.js?v={BUILD}"></script>"""
     return layout(
         "GAID AI Development Index - Model Evaluations",
         f"How {n_models} frontier LLMs (GPT, Claude, Gemini, Grok, Llama, "
