@@ -113,11 +113,18 @@ def logistic_models(df: pd.DataFrame) -> dict:
         if frame["fabricated"].nunique() < 2 or len(frame) < 50:
             return {"skipped": f"insufficient variation (n={len(frame)})"}
         try:
-            model = smf.logit(formula_for(frame, pooled), data=frame).fit(
-                disp=False, cov_type="cluster",
-                cov_kwds={"groups": frame["ISO3"]})
+            import warnings as w
+            with w.catch_warnings():
+                w.simplefilter("ignore")
+                model = smf.logit(formula_for(frame, pooled), data=frame).fit(
+                    disp=False, cov_type="cluster",
+                    cov_kwds={"groups": frame["ISO3"]})
         except Exception as exc:  # separation, singular matrix, ...
             return {"skipped": f"fit failed: {type(exc).__name__}: {exc}"}
+        if not getattr(model, "mle_retvals", {}).get("converged", True):
+            return {"skipped": "MLE did not converge (quasi-separation "
+                               f"likely; n={len(frame)}) — coefficients "
+                               "unreliable, not reported"}
         odds = np.exp(model.params)
         return {
             "n": int(model.nobs),
@@ -254,6 +261,11 @@ def continuous_error(df: pd.DataFrame) -> dict:
 def _md_report(stats: dict, tag: str, dry_run: bool) -> str:
     lines = [f"# GAID eval statistics — {tag}"
              + (" (DRY RUN — synthetic responses)" if dry_run else ""), ""]
+    if stats.get("partial_models_excluded"):
+        lines += ["> **Excluded as incomplete** (coverage-biased; finish the "
+                  "run or drop the model): "
+                  + ", ".join(f"{m} ({n})" for m, n in
+                              stats["partial_models_excluded"].items()), ""]
     lines += ["## Headline category rates (primary threshold ±10%)", "",
               "| model | n | correct | fabrication | refusal | hedge | misattr. |",
               "|---|---|---|---|---|---|---|"]
@@ -297,19 +309,33 @@ def run_stats(tag: str, repo_root: Path, *, dry_run: bool = False,
     df = load_results(tag, repo_root, dry_run)
     panel = yaml.safe_load(
         (repo_root / "config" / "models.yaml").read_text())["panel"]
+
+    # A model with incomplete coverage has a coverage-BIASED sample (queries
+    # run in fixed order), which also tends to break the regressions via
+    # quasi-separation. Only complete models enter the inferential analyses.
+    n_queries = len(pd.read_parquet(
+        repo_root / "data" / "processed" / tag / "queries.parquet"))
+    counts = df.groupby("model_id").size()
+    complete = sorted(counts[counts >= n_queries].index)
+    partial = {m: f"{int(n)}/{n_queries}" for m, n in counts.items()
+               if n < n_queries}
+    dfc = df[df["model_id"].isin(complete)]
+
     stats = {
         "tag": tag, "dry_run": dry_run,
         "n_results": len(df), "models": sorted(df["model_id"].unique()),
-        "headline_rates": headline_rates(df),
-        "ranking_stability": ranking_stability(df),
-        "logistic": logistic_models(df),
-        "income_stratification": income_stratification(df),
-        "cutoff_sensitivity": cutoff_sensitivity(df, panel),
-        "balanced_subset_check": balanced_subset_check(df),
-        "continuous_error": continuous_error(df),
+        "complete_models": complete,
+        "partial_models_excluded": partial,
+        "headline_rates": headline_rates(dfc),
+        "ranking_stability": ranking_stability(dfc),
+        "logistic": logistic_models(dfc),
+        "income_stratification": income_stratification(dfc),
+        "cutoff_sensitivity": cutoff_sensitivity(dfc, panel),
+        "balanced_subset_check": balanced_subset_check(dfc),
+        "continuous_error": continuous_error(dfc),
     }
     if mixed:
-        stats["mixed_effects"] = mixed_effects(df)
+        stats["mixed_effects"] = mixed_effects(dfc)
 
     out_dir = repo_root / "reports" / tag
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -318,6 +344,8 @@ def run_stats(tag: str, repo_root: Path, *, dry_run: bool = False,
     (out_dir / f"stats_report{suffix}.md").write_text(
         _md_report(stats, tag, dry_run))
     return {"tag": tag, "dry_run": dry_run, "models": stats["models"],
+            "complete_models": complete,
+            "partial_models_excluded": partial,
             "n_results": len(df),
             "report": str(out_dir / f"stats_report{suffix}.md"),
             "json": str(out_dir / f"stats{suffix}.json")}

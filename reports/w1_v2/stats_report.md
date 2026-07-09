@@ -1,14 +1,16 @@
 # GAID eval statistics — w1_v2
 
+> **Excluded as incomplete** (coverage-biased; finish the run or drop the model): gpt-5-5 (4359/6658)
+
 ## Headline category rates (primary threshold ±10%)
 
 | model | n | correct | fabrication | refusal | hedge | misattr. |
 |---|---|---|---|---|---|---|
 | claude-opus-4-8 | 6658 | 2.2% | 22.8% | 65.2% | 9.0% | 0.8% |
 | deepseek-v3-0324 | 6658 | 13.4% | 59.6% | 20.3% | 5.4% | 1.2% |
+| gemini-3-1-pro | 6658 | 13.2% | 45.7% | 35.4% | 4.9% | 0.9% |
 | glm-5-2 | 6658 | 17.6% | 49.2% | 31.2% | 0.7% | 1.4% |
-| gpt-5-4 | 251 | 0.8% | 29.5% | 0.4% | 69.3% | 0.0% |
-| gpt-5-5 | 1 | 0.0% | 100.0% | 0.0% | 0.0% | 0.0% |
+| gpt-5-4 | 6658 | 12.4% | 59.4% | 13.9% | 14.3% | 0.0% |
 | grok-4-20 | 6658 | 20.8% | 50.3% | 27.2% | 0.2% | 1.4% |
 | grok-4-3 | 6658 | 15.2% | 41.8% | 33.9% | 8.0% | 1.1% |
 | llama-4-maverick | 6658 | 7.4% | 28.8% | 58.3% | 5.1% | 0.3% |
@@ -21,9 +23,9 @@
 |---|---|---|---|---|
 | claude-opus-4-8 | 23.2% | 22.8% | 21.6% | 20.2% |
 | deepseek-v3-0324 | 62.8% | 59.6% | 52.9% | 41.3% |
+| gemini-3-1-pro | 47.9% | 45.7% | 41.9% | 33.5% |
 | glm-5-2 | 52.8% | 49.2% | 42.5% | 32.0% |
-| gpt-5-4 | 29.9% | 29.5% | 29.1% | 29.1% |
-| gpt-5-5 | 100.0% | 100.0% | 100.0% | 100.0% |
+| gpt-5-4 | 60.6% | 59.4% | 56.1% | 44.1% |
 | grok-4-20 | 54.4% | 50.3% | 42.3% | 30.2% |
 | grok-4-3 | 43.9% | 41.8% | 37.1% | 28.0% |
 | llama-4-maverick | 30.6% | 28.8% | 25.2% | 19.9% |
@@ -45,6 +47,18 @@
   - `binary[T.True]` OR=0.3153 (p=0.0001)***
   - `log10_magnitude` OR=1.4473 (p=0.0)***
   - `year_c` OR=1.0349 (p=0.0003)***
+- **gemini-3-1-pro** (n=3916):
+  - `C(income_tier)[T.LIC]` OR=1.0857 (p=0.7627)
+  - `C(income_tier)[T.LMC]` OR=0.9072 (p=0.5137)
+  - `C(income_tier)[T.UMC]` OR=1.0266 (p=0.8285)
+  - `C(income_tier)[T.UNCLASSIFIED]` OR=1.3992 (p=0.6381)
+  - `C(variant)[T.v2_hedged]` OR=1.0508 (p=0.9523)
+  - `C(variant)[T.v3_anchored]` OR=0.4031 (p=0.0)***
+  - `C(variant)[T.v4_comparative]` OR=0.6538 (p=0.0)***
+  - `C(variant)[T.v5_structured]` OR=2.1522 (p=0.1042)
+  - `binary[T.True]` OR=0.1587 (p=0.0)***
+  - `log10_magnitude` OR=1.1585 (p=0.0036)**
+  - `year_c` OR=0.9699 (p=0.0042)**
 - **glm-5-2** (n=4442):
   - `C(income_tier)[T.LIC]` OR=0.7127 (p=0.1062)
   - `C(income_tier)[T.LMC]` OR=0.6853 (p=0.0101)*
@@ -57,14 +71,18 @@
   - `binary[T.True]` OR=0.3882 (p=0.0061)**
   - `log10_magnitude` OR=1.4294 (p=0.0003)***
   - `year_c` OR=1.0156 (p=0.1451)
-- **gpt-5-4** (n=76):
-  - `C(income_tier)[T.LIC]` OR=1154707151.9598 (p=0.0)***
-  - `C(income_tier)[T.LMC]` OR=0.0165 (p=0.0044)**
-  - `C(income_tier)[T.UMC]` OR=2085055336.2576 (p=0.0)***
-  - `C(income_tier)[T.UNCLASSIFIED]` OR=566.3831 (p=0.0232)*
-  - `log10_magnitude` OR=0.2157 (p=0.1387)
-  - `year_c` OR=0.7967 (p=0.6539)
-- **gpt-5-5**: insufficient variation (n=1)
+- **gpt-5-4** (n=4780):
+  - `C(income_tier)[T.LIC]` OR=0.7283 (p=0.2944)
+  - `C(income_tier)[T.LMC]` OR=0.7931 (p=0.2775)
+  - `C(income_tier)[T.UMC]` OR=0.6751 (p=0.0241)*
+  - `C(income_tier)[T.UNCLASSIFIED]` OR=7.7162 (p=0.0453)*
+  - `C(variant)[T.v2_hedged]` OR=22.2044 (p=0.0)***
+  - `C(variant)[T.v3_anchored]` OR=1.1288 (p=0.1715)
+  - `C(variant)[T.v4_comparative]` OR=0.7358 (p=0.0004)***
+  - `C(variant)[T.v5_structured]` OR=0.4079 (p=0.1379)
+  - `binary[T.True]` OR=0.1963 (p=0.0)***
+  - `log10_magnitude` OR=1.2962 (p=0.0031)**
+  - `year_c` OR=0.9597 (p=0.0022)**
 - **grok-4-20** (n=4739):
   - `C(income_tier)[T.LIC]` OR=1.0623 (p=0.7917)
   - `C(income_tier)[T.LMC]` OR=0.8402 (p=0.1558)
@@ -119,8 +137,9 @@
 
 - **claude-opus-4-8**: median 0.7749, within half an order of magnitude 22.8% (n=1474)
 - **deepseek-v3-0324**: median 0.1761, within half an order of magnitude 49.9% (n=4044)
+- **gemini-3-1-pro**: median 0.3438, within half an order of magnitude 43.1% (n=3168)
 - **glm-5-2**: median 0.1308, within half an order of magnitude 54.2% (n=3585)
-- **gpt-5-4**: median 2.0603, within half an order of magnitude 4.4% (n=68)
+- **gpt-5-4**: median 1.1814, within half an order of magnitude 35.9% (n=3706)
 - **grok-4-20**: median 0.1139, within half an order of magnitude 57.1% (n=3869)
 - **grok-4-3**: median 0.2102, within half an order of magnitude 47.2% (n=2908)
 - **llama-4-maverick**: median 0.1734, within half an order of magnitude 50.1% (n=2081)
