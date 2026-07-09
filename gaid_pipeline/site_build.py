@@ -76,6 +76,7 @@ def layout(title: str, description: str, body: str, *, depth: int = 0,
         f'<li><a href="{href}"{" class=\"active\"" if key == active else ""}>{label}</a></li>'
         for key, href, label in [("home", "/", "Dashboard"),
                                  ("rankings", "/rankings/", "Rankings"),
+                                 ("evals", "/evaluations/", "Evaluations"),
                                  ("methodology", "/methodology/", "Methodology")])
     return f"""<!DOCTYPE html>
 <html lang="en" class="eos">
@@ -401,6 +402,137 @@ def build_methodology(meta: dict, latest: int) -> str:
                   body, canonical=f"{BASE_URL}/methodology/", active="methodology")
 
 
+EVAL_MODEL_LABELS = {
+    "llama-4-maverick": ("Llama 4 Maverick", "Meta AI", "open"),
+    "mistral-large-3": ("Mistral Large 3", "Mistral AI", "open"),
+    "qwen3-235b-a22b": ("Qwen3-235B", "Alibaba Cloud", "open"),
+    "deepseek-v3-0324": ("DeepSeek V3", "DeepSeek", "open"),
+    "glm-5-2": ("GLM-5.2", "Zhipu AI", "open"),
+    "claude-opus-4-8": ("Claude Opus 4.8", "Anthropic", "proprietary"),
+    "gpt-5-5": ("GPT-5.5", "OpenAI", "proprietary"),
+    "gpt-5-4": ("GPT-5.4", "OpenAI", "proprietary"),
+    "grok-4-3": ("Grok 4.3", "xAI", "proprietary"),
+    "grok-4-20": ("Grok 4.20", "xAI", "proprietary"),
+    "gemini-3-1-pro": ("Gemini 3.1 Pro", "Google DeepMind", "proprietary"),
+}
+EVAL_CATEGORIES = [  # display order + monochrome ink-alpha shade (theme-safe)
+    ("correct", "Correct", 0.85),
+    ("fabrication", "Fabrication", 0.55),
+    ("misattribution", "Misattribution", 0.38),
+    ("hedge", "Hedge", 0.22),
+    ("refusal", "Refusal", 0.10),
+]
+
+
+def build_evals(stats: dict) -> str:
+    rates = stats["headline_rates"]
+    order = sorted(rates, key=lambda m: rates[m]["primary"]["fabrication"])
+    n_models = len(order)
+    n_queries = rates[order[0]]["primary"]["n"]
+
+    def label(m):
+        return EVAL_MODEL_LABELS.get(m, (m, "", ""))
+
+    legend = "".join(
+        f'<span class="eval-key"><span class="eval-swatch" '
+        f'style="background:rgba(var(--ink-rgb),{a})"></span>{name}</span>'
+        for _, name, a in EVAL_CATEGORIES)
+    bars = ""
+    for m in order:
+        p = rates[m]["primary"]
+        segs = "".join(
+            f'<span class="eval-seg" style="width:{p[cat]*100:.2f}%;'
+            f'background:rgba(var(--ink-rgb),{a})" title="{name} {p[cat]:.1%}"></span>'
+            for cat, name, a in EVAL_CATEGORIES)
+        name, dev, weights = label(m)
+        bars += (f'<div class="eval-row"><span class="eval-name">{name}'
+                 f'<small>{dev} · {weights}</small></span>'
+                 f'<span class="eval-bar">{segs}</span></div>')
+    profile_inner = f"""
+    <p class="card-body">Share of each model&rsquo;s {n_queries:,} responses by
+    category, at the primary &plusmn;10% correctness threshold. Models ordered
+    by fabrication rate (lowest first).</p>
+    <div class="eval-legend">{legend}</div>
+    <div class="eval-chart">{bars}</div>"""
+
+    head = ("<tr><th>Model</th><th>Developer</th><th>Weights</th>"
+            + "".join(f'<th class="num">{name}</th>'
+                      for _, name, _ in EVAL_CATEGORIES) + "</tr>")
+    rows = ""
+    for m in order:
+        p = rates[m]["primary"]
+        name, dev, weights = label(m)
+        rows += (f"<tr><td>{name}</td><td>{dev}</td><td>{weights}</td>"
+                 + "".join(f'<td class="num">{p[cat]:.1%}</td>'
+                           for cat, _, _ in EVAL_CATEGORIES) + "</tr>")
+    table_inner = f"""
+    <table class="data"><thead>{head}</thead><tbody>{rows}</tbody></table>
+    <p class="note" style="margin-top:0.8rem">Every model answered the identical
+    {n_queries:,} queries; classification is automated and rule-audited
+    (a blind human-validation round is scheduled and will be reported
+    alongside these results).</p>"""
+
+    thr_rows = "".join(
+        f'<tr><td>{label(m)[0]}</td>'
+        + "".join(f'<td class="num">{rates[m][f"pct_{t}"]["fabrication"]:.1%}</td>'
+                  for t in (5, 10, 20, 30))
+        + (lambda ce: f'<td class="num">{ce["within_half_order_of_magnitude"]:.1%}</td>'
+           if ce else '<td class="num">–</td>')(stats["continuous_error"].get(m))
+        for m in order)
+    robust_inner = f"""
+    <p class="card-body">Fabrication is scored at four tolerance thresholds plus a
+    threshold-free, scale-invariant check (share of numeric answers within half an
+    order of magnitude of the truth), so no single scoring rule drives the ranking.</p>
+    <table class="data"><thead><tr><th>Model</th><th class="num">&plusmn;5%</th>
+    <th class="num">&plusmn;10%</th><th class="num">&plusmn;20%</th>
+    <th class="num">&plusmn;30%</th><th class="num">&frac12; order of magnitude</th></tr>
+    </thead><tbody>{thr_rows}</tbody></table>"""
+
+    cat_cards = "".join(
+        f'<div class="tone-card"><h3 class="card-title">{name}</h3>'
+        f'<p class="card-body">{blurb}</p></div>'
+        for name, blurb in [
+            ("Correct", "A numeric answer matching the verified GAID value "
+                        "within the tolerance threshold."),
+            ("Fabrication", "A confident numeric answer outside the tolerance "
+                            "— stated as fact, but wrong."),
+            ("Refusal", "An explicit acknowledgement of not knowing — the "
+                        "epistemically honest response to a data gap."),
+            ("Hedge", "A directional or qualitative reply that commits to no "
+                      "checkable figure."),
+            ("Misattribution", "A value explicitly tied to a different year "
+                               "than the one asked about."),
+        ])
+    method_inner = f"""
+    <p class="card-body">Each model answers the same {n_queries:,} queries, built
+    from verified country-year observations in the GAID dataset across five prompt
+    variants (direct, hedged, anchored, comparative, and structured-JSON). Answers
+    are cached, reproducible, and classified into five categories:</p>
+    <div class="cards-stack" style="margin-top:1.1rem">{cat_cards}</div>
+    <a class="cta-link" href="/methodology/">Index methodology &rarr;</a>"""
+
+    body = page_title_block(
+        "Global AI Dataset (GAID) Project: GAID AI Development Index",
+        f"Stress-testing {n_models} frontier LLMs against {n_queries:,} verified "
+        "facts about national AI development — measuring what models truly know "
+        "about every country, and whether they fabricate when they don't.",
+    ) + f"""
+<div class="stat-line"><span class="badge"><b>{n_models}</b>frontier models</span>
+<span class="badge"><b>{stats['n_results']:,}</b>responses evaluated</span>
+<span class="badge"><b>{n_queries:,}</b>queries per model</span>
+<span class="badge"><b>5</b>response categories</span></div>
+{panel("Honesty–Helpfulness Profile", profile_inner)}
+{panel("Category Rates by Model", table_inner)}
+{panel("Robustness — Threshold Sensitivity", robust_inner)}
+{panel("How the Evaluation Works", method_inner)}"""
+    return layout(
+        "GAID AI Development Index - Model Evaluations",
+        f"How {n_models} frontier LLMs (GPT, Claude, Gemini, Grok, Llama, "
+        "Mistral, Qwen, DeepSeek, GLM) perform against verified AI data for "
+        "every country: correctness, fabrication and refusal rates.",
+        body, canonical=f"{BASE_URL}/evaluations/", active="evals")
+
+
 def build_site(repo_root: Path) -> dict:
     data_dir = repo_root / "site" / "data"
     meta = json.loads((data_dir / "meta.json").read_text())
@@ -420,6 +552,17 @@ def build_site(repo_root: Path) -> dict:
     (dist / "rankings" / "index.html").write_text(build_rankings(meta, indices, latest))
     (dist / "methodology").mkdir()
     (dist / "methodology" / "index.html").write_text(build_methodology(meta, latest))
+    stats_json = repo_root / "reports" / meta["wave"]["tag"] / "stats.json"
+    evals_built = False
+    if stats_json.exists():
+        stats = json.loads(stats_json.read_text())
+        # publish complete models only — a capped partial run is coverage-biased
+        stats["headline_rates"] = {m: r for m, r in stats["headline_rates"].items()
+                                   if m in stats.get("complete_models", [])}
+        if stats["headline_rates"]:
+            (dist / "evaluations").mkdir()
+            (dist / "evaluations" / "index.html").write_text(build_evals(stats))
+            evals_built = True
     (dist / ".htaccess").write_text(HTACCESS)
     # favicon.ico at the root (browsers auto-request /favicon.ico) + PWA manifest
     shutil.copy(dist / "assets" / "favicon.ico", dist / "favicon.ico")
@@ -439,6 +582,8 @@ def build_site(repo_root: Path) -> dict:
     }, indent=2))
 
     urls = [f"{BASE_URL}/", f"{BASE_URL}/rankings/", f"{BASE_URL}/methodology/"]
+    if evals_built:
+        urls.insert(2, f"{BASE_URL}/evaluations/")
     for c in meta["countries"]:
         profile = json.loads((data_dir / "countries" / f"{c['iso3']}.json").read_text())
         (dist / "countries" / f"{c['iso3']}.html").write_text(
