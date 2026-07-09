@@ -38,7 +38,11 @@ def _db(repo_root: Path, dry_run: bool) -> sqlite3.Connection:
     path = repo_root / "data" / "eval" / (
         "responses_dryrun.sqlite" if dry_run else "responses.sqlite")
     path.parent.mkdir(parents=True, exist_ok=True)
-    conn = sqlite3.connect(path)
+    # WAL + a generous busy timeout make concurrent sessions safe: two
+    # models running in parallel terminals write disjoint (query_id,
+    # model_id) rows and only ever contend for the write lock for ~ms
+    conn = sqlite3.connect(path, timeout=60)
+    conn.execute("PRAGMA journal_mode=WAL")
     conn.execute("""
         CREATE TABLE IF NOT EXISTS responses (
             query_id TEXT NOT NULL,

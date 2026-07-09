@@ -1,0 +1,1880 @@
+{
+  "tag": "w1_v2",
+  "dry_run": false,
+  "n_results": 53516,
+  "models": [
+    "claude-opus-4-8",
+    "deepseek-v3-0324",
+    "glm-5-2",
+    "gpt-5-4",
+    "gpt-5-5",
+    "grok-4-20",
+    "grok-4-3",
+    "llama-4-maverick",
+    "mistral-large-3",
+    "qwen3-235b-a22b"
+  ],
+  "headline_rates": {
+    "claude-opus-4-8": {
+      "pct_5": {
+        "n": 6658,
+        "correct": 0.0176,
+        "fabrication": 0.2324,
+        "refusal": 0.6517,
+        "hedge": 0.0901,
+        "misattribution": 0.0083
+      },
+      "pct_10": {
+        "n": 6658,
+        "correct": 0.0224,
+        "fabrication": 0.2275,
+        "refusal": 0.6517,
+        "hedge": 0.0901,
+        "misattribution": 0.0083
+      },
+      "pct_20": {
+        "n": 6658,
+        "correct": 0.0342,
+        "fabrication": 0.2157,
+        "refusal": 0.6517,
+        "hedge": 0.0901,
+        "misattribution": 0.0083
+      },
+      "pct_30": {
+        "n": 6658,
+        "correct": 0.0484,
+        "fabrication": 0.2016,
+        "refusal": 0.6517,
+        "hedge": 0.0901,
+        "misattribution": 0.0083
+      },
+      "primary": {
+        "n": 6658,
+        "correct": 0.0224,
+        "fabrication": 0.2275,
+        "refusal": 0.6517,
+        "hedge": 0.0901,
+        "misattribution": 0.0083
+      }
+    },
+    "deepseek-v3-0324": {
+      "pct_5": {
+        "n": 6658,
+        "correct": 0.102,
+        "fabrication": 0.6283,
+        "refusal": 0.2035,
+        "hedge": 0.0538,
+        "misattribution": 0.0125
+      },
+      "pct_10": {
+        "n": 6658,
+        "correct": 0.1344,
+        "fabrication": 0.5958,
+        "refusal": 0.2035,
+        "hedge": 0.0538,
+        "misattribution": 0.0125
+      },
+      "pct_20": {
+        "n": 6658,
+        "correct": 0.201,
+        "fabrication": 0.5293,
+        "refusal": 0.2035,
+        "hedge": 0.0538,
+        "misattribution": 0.0125
+      },
+      "pct_30": {
+        "n": 6658,
+        "correct": 0.3175,
+        "fabrication": 0.4127,
+        "refusal": 0.2035,
+        "hedge": 0.0538,
+        "misattribution": 0.0125
+      },
+      "primary": {
+        "n": 6658,
+        "correct": 0.1344,
+        "fabrication": 0.5958,
+        "refusal": 0.2035,
+        "hedge": 0.0538,
+        "misattribution": 0.0125
+      }
+    },
+    "glm-5-2": {
+      "pct_5": {
+        "n": 6658,
+        "correct": 0.1395,
+        "fabrication": 0.5276,
+        "refusal": 0.3121,
+        "hedge": 0.0071,
+        "misattribution": 0.0137
+      },
+      "pct_10": {
+        "n": 6658,
+        "correct": 0.1756,
+        "fabrication": 0.4916,
+        "refusal": 0.3121,
+        "hedge": 0.0071,
+        "misattribution": 0.0137
+      },
+      "pct_20": {
+        "n": 6658,
+        "correct": 0.2421,
+        "fabrication": 0.4251,
+        "refusal": 0.3121,
+        "hedge": 0.0071,
+        "misattribution": 0.0137
+      },
+      "pct_30": {
+        "n": 6658,
+        "correct": 0.3474,
+        "fabrication": 0.3198,
+        "refusal": 0.3121,
+        "hedge": 0.0071,
+        "misattribution": 0.0137
+      },
+      "primary": {
+        "n": 6658,
+        "correct": 0.1756,
+        "fabrication": 0.4916,
+        "refusal": 0.3121,
+        "hedge": 0.0071,
+        "misattribution": 0.0137
+      }
+    },
+    "gpt-5-4": {
+      "pct_5": {
+        "n": 251,
+        "correct": 0.004,
+        "fabrication": 0.2988,
+        "refusal": 0.004,
+        "hedge": 0.6932,
+        "misattribution": 0.0
+      },
+      "pct_10": {
+        "n": 251,
+        "correct": 0.008,
+        "fabrication": 0.2948,
+        "refusal": 0.004,
+        "hedge": 0.6932,
+        "misattribution": 0.0
+      },
+      "pct_20": {
+        "n": 251,
+        "correct": 0.012,
+        "fabrication": 0.2908,
+        "refusal": 0.004,
+        "hedge": 0.6932,
+        "misattribution": 0.0
+      },
+      "pct_30": {
+        "n": 251,
+        "correct": 0.012,
+        "fabrication": 0.2908,
+        "refusal": 0.004,
+        "hedge": 0.6932,
+        "misattribution": 0.0
+      },
+      "primary": {
+        "n": 251,
+        "correct": 0.008,
+        "fabrication": 0.2948,
+        "refusal": 0.004,
+        "hedge": 0.6932,
+        "misattribution": 0.0
+      }
+    },
+    "gpt-5-5": {
+      "pct_5": {
+        "n": 1,
+        "correct": 0.0,
+        "fabrication": 1.0,
+        "refusal": 0.0,
+        "hedge": 0.0,
+        "misattribution": 0.0
+      },
+      "pct_10": {
+        "n": 1,
+        "correct": 0.0,
+        "fabrication": 1.0,
+        "refusal": 0.0,
+        "hedge": 0.0,
+        "misattribution": 0.0
+      },
+      "pct_20": {
+        "n": 1,
+        "correct": 0.0,
+        "fabrication": 1.0,
+        "refusal": 0.0,
+        "hedge": 0.0,
+        "misattribution": 0.0
+      },
+      "pct_30": {
+        "n": 1,
+        "correct": 0.0,
+        "fabrication": 1.0,
+        "refusal": 0.0,
+        "hedge": 0.0,
+        "misattribution": 0.0
+      },
+      "primary": {
+        "n": 1,
+        "correct": 0.0,
+        "fabrication": 1.0,
+        "refusal": 0.0,
+        "hedge": 0.0,
+        "misattribution": 0.0
+      }
+    },
+    "grok-4-20": {
+      "pct_5": {
+        "n": 6658,
+        "correct": 0.1679,
+        "fabrication": 0.5439,
+        "refusal": 0.2722,
+        "hedge": 0.0023,
+        "misattribution": 0.0138
+      },
+      "pct_10": {
+        "n": 6658,
+        "correct": 0.2085,
+        "fabrication": 0.5033,
+        "refusal": 0.2722,
+        "hedge": 0.0023,
+        "misattribution": 0.0138
+      },
+      "pct_20": {
+        "n": 6658,
+        "correct": 0.2887,
+        "fabrication": 0.4231,
+        "refusal": 0.2722,
+        "hedge": 0.0023,
+        "misattribution": 0.0138
+      },
+      "pct_30": {
+        "n": 6658,
+        "correct": 0.4093,
+        "fabrication": 0.3025,
+        "refusal": 0.2722,
+        "hedge": 0.0023,
+        "misattribution": 0.0138
+      },
+      "primary": {
+        "n": 6658,
+        "correct": 0.2085,
+        "fabrication": 0.5033,
+        "refusal": 0.2722,
+        "hedge": 0.0023,
+        "misattribution": 0.0138
+      }
+    },
+    "grok-4-3": {
+      "pct_5": {
+        "n": 6658,
+        "correct": 0.1304,
+        "fabrication": 0.4393,
+        "refusal": 0.3391,
+        "hedge": 0.0798,
+        "misattribution": 0.0114
+      },
+      "pct_10": {
+        "n": 6658,
+        "correct": 0.1518,
+        "fabrication": 0.4178,
+        "refusal": 0.3391,
+        "hedge": 0.0798,
+        "misattribution": 0.0114
+      },
+      "pct_20": {
+        "n": 6658,
+        "correct": 0.1986,
+        "fabrication": 0.3711,
+        "refusal": 0.3391,
+        "hedge": 0.0798,
+        "misattribution": 0.0114
+      },
+      "pct_30": {
+        "n": 6658,
+        "correct": 0.2899,
+        "fabrication": 0.2798,
+        "refusal": 0.3391,
+        "hedge": 0.0798,
+        "misattribution": 0.0114
+      },
+      "primary": {
+        "n": 6658,
+        "correct": 0.1518,
+        "fabrication": 0.4178,
+        "refusal": 0.3391,
+        "hedge": 0.0798,
+        "misattribution": 0.0114
+      }
+    },
+    "llama-4-maverick": {
+      "pct_5": {
+        "n": 6658,
+        "correct": 0.0569,
+        "fabrication": 0.3055,
+        "refusal": 0.5832,
+        "hedge": 0.0512,
+        "misattribution": 0.0032
+      },
+      "pct_10": {
+        "n": 6658,
+        "correct": 0.074,
+        "fabrication": 0.2884,
+        "refusal": 0.5832,
+        "hedge": 0.0512,
+        "misattribution": 0.0032
+      },
+      "pct_20": {
+        "n": 6658,
+        "correct": 0.1099,
+        "fabrication": 0.2525,
+        "refusal": 0.5832,
+        "hedge": 0.0512,
+        "misattribution": 0.0032
+      },
+      "pct_30": {
+        "n": 6658,
+        "correct": 0.1631,
+        "fabrication": 0.1993,
+        "refusal": 0.5832,
+        "hedge": 0.0512,
+        "misattribution": 0.0032
+      },
+      "primary": {
+        "n": 6658,
+        "correct": 0.074,
+        "fabrication": 0.2884,
+        "refusal": 0.5832,
+        "hedge": 0.0512,
+        "misattribution": 0.0032
+      }
+    },
+    "mistral-large-3": {
+      "pct_5": {
+        "n": 6658,
+        "correct": 0.1831,
+        "fabrication": 0.6527,
+        "refusal": 0.1385,
+        "hedge": 0.0116,
+        "misattribution": 0.0141
+      },
+      "pct_10": {
+        "n": 6658,
+        "correct": 0.2352,
+        "fabrication": 0.6006,
+        "refusal": 0.1385,
+        "hedge": 0.0116,
+        "misattribution": 0.0141
+      },
+      "pct_20": {
+        "n": 6658,
+        "correct": 0.3169,
+        "fabrication": 0.5189,
+        "refusal": 0.1385,
+        "hedge": 0.0116,
+        "misattribution": 0.0141
+      },
+      "pct_30": {
+        "n": 6658,
+        "correct": 0.4196,
+        "fabrication": 0.4162,
+        "refusal": 0.1385,
+        "hedge": 0.0116,
+        "misattribution": 0.0141
+      },
+      "primary": {
+        "n": 6658,
+        "correct": 0.2352,
+        "fabrication": 0.6006,
+        "refusal": 0.1385,
+        "hedge": 0.0116,
+        "misattribution": 0.0141
+      }
+    },
+    "qwen3-235b-a22b": {
+      "pct_5": {
+        "n": 6658,
+        "correct": 0.1075,
+        "fabrication": 0.5458,
+        "refusal": 0.2624,
+        "hedge": 0.026,
+        "misattribution": 0.0583
+      },
+      "pct_10": {
+        "n": 6658,
+        "correct": 0.1353,
+        "fabrication": 0.518,
+        "refusal": 0.2624,
+        "hedge": 0.026,
+        "misattribution": 0.0583
+      },
+      "pct_20": {
+        "n": 6658,
+        "correct": 0.1919,
+        "fabrication": 0.4614,
+        "refusal": 0.2624,
+        "hedge": 0.026,
+        "misattribution": 0.0583
+      },
+      "pct_30": {
+        "n": 6658,
+        "correct": 0.2888,
+        "fabrication": 0.3645,
+        "refusal": 0.2624,
+        "hedge": 0.026,
+        "misattribution": 0.0583
+      },
+      "primary": {
+        "n": 6658,
+        "correct": 0.1353,
+        "fabrication": 0.518,
+        "refusal": 0.2624,
+        "hedge": 0.026,
+        "misattribution": 0.0583
+      }
+    }
+  },
+  "ranking_stability": {
+    "tau_10_vs_5": {
+      "tau": 0.956,
+      "p": 0.0
+    },
+    "tau_10_vs_20": {
+      "tau": 0.911,
+      "p": 0.0
+    },
+    "tau_10_vs_30": {
+      "tau": 0.867,
+      "p": 0.0001
+    },
+    "n_models": 10
+  },
+  "logistic": {
+    "per_model": {
+      "claude-opus-4-8": {
+        "skipped": "fit failed: LinAlgError: Singular matrix"
+      },
+      "deepseek-v3-0324": {
+        "n": 4862,
+        "terms": {
+          "Intercept": {
+            "coef": 1.3214,
+            "se_cluster": 0.0881,
+            "odds_ratio": 3.7487,
+            "p": 0.0
+          },
+          "C(income_tier)[T.LIC]": {
+            "coef": 0.2362,
+            "se_cluster": 0.1857,
+            "odds_ratio": 1.2664,
+            "p": 0.2035
+          },
+          "C(income_tier)[T.LMC]": {
+            "coef": -0.05,
+            "se_cluster": 0.1733,
+            "odds_ratio": 0.9512,
+            "p": 0.7728
+          },
+          "C(income_tier)[T.UMC]": {
+            "coef": 0.2342,
+            "se_cluster": 0.1158,
+            "odds_ratio": 1.2639,
+            "p": 0.0431
+          },
+          "C(income_tier)[T.UNCLASSIFIED]": {
+            "coef": 0.213,
+            "se_cluster": 0.5922,
+            "odds_ratio": 1.2374,
+            "p": 0.7191
+          },
+          "C(variant)[T.v2_hedged]": {
+            "coef": 2.1598,
+            "se_cluster": 0.4048,
+            "odds_ratio": 8.6691,
+            "p": 0.0
+          },
+          "C(variant)[T.v3_anchored]": {
+            "coef": -0.4424,
+            "se_cluster": 0.0935,
+            "odds_ratio": 0.6425,
+            "p": 0.0
+          },
+          "C(variant)[T.v4_comparative]": {
+            "coef": -0.3236,
+            "se_cluster": 0.0894,
+            "odds_ratio": 0.7236,
+            "p": 0.0003
+          },
+          "C(variant)[T.v5_structured]": {
+            "coef": 0.077,
+            "se_cluster": 0.5985,
+            "odds_ratio": 1.08,
+            "p": 0.8976
+          },
+          "binary[T.True]": {
+            "coef": -1.1543,
+            "se_cluster": 0.2995,
+            "odds_ratio": 0.3153,
+            "p": 0.0001
+          },
+          "log10_magnitude": {
+            "coef": 0.3697,
+            "se_cluster": 0.0731,
+            "odds_ratio": 1.4473,
+            "p": 0.0
+          },
+          "year_c": {
+            "coef": 0.0343,
+            "se_cluster": 0.0095,
+            "odds_ratio": 1.0349,
+            "p": 0.0003
+          }
+        }
+      },
+      "glm-5-2": {
+        "n": 4442,
+        "terms": {
+          "Intercept": {
+            "coef": 1.1175,
+            "se_cluster": 0.1061,
+            "odds_ratio": 3.0571,
+            "p": 0.0
+          },
+          "C(income_tier)[T.LIC]": {
+            "coef": -0.3388,
+            "se_cluster": 0.2097,
+            "odds_ratio": 0.7127,
+            "p": 0.1062
+          },
+          "C(income_tier)[T.LMC]": {
+            "coef": -0.3779,
+            "se_cluster": 0.1468,
+            "odds_ratio": 0.6853,
+            "p": 0.0101
+          },
+          "C(income_tier)[T.UMC]": {
+            "coef": -0.1845,
+            "se_cluster": 0.1454,
+            "odds_ratio": 0.8315,
+            "p": 0.2044
+          },
+          "C(income_tier)[T.UNCLASSIFIED]": {
+            "coef": 1.6975,
+            "se_cluster": 0.8469,
+            "odds_ratio": 5.46,
+            "p": 0.045
+          },
+          "C(variant)[T.v2_hedged]": {
+            "coef": -0.1894,
+            "se_cluster": 0.8772,
+            "odds_ratio": 0.8274,
+            "p": 0.829
+          },
+          "C(variant)[T.v3_anchored]": {
+            "coef": -0.5922,
+            "se_cluster": 0.0865,
+            "odds_ratio": 0.5531,
+            "p": 0.0
+          },
+          "C(variant)[T.v4_comparative]": {
+            "coef": -0.2485,
+            "se_cluster": 0.0807,
+            "odds_ratio": 0.78,
+            "p": 0.0021
+          },
+          "C(variant)[T.v5_structured]": {
+            "coef": -0.1976,
+            "se_cluster": 0.4389,
+            "odds_ratio": 0.8207,
+            "p": 0.6525
+          },
+          "binary[T.True]": {
+            "coef": -0.9463,
+            "se_cluster": 0.3448,
+            "odds_ratio": 0.3882,
+            "p": 0.0061
+          },
+          "log10_magnitude": {
+            "coef": 0.3573,
+            "se_cluster": 0.0997,
+            "odds_ratio": 1.4294,
+            "p": 0.0003
+          },
+          "year_c": {
+            "coef": 0.0155,
+            "se_cluster": 0.0106,
+            "odds_ratio": 1.0156,
+            "p": 0.1451
+          }
+        }
+      },
+      "gpt-5-4": {
+        "n": 76,
+        "terms": {
+          "Intercept": {
+            "coef": 5.4954,
+            "se_cluster": 5.4485,
+            "odds_ratio": 243.5643,
+            "p": 0.3132
+          },
+          "C(income_tier)[T.LIC]": {
+            "coef": 20.8671,
+            "se_cluster": 2.1943,
+            "odds_ratio": 1154707151.9598,
+            "p": 0.0
+          },
+          "C(income_tier)[T.LMC]": {
+            "coef": -4.1049,
+            "se_cluster": 1.4412,
+            "odds_ratio": 0.0165,
+            "p": 0.0044
+          },
+          "C(income_tier)[T.UMC]": {
+            "coef": 21.4581,
+            "se_cluster": 0.8969,
+            "odds_ratio": 2085055336.2576,
+            "p": 0.0
+          },
+          "C(income_tier)[T.UNCLASSIFIED]": {
+            "coef": 6.3393,
+            "se_cluster": 2.7916,
+            "odds_ratio": 566.3831,
+            "p": 0.0232
+          },
+          "log10_magnitude": {
+            "coef": -1.5341,
+            "se_cluster": 1.036,
+            "odds_ratio": 0.2157,
+            "p": 0.1387
+          },
+          "year_c": {
+            "coef": -0.2272,
+            "se_cluster": 0.5068,
+            "odds_ratio": 0.7967,
+            "p": 0.6539
+          }
+        }
+      },
+      "gpt-5-5": {
+        "skipped": "insufficient variation (n=1)"
+      },
+      "grok-4-20": {
+        "n": 4739,
+        "terms": {
+          "Intercept": {
+            "coef": 0.7212,
+            "se_cluster": 0.0848,
+            "odds_ratio": 2.0569,
+            "p": 0.0
+          },
+          "C(income_tier)[T.LIC]": {
+            "coef": 0.0605,
+            "se_cluster": 0.229,
+            "odds_ratio": 1.0623,
+            "p": 0.7917
+          },
+          "C(income_tier)[T.LMC]": {
+            "coef": -0.1741,
+            "se_cluster": 0.1227,
+            "odds_ratio": 0.8402,
+            "p": 0.1558
+          },
+          "C(income_tier)[T.UMC]": {
+            "coef": -0.2083,
+            "se_cluster": 0.1106,
+            "odds_ratio": 0.812,
+            "p": 0.0597
+          },
+          "C(income_tier)[T.UNCLASSIFIED]": {
+            "coef": 0.188,
+            "se_cluster": 0.3445,
+            "odds_ratio": 1.2069,
+            "p": 0.5852
+          },
+          "C(variant)[T.v2_hedged]": {
+            "coef": -1.1776,
+            "se_cluster": 0.8097,
+            "odds_ratio": 0.308,
+            "p": 0.1458
+          },
+          "C(variant)[T.v3_anchored]": {
+            "coef": -0.2383,
+            "se_cluster": 0.0813,
+            "odds_ratio": 0.7879,
+            "p": 0.0034
+          },
+          "C(variant)[T.v4_comparative]": {
+            "coef": 0.2042,
+            "se_cluster": 0.0877,
+            "odds_ratio": 1.2265,
+            "p": 0.0199
+          },
+          "C(variant)[T.v5_structured]": {
+            "coef": 0.856,
+            "se_cluster": 0.5021,
+            "odds_ratio": 2.3538,
+            "p": 0.0882
+          },
+          "binary[T.True]": {
+            "coef": -1.7779,
+            "se_cluster": 0.4563,
+            "odds_ratio": 0.169,
+            "p": 0.0001
+          },
+          "log10_magnitude": {
+            "coef": 0.4954,
+            "se_cluster": 0.0788,
+            "odds_ratio": 1.6411,
+            "p": 0.0
+          },
+          "year_c": {
+            "coef": -0.0246,
+            "se_cluster": 0.0094,
+            "odds_ratio": 0.9757,
+            "p": 0.0089
+          }
+        }
+      },
+      "grok-4-3": {
+        "skipped": "fit failed: LinAlgError: Singular matrix"
+      },
+      "llama-4-maverick": {
+        "n": 2413,
+        "terms": {
+          "Intercept": {
+            "coef": 1.0598,
+            "se_cluster": 0.1864,
+            "odds_ratio": 2.8858,
+            "p": 0.0
+          },
+          "C(income_tier)[T.LIC]": {
+            "coef": -0.0774,
+            "se_cluster": 0.228,
+            "odds_ratio": 0.9255,
+            "p": 0.7343
+          },
+          "C(income_tier)[T.LMC]": {
+            "coef": -0.3022,
+            "se_cluster": 0.2449,
+            "odds_ratio": 0.7392,
+            "p": 0.2173
+          },
+          "C(income_tier)[T.UMC]": {
+            "coef": 0.2168,
+            "se_cluster": 0.1954,
+            "odds_ratio": 1.242,
+            "p": 0.2674
+          },
+          "C(income_tier)[T.UNCLASSIFIED]": {
+            "coef": 0.6223,
+            "se_cluster": 0.7699,
+            "odds_ratio": 1.8633,
+            "p": 0.4189
+          },
+          "C(variant)[T.v2_hedged]": {
+            "coef": 0.1746,
+            "se_cluster": 0.359,
+            "odds_ratio": 1.1907,
+            "p": 0.6268
+          },
+          "C(variant)[T.v3_anchored]": {
+            "coef": -0.5059,
+            "se_cluster": 0.1672,
+            "odds_ratio": 0.6029,
+            "p": 0.0025
+          },
+          "C(variant)[T.v4_comparative]": {
+            "coef": 0.0186,
+            "se_cluster": 0.1604,
+            "odds_ratio": 1.0188,
+            "p": 0.9076
+          },
+          "C(variant)[T.v5_structured]": {
+            "coef": 0.0707,
+            "se_cluster": 0.2186,
+            "odds_ratio": 1.0732,
+            "p": 0.7464
+          },
+          "binary[T.True]": {
+            "coef": -1.9231,
+            "se_cluster": 0.3794,
+            "odds_ratio": 0.1462,
+            "p": 0.0
+          },
+          "log10_magnitude": {
+            "coef": 0.5794,
+            "se_cluster": 0.12,
+            "odds_ratio": 1.7849,
+            "p": 0.0
+          },
+          "year_c": {
+            "coef": 0.0709,
+            "se_cluster": 0.0162,
+            "odds_ratio": 1.0734,
+            "p": 0.0
+          }
+        }
+      },
+      "mistral-large-3": {
+        "n": 5565,
+        "terms": {
+          "Intercept": {
+            "coef": 0.6513,
+            "se_cluster": 0.0775,
+            "odds_ratio": 1.918,
+            "p": 0.0
+          },
+          "C(income_tier)[T.LIC]": {
+            "coef": 0.0642,
+            "se_cluster": 0.2053,
+            "odds_ratio": 1.0663,
+            "p": 0.7544
+          },
+          "C(income_tier)[T.LMC]": {
+            "coef": -0.1245,
+            "se_cluster": 0.1371,
+            "odds_ratio": 0.8829,
+            "p": 0.3637
+          },
+          "C(income_tier)[T.UMC]": {
+            "coef": 0.1184,
+            "se_cluster": 0.1074,
+            "odds_ratio": 1.1257,
+            "p": 0.2705
+          },
+          "C(income_tier)[T.UNCLASSIFIED]": {
+            "coef": 0.1473,
+            "se_cluster": 0.505,
+            "odds_ratio": 1.1588,
+            "p": 0.7705
+          },
+          "C(variant)[T.v2_hedged]": {
+            "coef": 0.955,
+            "se_cluster": 0.1135,
+            "odds_ratio": 2.5987,
+            "p": 0.0
+          },
+          "C(variant)[T.v3_anchored]": {
+            "coef": -0.5458,
+            "se_cluster": 0.0784,
+            "odds_ratio": 0.5793,
+            "p": 0.0
+          },
+          "C(variant)[T.v4_comparative]": {
+            "coef": -0.1576,
+            "se_cluster": 0.0822,
+            "odds_ratio": 0.8542,
+            "p": 0.055
+          },
+          "C(variant)[T.v5_structured]": {
+            "coef": -0.6226,
+            "se_cluster": 0.4999,
+            "odds_ratio": 0.5366,
+            "p": 0.213
+          },
+          "binary[T.True]": {
+            "coef": 0.1555,
+            "se_cluster": 0.231,
+            "odds_ratio": 1.1683,
+            "p": 0.5007
+          },
+          "log10_magnitude": {
+            "coef": 0.4995,
+            "se_cluster": 0.0535,
+            "odds_ratio": 1.6479,
+            "p": 0.0
+          },
+          "year_c": {
+            "coef": 0.0196,
+            "se_cluster": 0.0089,
+            "odds_ratio": 1.0198,
+            "p": 0.0272
+          }
+        }
+      },
+      "qwen3-235b-a22b": {
+        "n": 4350,
+        "terms": {
+          "Intercept": {
+            "coef": 1.2318,
+            "se_cluster": 0.0854,
+            "odds_ratio": 3.4273,
+            "p": 0.0
+          },
+          "C(income_tier)[T.LIC]": {
+            "coef": 0.0776,
+            "se_cluster": 0.1992,
+            "odds_ratio": 1.0807,
+            "p": 0.6968
+          },
+          "C(income_tier)[T.LMC]": {
+            "coef": 0.0695,
+            "se_cluster": 0.1315,
+            "odds_ratio": 1.072,
+            "p": 0.5969
+          },
+          "C(income_tier)[T.UMC]": {
+            "coef": 0.0104,
+            "se_cluster": 0.1103,
+            "odds_ratio": 1.0104,
+            "p": 0.9249
+          },
+          "C(income_tier)[T.UNCLASSIFIED]": {
+            "coef": 0.6847,
+            "se_cluster": 0.5003,
+            "odds_ratio": 1.9832,
+            "p": 0.1711
+          },
+          "C(variant)[T.v2_hedged]": {
+            "coef": 2.3472,
+            "se_cluster": 0.7007,
+            "odds_ratio": 10.4566,
+            "p": 0.0008
+          },
+          "C(variant)[T.v3_anchored]": {
+            "coef": -0.3671,
+            "se_cluster": 0.0971,
+            "odds_ratio": 0.6927,
+            "p": 0.0002
+          },
+          "C(variant)[T.v4_comparative]": {
+            "coef": -0.0749,
+            "se_cluster": 0.0911,
+            "odds_ratio": 0.9278,
+            "p": 0.4107
+          },
+          "C(variant)[T.v5_structured]": {
+            "coef": 0.2428,
+            "se_cluster": 0.4552,
+            "odds_ratio": 1.2748,
+            "p": 0.5937
+          },
+          "binary[T.True]": {
+            "coef": -0.9435,
+            "se_cluster": 0.359,
+            "odds_ratio": 0.3893,
+            "p": 0.0086
+          },
+          "log10_magnitude": {
+            "coef": 0.257,
+            "se_cluster": 0.0405,
+            "odds_ratio": 1.293,
+            "p": 0.0
+          },
+          "year_c": {
+            "coef": -0.0194,
+            "se_cluster": 0.0098,
+            "odds_ratio": 0.9808,
+            "p": 0.0473
+          }
+        }
+      }
+    },
+    "pooled": {
+      "n": 31905,
+      "terms": {
+        "Intercept": {
+          "coef": 2.1391,
+          "se_cluster": 0.098,
+          "odds_ratio": 8.4919,
+          "p": 0.0
+        },
+        "C(income_tier)[T.LIC]": {
+          "coef": 0.0186,
+          "se_cluster": 0.1872,
+          "odds_ratio": 1.0188,
+          "p": 0.9208
+        },
+        "C(income_tier)[T.LMC]": {
+          "coef": -0.1483,
+          "se_cluster": 0.1134,
+          "odds_ratio": 0.8622,
+          "p": 0.1911
+        },
+        "C(income_tier)[T.UMC]": {
+          "coef": -0.0377,
+          "se_cluster": 0.0982,
+          "odds_ratio": 0.963,
+          "p": 0.7008
+        },
+        "C(income_tier)[T.UNCLASSIFIED]": {
+          "coef": 0.589,
+          "se_cluster": 0.3801,
+          "odds_ratio": 1.8021,
+          "p": 0.1213
+        },
+        "C(variant)[T.v2_hedged]": {
+          "coef": 1.058,
+          "se_cluster": 0.1057,
+          "odds_ratio": 2.8807,
+          "p": 0.0
+        },
+        "C(variant)[T.v3_anchored]": {
+          "coef": -0.3849,
+          "se_cluster": 0.0553,
+          "odds_ratio": 0.6805,
+          "p": 0.0
+        },
+        "C(variant)[T.v4_comparative]": {
+          "coef": -0.0524,
+          "se_cluster": 0.0507,
+          "odds_ratio": 0.949,
+          "p": 0.3019
+        },
+        "C(variant)[T.v5_structured]": {
+          "coef": 0.1364,
+          "se_cluster": 0.1893,
+          "odds_ratio": 1.1461,
+          "p": 0.4714
+        },
+        "binary[T.True]": {
+          "coef": -1.2237,
+          "se_cluster": 0.2124,
+          "odds_ratio": 0.2941,
+          "p": 0.0
+        },
+        "C(model_id)[T.deepseek-v3-0324]": {
+          "coef": -0.7915,
+          "se_cluster": 0.0906,
+          "odds_ratio": 0.4532,
+          "p": 0.0
+        },
+        "C(model_id)[T.glm-5-2]": {
+          "coef": -1.2321,
+          "se_cluster": 0.0951,
+          "odds_ratio": 0.2917,
+          "p": 0.0
+        },
+        "C(model_id)[T.gpt-5-4]": {
+          "coef": 1.1038,
+          "se_cluster": 0.7311,
+          "odds_ratio": 3.0157,
+          "p": 0.1311
+        },
+        "C(model_id)[T.gpt-5-5]": {
+          "coef": 14.1201,
+          "se_cluster": 1.0128,
+          "odds_ratio": 1356082.4884,
+          "p": 0.0
+        },
+        "C(model_id)[T.grok-4-20]": {
+          "coef": -1.3757,
+          "se_cluster": 0.0906,
+          "odds_ratio": 0.2527,
+          "p": 0.0
+        },
+        "C(model_id)[T.grok-4-3]": {
+          "coef": -1.2025,
+          "se_cluster": 0.1023,
+          "odds_ratio": 0.3004,
+          "p": 0.0
+        },
+        "C(model_id)[T.llama-4-maverick]": {
+          "coef": -0.9905,
+          "se_cluster": 0.1023,
+          "odds_ratio": 0.3714,
+          "p": 0.0
+        },
+        "C(model_id)[T.mistral-large-3]": {
+          "coef": -1.4476,
+          "se_cluster": 0.0925,
+          "odds_ratio": 0.2351,
+          "p": 0.0
+        },
+        "C(model_id)[T.qwen3-235b-a22b]": {
+          "coef": -0.91,
+          "se_cluster": 0.0938,
+          "odds_ratio": 0.4025,
+          "p": 0.0
+        },
+        "log10_magnitude": {
+          "coef": 0.412,
+          "se_cluster": 0.0524,
+          "odds_ratio": 1.5098,
+          "p": 0.0
+        },
+        "year_c": {
+          "coef": 0.0054,
+          "se_cluster": 0.0068,
+          "odds_ratio": 1.0054,
+          "p": 0.4282
+        }
+      }
+    },
+    "outcome": "fabrication vs correct (other categories excluded)",
+    "cluster": "ISO3"
+  },
+  "income_stratification": {
+    "claude-opus-4-8": {
+      "by_tier": {
+        "HIC": {
+          "n": 3504,
+          "correct": 0.0205,
+          "fabrication": 0.2506,
+          "refusal": 0.6304,
+          "hedge": 0.0919,
+          "misattribution": 0.0066
+        },
+        "LIC": {
+          "n": 430,
+          "correct": 0.0186,
+          "fabrication": 0.1674,
+          "refusal": 0.7093,
+          "hedge": 0.0884,
+          "misattribution": 0.0163
+        },
+        "LMC": {
+          "n": 940,
+          "correct": 0.0298,
+          "fabrication": 0.2011,
+          "refusal": 0.6734,
+          "hedge": 0.084,
+          "misattribution": 0.0117
+        },
+        "UMC": {
+          "n": 1732,
+          "correct": 0.0237,
+          "fabrication": 0.2154,
+          "refusal": 0.6628,
+          "hedge": 0.0906,
+          "misattribution": 0.0075
+        },
+        "UNCLASSIFIED": {
+          "n": 52,
+          "correct": 0.0,
+          "fabrication": 0.0577,
+          "refusal": 0.8462,
+          "hedge": 0.0769,
+          "misattribution": 0.0192
+        }
+      },
+      "chi2_fab_vs_correct": {
+        "skipped": "sparse contingency table"
+      }
+    },
+    "deepseek-v3-0324": {
+      "by_tier": {
+        "HIC": {
+          "n": 3504,
+          "correct": 0.1276,
+          "fabrication": 0.6067,
+          "refusal": 0.1918,
+          "hedge": 0.0588,
+          "misattribution": 0.0151
+        },
+        "LIC": {
+          "n": 430,
+          "correct": 0.1419,
+          "fabrication": 0.5628,
+          "refusal": 0.2279,
+          "hedge": 0.0628,
+          "misattribution": 0.0047
+        },
+        "LMC": {
+          "n": 940,
+          "correct": 0.1723,
+          "fabrication": 0.5649,
+          "refusal": 0.2085,
+          "hedge": 0.0468,
+          "misattribution": 0.0074
+        },
+        "UMC": {
+          "n": 1732,
+          "correct": 0.1259,
+          "fabrication": 0.6016,
+          "refusal": 0.2148,
+          "hedge": 0.0456,
+          "misattribution": 0.0121
+        },
+        "UNCLASSIFIED": {
+          "n": 52,
+          "correct": 0.1346,
+          "fabrication": 0.5,
+          "refusal": 0.3269,
+          "hedge": 0.0385,
+          "misattribution": 0.0
+        }
+      },
+      "chi2_fab_vs_correct": {
+        "chi2": 15.026,
+        "p": 0.0046,
+        "dof": 4
+      }
+    },
+    "glm-5-2": {
+      "by_tier": {
+        "HIC": {
+          "n": 3504,
+          "correct": 0.149,
+          "fabrication": 0.5348,
+          "refusal": 0.2979,
+          "hedge": 0.0049,
+          "misattribution": 0.0134
+        },
+        "LIC": {
+          "n": 430,
+          "correct": 0.2302,
+          "fabrication": 0.4116,
+          "refusal": 0.3209,
+          "hedge": 0.0279,
+          "misattribution": 0.0093
+        },
+        "LMC": {
+          "n": 940,
+          "correct": 0.2319,
+          "fabrication": 0.4266,
+          "refusal": 0.3213,
+          "hedge": 0.0074,
+          "misattribution": 0.0128
+        },
+        "UMC": {
+          "n": 1732,
+          "correct": 0.1894,
+          "fabrication": 0.4596,
+          "refusal": 0.3303,
+          "hedge": 0.0046,
+          "misattribution": 0.0162
+        },
+        "UNCLASSIFIED": {
+          "n": 52,
+          "correct": 0.0385,
+          "fabrication": 0.4808,
+          "refusal": 0.4231,
+          "hedge": 0.0577,
+          "misattribution": 0.0
+        }
+      },
+      "chi2_fab_vs_correct": {
+        "chi2": 73.378,
+        "p": 0.0,
+        "dof": 4
+      }
+    },
+    "gpt-5-4": {
+      "by_tier": {
+        "HIC": {
+          "n": 104,
+          "correct": 0.0096,
+          "fabrication": 0.3077,
+          "refusal": 0.0096,
+          "hedge": 0.6731,
+          "misattribution": 0.0
+        },
+        "LIC": {
+          "n": 18,
+          "correct": 0.0,
+          "fabrication": 0.4444,
+          "refusal": 0.0,
+          "hedge": 0.5556,
+          "misattribution": 0.0
+        },
+        "LMC": {
+          "n": 46,
+          "correct": 0.0217,
+          "fabrication": 0.1957,
+          "refusal": 0.0,
+          "hedge": 0.7826,
+          "misattribution": 0.0
+        },
+        "UMC": {
+          "n": 81,
+          "correct": 0.0,
+          "fabrication": 0.284,
+          "refusal": 0.0,
+          "hedge": 0.716,
+          "misattribution": 0.0
+        },
+        "UNCLASSIFIED": {
+          "n": 2,
+          "correct": 0.0,
+          "fabrication": 1.0,
+          "refusal": 0.0,
+          "hedge": 0.0,
+          "misattribution": 0.0
+        }
+      },
+      "chi2_fab_vs_correct": {
+        "skipped": "sparse contingency table"
+      }
+    },
+    "gpt-5-5": {
+      "by_tier": {
+        "LIC": {
+          "n": 1,
+          "correct": 0.0,
+          "fabrication": 1.0,
+          "refusal": 0.0,
+          "hedge": 0.0,
+          "misattribution": 0.0
+        }
+      },
+      "chi2_fab_vs_correct": {
+        "skipped": "sparse contingency table"
+      }
+    },
+    "grok-4-20": {
+      "by_tier": {
+        "HIC": {
+          "n": 3504,
+          "correct": 0.1769,
+          "fabrication": 0.5331,
+          "refusal": 0.2703,
+          "hedge": 0.0014,
+          "misattribution": 0.0183
+        },
+        "LIC": {
+          "n": 430,
+          "correct": 0.2326,
+          "fabrication": 0.4814,
+          "refusal": 0.2744,
+          "hedge": 0.007,
+          "misattribution": 0.0047
+        },
+        "LMC": {
+          "n": 940,
+          "correct": 0.2553,
+          "fabrication": 0.4628,
+          "refusal": 0.2723,
+          "hedge": 0.0032,
+          "misattribution": 0.0064
+        },
+        "UMC": {
+          "n": 1732,
+          "correct": 0.2408,
+          "fabrication": 0.4711,
+          "refusal": 0.2742,
+          "hedge": 0.0023,
+          "misattribution": 0.0115
+        },
+        "UNCLASSIFIED": {
+          "n": 52,
+          "correct": 0.2115,
+          "fabrication": 0.4808,
+          "refusal": 0.3077,
+          "hedge": 0.0,
+          "misattribution": 0.0
+        }
+      },
+      "chi2_fab_vs_correct": {
+        "chi2": 49.583,
+        "p": 0.0,
+        "dof": 4
+      }
+    },
+    "grok-4-3": {
+      "by_tier": {
+        "HIC": {
+          "n": 3504,
+          "correct": 0.1336,
+          "fabrication": 0.4489,
+          "refusal": 0.3319,
+          "hedge": 0.0725,
+          "misattribution": 0.0131
+        },
+        "LIC": {
+          "n": 430,
+          "correct": 0.1605,
+          "fabrication": 0.4,
+          "refusal": 0.3302,
+          "hedge": 0.1047,
+          "misattribution": 0.0047
+        },
+        "LMC": {
+          "n": 940,
+          "correct": 0.1681,
+          "fabrication": 0.3723,
+          "refusal": 0.3564,
+          "hedge": 0.0957,
+          "misattribution": 0.0074
+        },
+        "UMC": {
+          "n": 1732,
+          "correct": 0.1824,
+          "fabrication": 0.3822,
+          "refusal": 0.3464,
+          "hedge": 0.0774,
+          "misattribution": 0.0115
+        },
+        "UNCLASSIFIED": {
+          "n": 52,
+          "correct": 0.0,
+          "fabrication": 0.4808,
+          "refusal": 0.3462,
+          "hedge": 0.1538,
+          "misattribution": 0.0192
+        }
+      },
+      "chi2_fab_vs_correct": {
+        "skipped": "sparse contingency table"
+      }
+    },
+    "llama-4-maverick": {
+      "by_tier": {
+        "HIC": {
+          "n": 3504,
+          "correct": 0.0788,
+          "fabrication": 0.3536,
+          "refusal": 0.5123,
+          "hedge": 0.0517,
+          "misattribution": 0.0037
+        },
+        "LIC": {
+          "n": 430,
+          "correct": 0.0721,
+          "fabrication": 0.1512,
+          "refusal": 0.7302,
+          "hedge": 0.0442,
+          "misattribution": 0.0023
+        },
+        "LMC": {
+          "n": 940,
+          "correct": 0.0862,
+          "fabrication": 0.1872,
+          "refusal": 0.6617,
+          "hedge": 0.0628,
+          "misattribution": 0.0021
+        },
+        "UMC": {
+          "n": 1732,
+          "correct": 0.0595,
+          "fabrication": 0.2494,
+          "refusal": 0.6426,
+          "hedge": 0.0456,
+          "misattribution": 0.0029
+        },
+        "UNCLASSIFIED": {
+          "n": 52,
+          "correct": 0.0385,
+          "fabrication": 0.1538,
+          "refusal": 0.75,
+          "hedge": 0.0577,
+          "misattribution": 0.0
+        }
+      },
+      "chi2_fab_vs_correct": {
+        "chi2": 32.761,
+        "p": 0.0,
+        "dof": 4
+      }
+    },
+    "mistral-large-3": {
+      "by_tier": {
+        "HIC": {
+          "n": 3504,
+          "correct": 0.2112,
+          "fabrication": 0.6256,
+          "refusal": 0.1361,
+          "hedge": 0.0094,
+          "misattribution": 0.0177
+        },
+        "LIC": {
+          "n": 430,
+          "correct": 0.2791,
+          "fabrication": 0.5419,
+          "refusal": 0.1465,
+          "hedge": 0.0233,
+          "misattribution": 0.0093
+        },
+        "LMC": {
+          "n": 940,
+          "correct": 0.2979,
+          "fabrication": 0.5404,
+          "refusal": 0.1394,
+          "hedge": 0.0138,
+          "misattribution": 0.0085
+        },
+        "UMC": {
+          "n": 1732,
+          "correct": 0.2379,
+          "fabrication": 0.5999,
+          "refusal": 0.1403,
+          "hedge": 0.0104,
+          "misattribution": 0.0115
+        },
+        "UNCLASSIFIED": {
+          "n": 52,
+          "correct": 0.2692,
+          "fabrication": 0.5192,
+          "refusal": 0.1538,
+          "hedge": 0.0577,
+          "misattribution": 0.0
+        }
+      },
+      "chi2_fab_vs_correct": {
+        "chi2": 40.264,
+        "p": 0.0,
+        "dof": 4
+      }
+    },
+    "qwen3-235b-a22b": {
+      "by_tier": {
+        "HIC": {
+          "n": 3504,
+          "correct": 0.1276,
+          "fabrication": 0.5283,
+          "refusal": 0.2551,
+          "hedge": 0.0257,
+          "misattribution": 0.0634
+        },
+        "LIC": {
+          "n": 430,
+          "correct": 0.1512,
+          "fabrication": 0.5,
+          "refusal": 0.2767,
+          "hedge": 0.0465,
+          "misattribution": 0.0256
+        },
+        "LMC": {
+          "n": 940,
+          "correct": 0.1468,
+          "fabrication": 0.5106,
+          "refusal": 0.2723,
+          "hedge": 0.0202,
+          "misattribution": 0.05
+        },
+        "UMC": {
+          "n": 1732,
+          "correct": 0.142,
+          "fabrication": 0.5046,
+          "refusal": 0.2667,
+          "hedge": 0.0242,
+          "misattribution": 0.0624
+        },
+        "UNCLASSIFIED": {
+          "n": 52,
+          "correct": 0.0962,
+          "fabrication": 0.5577,
+          "refusal": 0.3077,
+          "hedge": 0.0385,
+          "misattribution": 0.0
+        }
+      },
+      "chi2_fab_vs_correct": {
+        "chi2": 6.092,
+        "p": 0.1924,
+        "dof": 4
+      }
+    }
+  },
+  "cutoff_sensitivity": {
+    "all_models": {
+      "llama-4-maverick": {
+        "cutoff_year": 2024,
+        "cutoff_status": "documented",
+        "pre": {
+          "n": 6658,
+          "correct": 0.074,
+          "fabrication": 0.2884,
+          "refusal": 0.5832,
+          "hedge": 0.0512,
+          "misattribution": 0.0032
+        },
+        "post": null
+      },
+      "mistral-large-3": {
+        "cutoff_year": 2025,
+        "cutoff_status": "estimated",
+        "pre": {
+          "n": 6658,
+          "correct": 0.2352,
+          "fabrication": 0.6006,
+          "refusal": 0.1385,
+          "hedge": 0.0116,
+          "misattribution": 0.0141
+        },
+        "post": null
+      },
+      "qwen3-235b-a22b": {
+        "cutoff_year": 2025,
+        "cutoff_status": "estimated",
+        "pre": {
+          "n": 6658,
+          "correct": 0.1353,
+          "fabrication": 0.518,
+          "refusal": 0.2624,
+          "hedge": 0.026,
+          "misattribution": 0.0583
+        },
+        "post": null
+      },
+      "deepseek-v3-0324": {
+        "cutoff_year": 2024,
+        "cutoff_status": "estimated",
+        "pre": {
+          "n": 6658,
+          "correct": 0.1344,
+          "fabrication": 0.5958,
+          "refusal": 0.2035,
+          "hedge": 0.0538,
+          "misattribution": 0.0125
+        },
+        "post": null
+      }
+    },
+    "documented_cutoffs_only": {
+      "llama-4-maverick": {
+        "cutoff_year": 2024,
+        "cutoff_status": "documented",
+        "pre": {
+          "n": 6658,
+          "correct": 0.074,
+          "fabrication": 0.2884,
+          "refusal": 0.5832,
+          "hedge": 0.0512,
+          "misattribution": 0.0032
+        },
+        "post": null
+      }
+    },
+    "note": "post-cutoff queries can only be answered from retrieval or fabrication; documented-only run excludes estimated cutoffs as a sensitivity check"
+  },
+  "balanced_subset_check": {
+    "claude-opus-4-8": {
+      "full": {
+        "n": 6658,
+        "correct": 0.0224,
+        "fabrication": 0.2275,
+        "refusal": 0.6517,
+        "hedge": 0.0901,
+        "misattribution": 0.0083
+      },
+      "balanced_subset": {
+        "n": 5332,
+        "correct": 0.0206,
+        "fabrication": 0.2219,
+        "refusal": 0.6643,
+        "hedge": 0.0846,
+        "misattribution": 0.0086
+      }
+    },
+    "deepseek-v3-0324": {
+      "full": {
+        "n": 6658,
+        "correct": 0.1344,
+        "fabrication": 0.5958,
+        "refusal": 0.2035,
+        "hedge": 0.0538,
+        "misattribution": 0.0125
+      },
+      "balanced_subset": {
+        "n": 5332,
+        "correct": 0.1341,
+        "fabrication": 0.6007,
+        "refusal": 0.2144,
+        "hedge": 0.0501,
+        "misattribution": 0.0008
+      }
+    },
+    "glm-5-2": {
+      "full": {
+        "n": 6658,
+        "correct": 0.1756,
+        "fabrication": 0.4916,
+        "refusal": 0.3121,
+        "hedge": 0.0071,
+        "misattribution": 0.0137
+      },
+      "balanced_subset": {
+        "n": 5332,
+        "correct": 0.1817,
+        "fabrication": 0.4786,
+        "refusal": 0.3241,
+        "hedge": 0.0053,
+        "misattribution": 0.0103
+      }
+    },
+    "gpt-5-4": {
+      "full": {
+        "n": 251,
+        "correct": 0.008,
+        "fabrication": 0.2948,
+        "refusal": 0.004,
+        "hedge": 0.6932,
+        "misattribution": 0.0
+      },
+      "balanced_subset": {
+        "n": 251,
+        "correct": 0.008,
+        "fabrication": 0.2948,
+        "refusal": 0.004,
+        "hedge": 0.6932,
+        "misattribution": 0.0
+      }
+    },
+    "gpt-5-5": {
+      "full": {
+        "n": 1,
+        "correct": 0.0,
+        "fabrication": 1.0,
+        "refusal": 0.0,
+        "hedge": 0.0,
+        "misattribution": 0.0
+      },
+      "balanced_subset": {
+        "n": 1,
+        "correct": 0.0,
+        "fabrication": 1.0,
+        "refusal": 0.0,
+        "hedge": 0.0,
+        "misattribution": 0.0
+      }
+    },
+    "grok-4-20": {
+      "full": {
+        "n": 6658,
+        "correct": 0.2085,
+        "fabrication": 0.5033,
+        "refusal": 0.2722,
+        "hedge": 0.0023,
+        "misattribution": 0.0138
+      },
+      "balanced_subset": {
+        "n": 5332,
+        "correct": 0.2209,
+        "fabrication": 0.4947,
+        "refusal": 0.2742,
+        "hedge": 0.0,
+        "misattribution": 0.0101
+      }
+    },
+    "grok-4-3": {
+      "full": {
+        "n": 6658,
+        "correct": 0.1518,
+        "fabrication": 0.4178,
+        "refusal": 0.3391,
+        "hedge": 0.0798,
+        "misattribution": 0.0114
+      },
+      "balanced_subset": {
+        "n": 5332,
+        "correct": 0.1515,
+        "fabrication": 0.4085,
+        "refusal": 0.3515,
+        "hedge": 0.0795,
+        "misattribution": 0.009
+      }
+    },
+    "llama-4-maverick": {
+      "full": {
+        "n": 6658,
+        "correct": 0.074,
+        "fabrication": 0.2884,
+        "refusal": 0.5832,
+        "hedge": 0.0512,
+        "misattribution": 0.0032
+      },
+      "balanced_subset": {
+        "n": 5332,
+        "correct": 0.0636,
+        "fabrication": 0.2483,
+        "refusal": 0.6328,
+        "hedge": 0.0546,
+        "misattribution": 0.0008
+      }
+    },
+    "mistral-large-3": {
+      "full": {
+        "n": 6658,
+        "correct": 0.2352,
+        "fabrication": 0.6006,
+        "refusal": 0.1385,
+        "hedge": 0.0116,
+        "misattribution": 0.0141
+      },
+      "balanced_subset": {
+        "n": 5332,
+        "correct": 0.2419,
+        "fabrication": 0.602,
+        "refusal": 0.1408,
+        "hedge": 0.0103,
+        "misattribution": 0.0049
+      }
+    },
+    "qwen3-235b-a22b": {
+      "full": {
+        "n": 6658,
+        "correct": 0.1353,
+        "fabrication": 0.518,
+        "refusal": 0.2624,
+        "hedge": 0.026,
+        "misattribution": 0.0583
+      },
+      "balanced_subset": {
+        "n": 5332,
+        "correct": 0.1255,
+        "fabrication": 0.53,
+        "refusal": 0.2661,
+        "hedge": 0.027,
+        "misattribution": 0.0514
+      }
+    }
+  },
+  "continuous_error": {
+    "claude-opus-4-8": {
+      "n_numeric": 1474,
+      "median_abs_log10_ratio": 0.7749,
+      "p90_abs_log10_ratio": 3.3467,
+      "within_half_order_of_magnitude": 0.228,
+      "within_one_order_of_magnitude": 0.555
+    },
+    "deepseek-v3-0324": {
+      "n_numeric": 4044,
+      "median_abs_log10_ratio": 0.1761,
+      "p90_abs_log10_ratio": 2.2484,
+      "within_half_order_of_magnitude": 0.4988,
+      "within_one_order_of_magnitude": 0.8197
+    },
+    "glm-5-2": {
+      "n_numeric": 3585,
+      "median_abs_log10_ratio": 0.1308,
+      "p90_abs_log10_ratio": 1.8084,
+      "within_half_order_of_magnitude": 0.5417,
+      "within_one_order_of_magnitude": 0.8572
+    },
+    "gpt-5-4": {
+      "n_numeric": 68,
+      "median_abs_log10_ratio": 2.0603,
+      "p90_abs_log10_ratio": 3.0929,
+      "within_half_order_of_magnitude": 0.0441,
+      "within_one_order_of_magnitude": 0.2059
+    },
+    "grok-4-20": {
+      "n_numeric": 3869,
+      "median_abs_log10_ratio": 0.1139,
+      "p90_abs_log10_ratio": 1.9831,
+      "within_half_order_of_magnitude": 0.5707,
+      "within_one_order_of_magnitude": 0.8478
+    },
+    "grok-4-3": {
+      "n_numeric": 2908,
+      "median_abs_log10_ratio": 0.2102,
+      "p90_abs_log10_ratio": 3.3058,
+      "within_half_order_of_magnitude": 0.4718,
+      "within_one_order_of_magnitude": 0.6627
+    },
+    "llama-4-maverick": {
+      "n_numeric": 2081,
+      "median_abs_log10_ratio": 0.1734,
+      "p90_abs_log10_ratio": 1.2482,
+      "within_half_order_of_magnitude": 0.5012,
+      "within_one_order_of_magnitude": 0.8635
+    },
+    "mistral-large-3": {
+      "n_numeric": 4579,
+      "median_abs_log10_ratio": 0.1419,
+      "p90_abs_log10_ratio": 2.649,
+      "within_half_order_of_magnitude": 0.5283,
+      "within_one_order_of_magnitude": 0.8032
+    },
+    "qwen3-235b-a22b": {
+      "n_numeric": 3505,
+      "median_abs_log10_ratio": 0.2007,
+      "p90_abs_log10_ratio": 3.1631,
+      "within_half_order_of_magnitude": 0.4785,
+      "within_one_order_of_magnitude": 0.6996
+    }
+  }
+}

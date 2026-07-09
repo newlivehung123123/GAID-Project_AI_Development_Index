@@ -153,7 +153,7 @@ def cmd_run_eval(args) -> int:
     summary = client.run_eval(
         queries, models[args.model], REPO_ROOT, budget_usd=args.budget,
         generation=generation, dry_run=args.dry_run, limit=args.limit,
-        use_free_endpoint=not args.paid)
+        use_free_endpoint=not args.paid, workers=args.workers)
     print(json.dumps(summary, indent=2))
     return 0
 
@@ -267,6 +267,8 @@ def main(argv: list[str] | None = None) -> int:
                        help="max queries this session")
     p_run.add_argument("--dry-run", action="store_true",
                        help="synthetic responses, $0, separate cache")
+    p_run.add_argument("--workers", type=int, default=4,
+                       help="parallel request threads (default 4)")
     p_run.add_argument("--paid", action="store_true",
                        help="use the paid endpoint instead of the free tier")
     p_panel = sub.add_parser("run-panel", help="run every active panel model "
