@@ -365,3 +365,17 @@ footer.site a { font-weight: 500; }
 .flow-caption { font-size: 0.72rem; letter-spacing: 0.1em;
                 text-transform: uppercase; opacity: 0.7; text-align: center; }
 @media (max-width: 640px) { .flow-wrap { height: 330px; } }
+
+/* ── Evaluations v3: org colours, ranks, swiper coverflow ────────── */
+.dev-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+           margin-right: 0.45rem; vertical-align: baseline; }
+.eval-rank { flex: 0 0 30px; font-size: 0.78rem; font-weight: 600;
+             font-variant-numeric: tabular-nums; opacity: 0.65; }
+.eval-fab { flex: 0 0 46px; text-align: right; font-size: 0.75rem;
+            font-weight: 600; font-variant-numeric: tabular-nums; }
+/* swiper takes over card positioning: undo the hand-rolled 3D rules */
+.flow-card { position: static; left: auto; top: auto; width: 100%;
+             transition: none; cursor: inherit; }
+.flow-swiper { padding: 0.8rem 0 1.2rem; }
+.flow-swiper .swiper-slide { width: min(520px, 84%); }
+.flow-swiper .swiper-slide:not(.swiper-slide-active) .flow-card { opacity: 0.55; }

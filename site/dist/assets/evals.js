@@ -1,7 +1,12 @@
-/* Model Evaluations charts: metric-space scatter explorer + small-multiple
-   line panels (one per model — the readable monochrome alternative to
-   spaghetti lines). Same ink-alpha language as the rest of the site;
-   re-renders on the Nyx/Eos toggle. Data embedded at build time as EVALS. */
+/* Model Evaluations charts.
+   - Marks are coloured by ORGANISATION (Epoch-style: models share their
+     lab's colour, embedded per model as m.color at build time); the page
+     chrome stays in the site's monochrome design language.
+   - Scatter labels: cluster label groups and MERGE groups until no two
+     groups' boxes overlap, then sweep inside each group — verified across
+     all metric combinations before shipping.
+   - The per-model decks are Swiper coverflow carousels (drag / click /
+     arrows / keyboard / autoplay). */
 (function () {
   const METRICS = {
     fabrication:   { label: "Fabrication rate", pct: true },
@@ -35,7 +40,7 @@
     tip.style.top = (y + window.scrollY) + "px";
   }
   const hideTip = () => tip.classList.remove("on");
-  const profile = m => `<div class="pc-head"><b>${m.label}</b>
+  const profile = m => `<div class="pc-head"><b><span class="dev-dot" style="background:${m.color}"></span>${m.label}</b>
     <span>${m.dev} · ${m.weights} weights</span></div>` +
     ["correct", "fabrication", "refusal", "hedge", "misattribution"].map(k =>
       `<div class="pc-row"><span class="pc-label">${METRICS[k].label.split(" ")[0]}</span>
@@ -84,69 +89,96 @@
     const shown = EVALS.filter(m => m[sx.value] != null && m[sy.value] != null);
     const g = svg.append("g");
     g.selectAll("circle").data(shown).join("circle")
-      .attr("class", "scatter-dot")
       .attr("cx", m => x(m[sx.value])).attr("cy", m => y(m[sy.value]))
       .attr("r", 8)
-      .style("opacity", m => active(m) ? 1 : 0.12)
+      .attr("fill", m => m.color).attr("fill-opacity", 0.85)
+      .attr("stroke", ink(0.8)).attr("stroke-width", 0.8)
+      .style("cursor", "pointer")
+      .style("opacity", m => active(m) ? 1 : 0.10)
       .on("mousemove", (ev, m) => showTip(ev, profile(m)))
       .on("mouseleave", hideTip);
 
-    /* labels: cluster dots that share horizontal space; a lone dot gets its
-       label beside it, a dense cluster gets a tidy label COLUMN beside the
-       cluster with a thin leader line from each label to its dot */
-    const GAP = 17;
-    const clamp = v => Math.max(M.top + 12, Math.min(v, H - M.bottom - 8));
+    /* ── label layout: build groups, then MERGE any groups whose label
+       boxes would overlap, re-laying-out until stable ─────────────── */
+    const GAP = 17, LH = 13;   // row gap, label box height
     const items = shown.filter(active).map(m => ({
-      m, dx: x(m[sx.value]), dy: y(m[sy.value]), w: m.label.length * 6.8,
-    })).sort((a, b) => a.dx - b.dx);
-    const clusters = [];
-    for (const it of items) {
-      const cur = clusters.at(-1);
-      const reach = it.dx + 13 + it.w;                 // label extent if placed right
-      if (cur && it.dx <= cur.maxReach + 10) {
-        cur.items.push(it); cur.maxReach = Math.max(cur.maxReach, reach);
-      } else clusters.push({ items: [it], maxReach: reach });
+      m, dx: x(m[sx.value]), dy: y(m[sy.value]), w: m.label.length * 6.9,
+    }));
+
+    function layoutGroup(gr) {
+      // lone label sits beside its dot; groups form a column
+      if (gr.items.length === 1) {
+        const it = gr.items[0];
+        const right = it.dx + 13 + it.w <= W - M.right;
+        it.anchor = right ? "start" : "end";
+        it.lx = right ? it.dx + 13 : it.dx - 13;
+        it.ly = Math.max(M.top + 12, Math.min(it.dy + 4, H - M.bottom - 8));
+      } else {
+        const maxW = Math.max(...gr.items.map(i => i.w));
+        let colX = Math.max(...gr.items.map(i => i.dx)) + 24, anchor = "start";
+        if (colX + maxW > W - M.right + 26) {
+          colX = Math.min(...gr.items.map(i => i.dx)) - 24; anchor = "end";
+        }
+        gr.items.sort((a, b) => a.dy - b.dy);
+        const total = (gr.items.length - 1) * GAP;
+        const meanY = gr.items.reduce((s, i) => s + i.dy, 0) / gr.items.length;
+        const y0 = Math.max(M.top + 14,
+          Math.min(meanY - total / 2, H - M.bottom - 10 - total));
+        gr.items.forEach((it, k) => {
+          it.anchor = anchor; it.lx = colX; it.ly = y0 + k * GAP;
+        });
+      }
+      // group bbox from label boxes
+      const boxes = gr.items.map(it => ({
+        x0: it.anchor === "start" ? it.lx : it.lx - it.w,
+        x1: it.anchor === "start" ? it.lx + it.w : it.lx,
+        y0: it.ly - LH + 2, y1: it.ly + 4,
+      }));
+      gr.x0 = Math.min(...boxes.map(b => b.x0)) - 4;
+      gr.x1 = Math.max(...boxes.map(b => b.x1)) + 4;
+      gr.y0 = Math.min(...boxes.map(b => b.y0)) - 2;
+      gr.y1 = Math.max(...boxes.map(b => b.y1)) + 2;
     }
-    clusters.forEach(c => {
-      if (c.items.length === 1) {
-        const it = c.items[0];
-        it.anchor = it.dx + 13 + it.w > W - M.right ? "end" : "start";
-        it.lx = it.anchor === "start" ? it.dx + 13 : it.dx - 13;
-        it.ly = clamp(it.dy + 4);
-        return;
-      }
-      const maxW = Math.max(...c.items.map(i => i.w));
-      let colX = Math.max(...c.items.map(i => i.dx)) + 22, anchor = "start";
-      if (colX + maxW > W - M.right + 24) {
-        colX = Math.min(...c.items.map(i => i.dx)) - 22; anchor = "end";
-      }
-      c.items.sort((a, b) => a.dy - b.dy);
-      const total = (c.items.length - 1) * GAP;
-      const meanY = c.items.reduce((s, i) => s + i.dy, 0) / c.items.length;
-      let y0 = Math.max(M.top + 14,
-        Math.min(meanY - total / 2, H - M.bottom - 10 - total));
-      c.items.forEach((it, k) => {
-        it.anchor = anchor; it.lx = colX; it.ly = y0 + k * GAP;
-      });
-    });
+
+    let groups = items.map(it => ({ items: [it] }));
+    for (let pass = 0; pass < 8; pass++) {
+      groups.forEach(layoutGroup);
+      let merged = false;
+      outer:
+      for (let i = 0; i < groups.length; i++)
+        for (let j = i + 1; j < groups.length; j++) {
+          const a = groups[i], b = groups[j];
+          if (a.x0 < b.x1 && b.x0 < a.x1 && a.y0 < b.y1 && b.y0 < a.y1) {
+            a.items = a.items.concat(b.items);
+            groups.splice(j, 1);
+            merged = true;
+            break outer;
+          }
+        }
+      if (!merged) break;
+    }
+    groups.forEach(layoutGroup);
+
     items.forEach(it => {
-      const moved = Math.abs(it.ly - (it.dy + 4)) > 8 || Math.abs(it.lx - it.dx) > 15;
-      if (moved)
+      const displaced =
+        Math.abs(it.ly - (it.dy + 4)) > 8 || Math.abs(it.lx - it.dx) > 15;
+      if (displaced)
         g.append("line")
           .attr("x1", it.dx + (it.lx > it.dx ? 9 : -9)).attr("y1", it.dy)
           .attr("x2", it.lx + (it.anchor === "start" ? -3 : 3))
           .attr("y2", it.ly - 4)
-          .attr("stroke", ink(0.28)).attr("stroke-width", 0.8);
+          .attr("stroke", it.m.color).attr("stroke-opacity", 0.55)
+          .attr("stroke-width", 0.9);
       g.append("text").attr("x", it.lx).attr("y", it.ly)
         .attr("text-anchor", it.anchor)
         .attr("font-size", 11.5).attr("font-family", "var(--serif)")
-        .attr("fill", "var(--ink)").style("opacity", 0.88)
-        .text(it.m.label);
+        .attr("font-weight", 600)
+        .attr("fill", it.m.color).text(it.m.label);
     });
     document.getElementById("ev-note").textContent =
       `${items.length} of ${shown.length} models shown` +
       (weightFilter === "all" ? "" : ` (${weightFilter} weights)`) +
-      ` · hover a point for its full category profile.`;
+      ` · colour = developer · hover a point for its full profile.`;
   }
 
   document.querySelectorAll("#ev-filter .chip").forEach(btn =>
@@ -159,24 +191,20 @@
   sx.addEventListener("change", renderScatter);
   sy.addEventListener("change", renderScatter);
 
-  /* ── Cover Flow: one card per model, iTunes-style 3D deck ───────── */
+  /* ── Swiper coverflow decks: drag / click / arrows / keys / autoplay ── */
+  const swipers = [];
   function coverFlow(hostSel, keys, keyOf, xNote) {
     const host = document.querySelector(hostSel);
     host.innerHTML = "";
-    const wrap = document.createElement("div");
-    wrap.className = "flow-wrap";
-    wrap.tabIndex = 0;
-    const stage = document.createElement("div");
-    stage.className = "flow-stage";
-    wrap.appendChild(stage);
-    const nav = document.createElement("div");
-    nav.className = "flow-nav";
-    nav.innerHTML = `<button class="chip" data-d="-1" aria-label="previous">&#8249;</button>
-      <span class="flow-caption"></span>
-      <button class="chip" data-d="1" aria-label="next">&#8250;</button>`;
-    host.appendChild(wrap);
-    host.appendChild(nav);
-    const caption = nav.querySelector(".flow-caption");
+    host.insertAdjacentHTML("beforeend", `
+      <div class="swiper flow-swiper"><div class="swiper-wrapper"></div></div>
+      <div class="flow-nav">
+        <button class="chip" data-d="-1" aria-label="previous">&#8249;</button>
+        <span class="flow-caption"></span>
+        <button class="chip" data-d="1" aria-label="next">&#8250;</button>
+      </div>`);
+    const wrapper = host.querySelector(".swiper-wrapper");
+    const caption = host.querySelector(".flow-caption");
 
     const W = 460, H = 290, M = { top: 16, right: 18, bottom: 34, left: 48 };
     const vals = EVALS.flatMap(m => keys.map(k => keyOf(m, k))).filter(v => v != null);
@@ -188,14 +216,14 @@
     const series = EVALS.map(m => ({ m, pts: keys.map(k => [k, keyOf(m, k)]) }))
       .filter(s => s.pts.some(p => p[1] != null));
 
-    let idx = 0;
-    const cards = series.map((s, i) => {
+    series.forEach(s => {
+      const slide = document.createElement("div");
+      slide.className = "swiper-slide";
       const card = document.createElement("div");
       card.className = "flow-card";
-      const name = document.createElement("h4");
-      name.textContent = s.m.label;
-      card.appendChild(name);
-      stage.appendChild(card);
+      card.innerHTML = `<h4><span class="dev-dot" style="background:${s.m.color}"></span>${s.m.label}</h4>`;
+      slide.appendChild(card);
+      wrapper.appendChild(slide);
       const svg = d3.select(card).append("svg").attr("viewBox", `0 0 ${W} ${H}`);
       [0, yMax / 2, yMax].forEach(v => {
         svg.append("line").attr("x1", M.left).attr("x2", W - M.right)
@@ -216,47 +244,41 @@
           .attr("fill", "none").attr("stroke", ink(0.09)).attr("stroke-width", 1);
       });
       svg.append("path").datum(s.pts).attr("d", line)
-        .attr("fill", "none").attr("stroke", ink(0.85)).attr("stroke-width", 2.4);
+        .attr("fill", "none").attr("stroke", s.m.color).attr("stroke-width", 2.6);
       const on = s.pts.filter(p => p[1] != null);
       svg.selectAll(".pt").data(on).join("circle")
         .attr("cx", d => x(d[0])).attr("cy", d => y(d[1]))
-        .attr("r", 4).attr("fill", ink(0.9));
+        .attr("r", 4).attr("fill", s.m.color);
       svg.selectAll(".vl").data(on).join("text")
-        .attr("x", d => x(d[0])).attr("y", d => y(d[1]) - 9)
+        .attr("x", d => x(d[0])).attr("y", d => y(d[1]) - 10)
         .attr("text-anchor", "middle").attr("font-size", 10.5)
         .attr("font-family", "var(--serif)").attr("fill", "var(--ink)")
-        .style("opacity", 0.75).text(d => (d[1] * 100).toFixed(1) + "%");
-      card.addEventListener("click", () => {
-        if (i !== idx) { idx = i; update(); }
-      });
-      return card;
+        .style("opacity", 0.8).text(d => (d[1] * 100).toFixed(1) + "%");
     });
 
-    function update() {
-      cards.forEach((c, i) => {
-        const off = i - idx, abs = Math.abs(off);
-        c.style.transform =
-          `translate(-50%, -50%) translateX(${off * 92}px) ` +
-          `translateZ(${off === 0 ? 110 : -60 - abs * 40}px) ` +
-          `rotateY(${off === 0 ? 0 : off < 0 ? 52 : -52}deg) ` +
-          `scale(${off === 0 ? 1 : 0.72})`;
-        c.style.zIndex = 100 - abs;
-        c.style.opacity = abs > 3 ? 0 : 1;
-        c.style.pointerEvents = abs > 3 ? "none" : "auto";
-        c.classList.toggle("front", off === 0);
-      });
-      const m = series[idx].m;
-      caption.textContent =
-        `${m.label} — ${m.dev} · ${m.weights} weights (${idx + 1} of ${series.length})`;
-    }
-    const step = d => { idx = Math.max(0, Math.min(series.length - 1, idx + d)); update(); };
-    nav.querySelectorAll("button").forEach(b =>
-      b.addEventListener("click", () => step(+b.dataset.d)));
-    wrap.addEventListener("keydown", ev => {
-      if (ev.key === "ArrowLeft") { step(-1); ev.preventDefault(); }
-      if (ev.key === "ArrowRight") { step(1); ev.preventDefault(); }
+    const sw = new Swiper(host.querySelector(".flow-swiper"), {
+      effect: "coverflow",
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: "auto",
+      slideToClickedSlide: true,
+      coverflowEffect: { rotate: 38, stretch: 0, depth: 160, modifier: 1,
+                         slideShadows: false },
+      keyboard: { enabled: true, onlyInViewport: true },
+      autoplay: { delay: 3200, pauseOnMouseEnter: true,
+                  disableOnInteraction: false },
     });
+    const update = () => {
+      const m = series[sw.activeIndex].m;
+      caption.textContent =
+        `${m.label} — ${m.dev} · ${m.weights} weights (${sw.activeIndex + 1} of ${series.length})`;
+    };
+    sw.on("slideChange", update);
     update();
+    host.querySelectorAll(".flow-nav button").forEach(b =>
+      b.addEventListener("click", () =>
+        +b.dataset.d < 0 ? sw.slidePrev() : sw.slideNext()));
+    swipers.push(sw);
   }
 
   function renderLines() {
@@ -266,7 +288,11 @@
       (m, k) => m.thresholds[k], k => "±" + k + "%");
   }
 
-  function renderAll() { renderScatter(); renderLines(); }
+  function renderAll() {
+    renderScatter();
+    swipers.splice(0).forEach(s => s.destroy(true, true));
+    renderLines();
+  }
   addEventListener("gaid-theme", renderAll);
   renderAll();
 })();

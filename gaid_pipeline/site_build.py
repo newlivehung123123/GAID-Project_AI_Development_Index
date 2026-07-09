@@ -423,6 +423,20 @@ EVAL_CATEGORIES = [  # display order + monochrome ink-alpha shade (theme-safe)
     ("hedge", "Hedge", 0.22),
     ("refusal", "Refusal", 0.10),
 ]
+# One colour per organisation (Epoch-style: models share their lab's colour).
+# Even hue spacing at matched saturation/lightness so the set reads as a
+# harmonised palette on the parchment background and in dark mode.
+ORG_COLORS = {
+    "OpenAI": "#C2366B",           # magenta
+    "Anthropic": "#7B4FC7",        # violet
+    "Google DeepMind": "#1F9E8E",  # teal
+    "Meta AI": "#C7692C",          # orange
+    "xAI": "#3E63C4",              # royal blue
+    "Mistral AI": "#A98A1F",       # gold
+    "Alibaba Cloud": "#4F9E4F",    # green
+    "DeepSeek": "#2E8FB8",         # steel blue
+    "Zhipu AI": "#B048A8",         # plum
+}
 
 
 def _evals_data(stats: dict) -> list[dict]:
@@ -439,6 +453,7 @@ def _evals_data(stats: dict) -> list[dict]:
         e = ce.get(m, {})
         out.append({
             "id": m, "label": name, "dev": dev, "weights": weights,
+            "color": ORG_COLORS.get(dev, "#888888"),
             "correct": p["correct"], "fabrication": p["fabrication"],
             "refusal": p["refusal"], "hedge": p["hedge"],
             "misattribution": p["misattribution"],
@@ -469,20 +484,26 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
         f'style="background:rgba(var(--ink-rgb),{a})"></span>{name}</span>'
         for _, name, a in EVAL_CATEGORIES)
     bars = ""
-    for m in order:
+    for rank, m in enumerate(order, 1):
         p = rates[m]["primary"]
         segs = "".join(
             f'<span class="eval-seg" style="width:{p[cat]*100:.2f}%;'
             f'background:rgba(var(--ink-rgb),{a})" title="{name} {p[cat]:.1%}"></span>'
             for cat, name, a in EVAL_CATEGORIES)
         name, dev, weights = label(m)
-        bars += (f'<div class="eval-row"><span class="eval-name">{name}'
+        color = ORG_COLORS.get(dev, "#888")
+        bars += (f'<div class="eval-row"><span class="eval-rank">#{rank}</span>'
+                 f'<span class="eval-name"><span class="dev-dot" '
+                 f'style="background:{color}"></span>{name}'
                  f'<small>{dev} · {weights}</small></span>'
-                 f'<span class="eval-bar">{segs}</span></div>')
+                 f'<span class="eval-bar">{segs}</span>'
+                 f'<span class="eval-fab">{p["fabrication"]:.1%}</span></div>')
     profile_inner = f"""
     <p class="card-body">Share of each model&rsquo;s {n_queries:,} responses by
-    category, at the primary &plusmn;10% correctness threshold. Models ordered
-    by fabrication rate (lowest first).</p>
+    category, at the primary &plusmn;10% correctness threshold. <b>Ranked by
+    fabrication rate</b> &mdash; #1 fabricates least; the figure at the end of
+    each bar is that model&rsquo;s fabrication rate. Colour dot = developer
+    (used across all charts on this page).</p>
     <div class="eval-legend">{legend}</div>
     <div class="eval-chart">{bars}</div>"""
 
@@ -493,7 +514,9 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
     for m in order:
         p = rates[m]["primary"]
         name, dev, weights = label(m)
-        rows += (f"<tr><td>{name}</td><td>{dev}</td><td>{weights}</td>"
+        dot = (f'<span class="dev-dot" '
+               f'style="background:{ORG_COLORS.get(dev, "#888")}"></span>')
+        rows += (f"<tr><td>{dot}{name}</td><td>{dev}</td><td>{weights}</td>"
                  + "".join(f'<td class="num">{p[cat]:.1%}</td>'
                            for cat, _, _ in EVAL_CATEGORIES) + "</tr>")
     table_inner = f"""
@@ -548,8 +571,8 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
     <p class="card-body">Do models fabricate more about some countries than
     others? One card per model: its fabrication rate across World Bank income
     tiers, from low-income (LIC) to high-income (HIC) countries, with the
-    other models as faint context curves. Flip through the deck &mdash; click
-    a side card, use the arrows, or the arrow keys.</p>
+    other models as faint context curves. Drag the deck, click any card, use
+    the arrows or arrow keys &mdash; it also advances by itself.</p>
     <div id="eval-tiers"></div>
     <p class="note" style="margin-top:0.8rem">LIC = low income &middot; LMC =
     lower-middle &middot; UMC = upper-middle &middot; HIC = high income
@@ -568,7 +591,7 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
     order of magnitude of the truth), so no single scoring rule drives the ranking.
     One card per model: its fabrication rate as the correctness tolerance
     widens from &plusmn;5% to &plusmn;30%, with the other models as faint
-    context curves. Flip through the deck.</p>
+    context curves. Drag, click, or let it play.</p>
     <div id="eval-thresholds"></div>
     <table class="data" style="margin-top:1.2rem"><thead><tr><th>Model</th>
     <th class="num">&plusmn;5%</th>
@@ -645,6 +668,8 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
 {panel("Category Rates by Model", table_inner)}
 {panel("How the Evaluation Works", method_inner)}
 <script>const EVALS = {json.dumps(_evals_data(stats))};</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="/assets/evals.js?v={BUILD}"></script>"""
     return layout(
