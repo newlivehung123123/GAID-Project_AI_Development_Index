@@ -18,6 +18,7 @@ from datetime import date
 from pathlib import Path
 
 import requests
+import yaml
 
 BUILD = str(int(time.time()))  # cache-buster stamped on every asset URL
 
@@ -454,7 +455,7 @@ def _evals_data(stats: dict) -> list[dict]:
     return out
 
 
-def build_evals(stats: dict) -> str:
+def build_evals(stats: dict, indicators: list[dict]) -> str:
     rates = stats["headline_rates"]
     order = sorted(rates, key=lambda m: rates[m]["primary"]["fabrication"])
     n_models = len(order)
@@ -545,10 +546,10 @@ def build_evals(stats: dict) -> str:
 
     tiers_inner = """
     <p class="card-body">Do models fabricate more about some countries than
-    others? Each panel shows one model&rsquo;s fabrication rate across World
-    Bank income tiers, from low-income (LIC) to high-income (HIC) countries;
-    the faint curves behind it are the other models, for context. Hover a
-    panel for exact values.</p>
+    others? One card per model: its fabrication rate across World Bank income
+    tiers, from low-income (LIC) to high-income (HIC) countries, with the
+    other models as faint context curves. Flip through the deck &mdash; click
+    a side card, use the arrows, or the arrow keys.</p>
     <div id="eval-tiers"></div>
     <p class="note" style="margin-top:0.8rem">LIC = low income &middot; LMC =
     lower-middle &middot; UMC = upper-middle &middot; HIC = high income
@@ -565,8 +566,9 @@ def build_evals(stats: dict) -> str:
     <p class="card-body">Fabrication is scored at four tolerance thresholds plus a
     threshold-free, scale-invariant check (share of numeric answers within half an
     order of magnitude of the truth), so no single scoring rule drives the ranking.
-    Each panel: one model&rsquo;s fabrication rate as the correctness tolerance
-    widens from &plusmn;5% to &plusmn;30%; faint curves are the other models.</p>
+    One card per model: its fabrication rate as the correctness tolerance
+    widens from &plusmn;5% to &plusmn;30%, with the other models as faint
+    context curves. Flip through the deck.</p>
     <div id="eval-thresholds"></div>
     <table class="data" style="margin-top:1.2rem"><thead><tr><th>Model</th>
     <th class="num">&plusmn;5%</th>
@@ -589,15 +591,29 @@ def build_evals(stats: dict) -> str:
             ("Misattribution", "A value explicitly tied to a different year "
                                "than the one asked about."),
         ])
+    ind_rows = "".join(
+        f'<tr><td>{i["label"][0].upper() + i["label"][1:]}</td>'
+        f'<td>{i["theme"]}</td><td>{i["source"]}</td></tr>'
+        for i in sorted(indicators, key=lambda i: (i["theme"], i["label"])))
+    indicators_table = f"""
+    <p class="card-body" style="margin-top:1.4rem"><b>The {len(indicators)}
+    indicators.</b> Every question asks for one of these verified quantities,
+    for a specific country and year:</p>
+    <table class="data" style="margin-top:0.8rem"><thead><tr>
+    <th>What the model is asked</th><th>Theme</th><th>Source</th></tr></thead>
+    <tbody>{ind_rows}</tbody></table>"""
+
     method_inner = f"""
     <p class="card-body">The {n_queries:,} queries are built from verified
-    country-year observations covering 18 screened GAID indicators (2010&ndash;2023):
-    2,978 direct questions over the full observation grid, plus four paired
-    variants asked on an identical stratified subsample so variant effects are
-    measured on the same facts. Every response is classified into one of five
-    mutually exclusive categories:</p>
+    country-year observations covering {len(indicators)} screened GAID
+    indicators (2010&ndash;2023): 2,978 direct questions over the full
+    observation grid, plus four paired variants asked on an identical
+    stratified subsample so variant effects are measured on the same facts.
+    Every response is classified into one of five mutually exclusive
+    categories:</p>
     <div class="cards-stack" style="margin-top:1.1rem">{cat_cards}</div>
-    <p class="card-body" style="margin-top:1.1rem"><b>Settings.</b> Identical
+    {indicators_table}
+    <p class="card-body" style="margin-top:1.4rem"><b>Settings.</b> Identical
     prompts for every model; temperature 0; hidden chain-of-thought disabled or
     minimised where the provider allows it (per-model settings documented in the
     open-source pipeline); serving endpoint recorded per response. Numeric
@@ -666,8 +682,14 @@ def build_site(repo_root: Path) -> dict:
         stats["headline_rates"] = {m: r for m, r in stats["headline_rates"].items()
                                    if m in stats.get("complete_models", [])}
         if stats["headline_rates"]:
+            ind_cfg = yaml.safe_load(
+                (repo_root / "config" / "indicators.yaml").read_text())
+            indicators = (ind_cfg["indicators"]
+                          if isinstance(ind_cfg, dict) and "indicators" in ind_cfg
+                          else ind_cfg)
             (dist / "evaluations").mkdir()
-            (dist / "evaluations" / "index.html").write_text(build_evals(stats))
+            (dist / "evaluations" / "index.html").write_text(
+                build_evals(stats, indicators))
             evals_built = True
     (dist / ".htaccess").write_text(HTACCESS)
     # favicon.ico at the root (browsers auto-request /favicon.ico) + PWA manifest
