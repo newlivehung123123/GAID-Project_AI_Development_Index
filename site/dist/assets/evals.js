@@ -277,6 +277,7 @@
       grabCursor: true,
       centeredSlides: true,
       slidesPerView: "auto",
+      threshold: 8,   // presses that move <8px are taps, not drags
       rewind: true,   // indefinite cycle: prev at the first card wraps to the
                       // last, next at the last wraps back to the first
       coverflowEffect: { rotate: 38, stretch: 0, depth: 160, modifier: 1,
@@ -292,20 +293,29 @@
     };
     sw.on("slideChange", update);
     update();
-    // Every click on the deck navigates. A click that reaches a SIDE slide
-    // jumps straight to it; a click landing on the front card's outer thirds
-    // (which visually overlap the neighbours) steps prev/next.
-    host.querySelector(".flow-swiper").addEventListener("click", ev => {
-      const slide = ev.target.closest(".swiper-slide");
+    // Tap detection from raw pointer events — Swiper suppresses CLICK events
+    // whenever the cursor moves a pixel or two between press and release
+    // (the cause of the intermittent dead clicks), but it cannot suppress
+    // pointerdown/pointerup. Press+release within 8px/600ms = navigate:
+    // a side card jumps to itself; the front card's outer thirds (which
+    // visually overlap the neighbours) step prev/next; a real drag swipes.
+    const flowEl = host.querySelector(".flow-swiper");
+    let px = 0, py = 0, pt = 0;
+    flowEl.addEventListener("pointerdown", e => {
+      px = e.clientX; py = e.clientY; pt = Date.now();
+    });
+    flowEl.addEventListener("pointerup", e => {
+      if (Math.hypot(e.clientX - px, e.clientY - py) > 8) return;  // drag
+      if (Date.now() - pt > 600) return;                           // hold
+      const slide = e.target.closest(".swiper-slide");
+      if (!slide) return;
       const slides = [...host.querySelectorAll(".swiper-slide")];
-      if (slide) {
-        const i = slides.indexOf(slide);
-        if (i !== sw.activeIndex) { sw.slideTo(i); return; }
-        const r = slide.getBoundingClientRect();
-        const fx = (ev.clientX - r.left) / r.width;
-        if (fx < 0.33) sw.slidePrev();
-        else if (fx > 0.67) sw.slideNext();
-      }
+      const i = slides.indexOf(slide);
+      if (i !== sw.activeIndex) { sw.slideTo(i); return; }
+      const r = slide.getBoundingClientRect();
+      const fx = (e.clientX - r.left) / r.width;
+      if (fx < 0.33) sw.slidePrev();
+      else if (fx > 0.67) sw.slideNext();
     });
     host.querySelectorAll(".flow-nav button").forEach(b =>
       b.addEventListener("click", () =>
