@@ -40,12 +40,22 @@
     tip.style.top = (y + window.scrollY) + "px";
   }
   const hideTip = () => tip.classList.remove("on");
-  const profile = m => `<div class="pc-head"><b><span class="dev-dot" style="background:${m.color}"></span>${m.label}</b>
+  const logoImg = (m, s = 15) => m.logo
+    ? `<img class="dev-logo${m.mono ? " mono" : ""}" src="/assets/logos/${m.logo}" width="${s}" height="${s}" alt="">`
+    : "";
+  const profile = m => `<div class="pc-head"><b>${logoImg(m)}${m.label}</b>
     <span>${m.dev} · ${m.weights} weights</span></div>` +
     ["correct", "fabrication", "refusal", "hedge", "misattribution"].map(k =>
       `<div class="pc-row"><span class="pc-label">${METRICS[k].label.split(" ")[0]}</span>
        <span class="pc-bar"><span style="width:${(m[k] * 100).toFixed(1)}%"></span></span>
        <span class="pc-val">${fmt(k, m[k])}</span></div>`).join("");
+
+  /* instant tooltips for the stacked profile bars */
+  document.querySelectorAll(".eval-seg[data-tip]").forEach(seg => {
+    seg.addEventListener("mousemove", ev =>
+      showTip(ev, `<div class="pc-head"><b>${seg.dataset.tip}</b></div>`));
+    seg.addEventListener("mouseleave", hideTip);
+  });
 
   /* ── metric-space scatter ──────────────────────────────────────── */
   const sx = document.getElementById("ev-x"), sy = document.getElementById("ev-y");
@@ -175,6 +185,11 @@
         .attr("font-weight", 600)
         .attr("fill", it.m.color).text(it.m.label);
     });
+    const legend = document.getElementById("ev-legend");
+    legend.innerHTML = shown.map(m => `
+      <div class="lg-row" style="opacity:${active(m) ? 1 : 0.3}">
+        ${logoImg(m, 16)}<span style="color:${m.color}">${m.label}</span>
+      </div>`).join("");
     document.getElementById("ev-note").textContent =
       `${items.length} of ${shown.length} models shown` +
       (weightFilter === "all" ? "" : ` (${weightFilter} weights)`) +
@@ -221,7 +236,7 @@
       slide.className = "swiper-slide";
       const card = document.createElement("div");
       card.className = "flow-card";
-      card.innerHTML = `<h4><span class="dev-dot" style="background:${s.m.color}"></span>${s.m.label}</h4>`;
+      card.innerHTML = `<h4>${logoImg(s.m, 16)}${s.m.label}</h4>`;
       slide.appendChild(card);
       wrapper.appendChild(slide);
       const svg = d3.select(card).append("svg").attr("viewBox", `0 0 ${W} ${H}`);
@@ -262,6 +277,8 @@
       centeredSlides: true,
       slidesPerView: "auto",
       slideToClickedSlide: true,
+      rewind: true,   // indefinite cycle: prev at the first card wraps to the
+                      // last, next at the last wraps back to the first
       coverflowEffect: { rotate: 38, stretch: 0, depth: 160, modifier: 1,
                          slideShadows: false },
       keyboard: { enabled: true, onlyInViewport: true },
@@ -269,12 +286,16 @@
                   disableOnInteraction: false },
     });
     const update = () => {
-      const m = series[sw.activeIndex].m;
+      const m = series[sw.realIndex].m;
       caption.textContent =
-        `${m.label} — ${m.dev} · ${m.weights} weights (${sw.activeIndex + 1} of ${series.length})`;
+        `${m.label} — ${m.dev} · ${m.weights} weights (${sw.realIndex + 1} of ${series.length})`;
     };
     sw.on("slideChange", update);
     update();
+    host.querySelectorAll(".swiper-slide").forEach((slide, i) =>
+      slide.addEventListener("click", () => {
+        if (sw.activeIndex !== i) sw.slideTo(i);
+      }));
     host.querySelectorAll(".flow-nav button").forEach(b =>
       b.addEventListener("click", () =>
         +b.dataset.d < 0 ? sw.slidePrev() : sw.slideNext()));

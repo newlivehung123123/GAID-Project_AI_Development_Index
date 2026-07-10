@@ -426,6 +426,32 @@ EVAL_CATEGORIES = [  # display order + monochrome ink-alpha shade (theme-safe)
 # One colour per organisation (Epoch-style: models share their lab's colour).
 # Even hue spacing at matched saturation/lightness so the set reads as a
 # harmonised palette on the parchment background and in dark mode.
+MODEL_LOGOS = {  # local copies in /assets/logos (LobeHub AI icon set)
+    "claude-opus-4-8": ("claude-color.svg", False),
+    "gpt-5-5": ("openai.svg", True),
+    "gpt-5-4": ("openai.svg", True),
+    "gemini-3-1-pro": ("gemini-color.svg", False),
+    "llama-4-maverick": ("meta-color.svg", False),
+    "grok-4-3": ("grok.svg", True),
+    "grok-4-20": ("grok.svg", True),
+    "mistral-large-3": ("mistral-color.svg", False),
+    "deepseek-v3-0324": ("deepseek-color.svg", False),
+    "qwen3-235b-a22b": ("qwen-color.svg", False),
+    "glm-5-2": ("zhipu-color.svg", False),
+}
+
+
+def model_logo_img(mid: str, size: int = 15) -> str:
+    """Inline <img> for a model's developer logo ('mono' logos get inverted
+    in dark mode via CSS)."""
+    logo, mono = MODEL_LOGOS.get(mid, (None, False))
+    if not logo:
+        return ""
+    cls = "dev-logo mono" if mono else "dev-logo"
+    return (f'<img class="{cls}" src="/assets/logos/{logo}" alt="" '
+            f'width="{size}" height="{size}" loading="lazy">')
+
+
 ORG_COLORS = {
     "OpenAI": "#C2366B",           # magenta
     "Anthropic": "#7B4FC7",        # violet
@@ -454,6 +480,8 @@ def _evals_data(stats: dict) -> list[dict]:
         out.append({
             "id": m, "label": name, "dev": dev, "weights": weights,
             "color": ORG_COLORS.get(dev, "#888888"),
+            "logo": MODEL_LOGOS.get(m, ("", False))[0],
+            "mono": MODEL_LOGOS.get(m, ("", False))[1],
             "correct": p["correct"], "fabrication": p["fabrication"],
             "refusal": p["refusal"], "hedge": p["hedge"],
             "misattribution": p["misattribution"],
@@ -488,13 +516,12 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
         p = rates[m]["primary"]
         segs = "".join(
             f'<span class="eval-seg" style="width:{p[cat]*100:.2f}%;'
-            f'background:rgba(var(--ink-rgb),{a})" title="{name} {p[cat]:.1%}"></span>'
+            f'background:rgba(var(--ink-rgb),{a})" '
+            f'data-tip="{name} {p[cat]:.1%}"></span>'
             for cat, name, a in EVAL_CATEGORIES)
         name, dev, weights = label(m)
-        color = ORG_COLORS.get(dev, "#888")
         bars += (f'<div class="eval-row"><span class="eval-rank">#{rank}</span>'
-                 f'<span class="eval-name"><span class="dev-dot" '
-                 f'style="background:{color}"></span>{name}'
+                 f'<span class="eval-name">{model_logo_img(m)}{name}'
                  f'<small>{dev} · {weights}</small></span>'
                  f'<span class="eval-bar">{segs}</span>'
                  f'<span class="eval-fab">{p["fabrication"]:.1%}</span></div>')
@@ -502,8 +529,8 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
     <p class="card-body">Share of each model&rsquo;s {n_queries:,} responses by
     category, at the primary &plusmn;10% correctness threshold. <b>Ranked by
     fabrication rate</b> &mdash; #1 fabricates least; the figure at the end of
-    each bar is that model&rsquo;s fabrication rate. Colour dot = developer
-    (used across all charts on this page).</p>
+    each bar is that model&rsquo;s fabrication rate. Logos and colours
+    identify each developer across all charts on this page.</p>
     <div class="eval-legend">{legend}</div>
     <div class="eval-row eval-headrow" aria-hidden="true"><span class="eval-rank"></span>
     <span class="eval-name"></span><span class="eval-bar" style="background:transparent"></span>
@@ -517,9 +544,8 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
     for m in order:
         p = rates[m]["primary"]
         name, dev, weights = label(m)
-        dot = (f'<span class="dev-dot" '
-               f'style="background:{ORG_COLORS.get(dev, "#888")}"></span>')
-        rows += (f"<tr><td>{dot}{name}</td><td>{dev}</td><td>{weights}</td>"
+        rows += (f"<tr><td>{model_logo_img(m)}{name}</td>"
+                 f"<td>{dev}</td><td>{weights}</td>"
                  + "".join(f'<td class="num">{p[cat]:.1%}</td>'
                            for cat, _, _ in EVAL_CATEGORIES) + "</tr>")
     table_inner = f"""
@@ -567,7 +593,10 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
       <button class="chip" data-w="open">Open weights</button>
       <button class="chip" data-w="proprietary">Proprietary</button>
     </div>
-    <div id="eval-scatter"></div>
+    <div class="scatter-flex">
+      <div id="eval-scatter"></div>
+      <div id="ev-legend" aria-label="Model legend"></div>
+    </div>
     <p class="note" id="ev-note" style="margin-top:0.8rem"></p>"""
 
     tiers_inner = """
@@ -674,13 +703,13 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
   <button class="toc-toggle chip" aria-expanded="false">&#9776;&nbsp;Contents</button>
   <div class="toc-list">
     <span class="toc-title">On this page</span>
-    <a href="#about">What This Benchmark Measures</a>
-    <a href="#profile">Honesty&ndash;Helpfulness Profile</a>
-    <a href="#explore">Explore the Model Space</a>
-    <a href="#income-tiers">Fabrication by Income Tier</a>
-    <a href="#robustness">Threshold Sensitivity</a>
-    <a href="#rates">Category Rates by Model</a>
-    <a href="#method">How the Evaluation Works</a>
+    <a href="#about" title="What This Benchmark Measures"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="7.6" r="0.6" fill="currentColor"/></svg><span>What This Benchmark Measures</span></a>
+    <a href="#profile" title="Honesty–Helpfulness Profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="17" x2="18" y2="17"/></svg><span>Honesty–Helpfulness Profile</span></a>
+    <a href="#explore" title="Explore the Model Space"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16h16"/><circle cx="9" cy="14" r="1.7"/><circle cx="13.5" cy="8.5" r="1.7"/><circle cx="17.5" cy="13" r="1.7"/></svg><span>Explore the Model Space</span></a>
+    <a href="#income-tiers" title="Fabrication by Income Tier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c3.2 3.6 3.2 14.4 0 18"/><path d="M12 3c-3.2 3.6-3.2 14.4 0 18"/></svg><span>Fabrication by Income Tier</span></a>
+    <a href="#robustness" title="Threshold Sensitivity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 6-8"/><path d="M3 21h18" opacity="0.4"/></svg><span>Threshold Sensitivity</span></a>
+    <a href="#rates" title="Category Rates by Model"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/><line x1="10" y1="5" x2="10" y2="19"/></svg><span>Category Rates by Model</span></a>
+    <a href="#method" title="How the Evaluation Works"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg><span>How the Evaluation Works</span></a>
   </div>
 </nav>
 {panel("What This Benchmark Measures", context_inner, anchor="about")}
