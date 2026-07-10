@@ -291,6 +291,11 @@
       caption.textContent =
         `${m.label} — ${m.dev} · ${m.weights} weights (${sw.realIndex + 1} of ${series.length})`;
     };
+    // Swiper DROPS navigation commands while a transition is in flight
+    // (including its own autoplay transitions) — the root cause of taps
+    // that "sometimes" did nothing. go() clears the in-flight flag so a
+    // command ALWAYS executes.
+    const go = fn => { sw.animating = false; fn(); };
     sw.on("slideChange", update);
     update();
     // Tap detection from raw pointer events — Swiper suppresses CLICK events
@@ -302,24 +307,28 @@
     const flowEl = host.querySelector(".flow-swiper");
     let px = 0, py = 0, pt = 0;
     flowEl.addEventListener("pointerdown", e => {
+      sw.autoplay.stop();   // the deck stops moving the moment you touch it
       px = e.clientX; py = e.clientY; pt = Date.now();
     });
     flowEl.addEventListener("pointerup", e => {
       if (Math.hypot(e.clientX - px, e.clientY - py) > 8) return;  // drag
       if (Date.now() - pt > 600) return;                           // hold
-      const slide = e.target.closest(".swiper-slide");
-      if (!slide) return;
-      const slides = [...host.querySelectorAll(".swiper-slide")];
-      const i = slides.indexOf(slide);
-      if (i !== sw.activeIndex) { sw.slideTo(i); return; }
-      const r = slide.getBoundingClientRect();
+      // PURE STATIONARY ZONES — no card-geometry, no card-identity logic.
+      // Mid-transition the outgoing card still covers the tap point, so any
+      // "jump to the card you hit" branch bounces users BACK to the card
+      // they just left (the final root cause of the intermittent behaviour).
+      // Left zone = previous, right zone = next, centre = nothing. This
+      // cannot be fooled by any animation state.
+      const r = flowEl.getBoundingClientRect();
       const fx = (e.clientX - r.left) / r.width;
-      if (fx < 0.33) sw.slidePrev();
-      else if (fx > 0.67) sw.slideNext();
+      if (fx < 0.38) go(() => sw.slidePrev());
+      else if (fx > 0.62) go(() => sw.slideNext());
     });
     host.querySelectorAll(".flow-nav button").forEach(b =>
-      b.addEventListener("click", () =>
-        +b.dataset.d < 0 ? sw.slidePrev() : sw.slideNext()));
+      b.addEventListener("click", () => {
+        sw.autoplay.stop();
+        go(() => +b.dataset.d < 0 ? sw.slidePrev() : sw.slideNext());
+      }));
     swipers.push(sw);
   }
 
