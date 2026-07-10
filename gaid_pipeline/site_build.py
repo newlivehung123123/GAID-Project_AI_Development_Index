@@ -505,6 +505,9 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
     each bar is that model&rsquo;s fabrication rate. Colour dot = developer
     (used across all charts on this page).</p>
     <div class="eval-legend">{legend}</div>
+    <div class="eval-row eval-headrow" aria-hidden="true"><span class="eval-rank"></span>
+    <span class="eval-name"></span><span class="eval-bar" style="background:transparent"></span>
+    <span class="eval-fab eval-fab-head">Fabrication Rate</span></div>
     <div class="eval-chart">{bars}</div>"""
 
     head = ("<tr><th>Model</th><th>Developer</th><th>Weights</th>"
@@ -568,11 +571,14 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
     <p class="note" id="ev-note" style="margin-top:0.8rem"></p>"""
 
     tiers_inner = """
-    <p class="card-body">Do models fabricate more about some countries than
-    others? One card per model: its fabrication rate across World Bank income
-    tiers, from low-income (LIC) to high-income (HIC) countries, with the
-    other models as faint context curves. Drag the deck, click any card, use
-    the arrows or arrow keys &mdash; it also advances by itself.</p>
+    <p class="card-body"><b>Research Question (RQ):</b> Do models fabricate
+    more about some countries than others?</p>
+    <p class="card-body" style="margin-top:0.8rem"><b>One Card Per Model:</b>
+    its fabrication rate across World Bank income tiers, from low-income (LIC)
+    to high-income (HIC) countries, with the other models as faint context
+    curves.</p>
+    <p class="card-body" style="margin-top:0.8rem"><b>Instruction:</b> Drag the
+    deck, click any card, use the arrows or arrow keys.</p>
     <div id="eval-tiers"></div>
     <p class="note" style="margin-top:0.8rem">LIC = low income &middot; LMC =
     lower-middle &middot; UMC = upper-middle &middot; HIC = high income
@@ -586,12 +592,15 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
            if ce else '<td class="num">–</td>')(stats["continuous_error"].get(m))
         for m in order)
     robust_inner = f"""
-    <p class="card-body">Fabrication is scored at four tolerance thresholds plus a
-    threshold-free, scale-invariant check (share of numeric answers within half an
-    order of magnitude of the truth), so no single scoring rule drives the ranking.
-    One card per model: its fabrication rate as the correctness tolerance
-    widens from &plusmn;5% to &plusmn;30%, with the other models as faint
-    context curves. Drag, click, or let it play.</p>
+    <p class="card-body"><b>Methodology:</b> Fabrication is scored at four
+    tolerance thresholds plus a threshold-free, scale-invariant check (share of
+    numeric answers within half an order of magnitude of the truth), so no
+    single scoring rule drives the ranking.</p>
+    <p class="card-body" style="margin-top:0.8rem"><b>One Card Per Model:</b>
+    its fabrication rate as the correctness tolerance widens from &plusmn;5%
+    to &plusmn;30%, with the other models as faint context curves.</p>
+    <p class="card-body" style="margin-top:0.8rem"><b>Instruction:</b> Drag,
+    click, or let it play.</p>
     <div id="eval-thresholds"></div>
     <table class="data" style="margin-top:1.2rem"><thead><tr><th>Model</th>
     <th class="num">&plusmn;5%</th>
@@ -627,27 +636,28 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
     <tbody>{ind_rows}</tbody></table>"""
 
     method_inner = f"""
-    <p class="card-body">The {n_queries:,} queries are built from verified
+    <p class="card-body">We built {n_queries:,} queries from verified
     country-year observations covering {len(indicators)} screened GAID
     indicators (2010&ndash;2023): 2,978 direct questions over the full
     observation grid, plus four paired variants asked on an identical
-    stratified subsample so variant effects are measured on the same facts.
-    Every response is classified into one of five mutually exclusive
-    categories:</p>
+    stratified subsample so variant effects are measured on the same facts.</p>
+    <p class="card-body" style="margin-top:0.8rem">Every response is classified
+    into one of five mutually exclusive categories:</p>
     <div class="cards-stack" style="margin-top:1.1rem">{cat_cards}</div>
     {indicators_table}
-    <p class="card-body" style="margin-top:1.4rem"><b>Settings.</b> Identical
-    prompts for every model; temperature 0; hidden chain-of-thought disabled or
-    minimised where the provider allows it (per-model settings documented in the
-    open-source pipeline); serving endpoint recorded per response. Numeric
-    correctness uses a &plusmn;10% primary tolerance with &plusmn;5/20/30%
-    sensitivity bounds and a scale-invariant log-ratio check.</p>
+    <p class="card-body" style="margin-top:1.4rem"><b>Settings.</b> We ran
+    identical prompts for every model; we set temperature as 0; we disabled or
+    minimised hidden chain-of-thought where the provider allows it (note:
+    per-model settings documented in the open-source pipeline); serving
+    endpoint recorded per response. It is noteworthy that numeric correctness
+    uses a &plusmn;10% primary tolerance with &plusmn;5/20/30% sensitivity
+    bounds and a scale-invariant log-ratio check.</p>
     <p class="card-body" style="margin-top:1.1rem"><b>What this does and does not
     measure.</b> These scores measure factual recall and epistemic honesty about
-    country-level AI statistics &mdash; not general capability, reasoning, or
+    country-level AI statistics but not general capability, reasoning, or
     usefulness. Classification is automated and rule-audited; a blind
     human-validation round is scheduled and will be reported alongside these
-    results.</p>
+    results in due course.</p>
     <a class="cta-link" href="/methodology/">Index methodology &rarr;</a>"""
 
     body = page_title_block(
@@ -660,13 +670,26 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
 <span class="badge"><b>{stats['n_results']:,}</b>responses evaluated</span>
 <span class="badge"><b>{n_queries:,}</b>queries per model</span>
 <span class="badge"><b>5</b>response categories</span></div>
-{panel("What This Benchmark Measures", context_inner)}
-{panel("Honesty–Helpfulness Profile", profile_inner)}
-{panel("Explore the Model Space", explore_inner)}
-{panel("Fabrication by Country Income Tier", tiers_inner)}
-{panel("Robustness — Threshold Sensitivity", robust_inner)}
-{panel("Category Rates by Model", table_inner)}
-{panel("How the Evaluation Works", method_inner)}
+<nav class="toc" id="page-toc" aria-label="Page contents">
+  <button class="toc-toggle chip" aria-expanded="false">&#9776;&nbsp;Contents</button>
+  <div class="toc-list">
+    <span class="toc-title">On this page</span>
+    <a href="#about">What This Benchmark Measures</a>
+    <a href="#profile">Honesty&ndash;Helpfulness Profile</a>
+    <a href="#explore">Explore the Model Space</a>
+    <a href="#income-tiers">Fabrication by Income Tier</a>
+    <a href="#robustness">Threshold Sensitivity</a>
+    <a href="#rates">Category Rates by Model</a>
+    <a href="#method">How the Evaluation Works</a>
+  </div>
+</nav>
+{panel("What This Benchmark Measures", context_inner, anchor="about")}
+{panel("Honesty–Helpfulness Profile", profile_inner, anchor="profile")}
+{panel("Explore the Model Space", explore_inner, anchor="explore")}
+{panel("Fabrication by Country Income Tier", tiers_inner, anchor="income-tiers")}
+{panel("Robustness — Threshold Sensitivity", robust_inner, anchor="robustness")}
+{panel("Category Rates by Model", table_inner, anchor="rates")}
+{panel("How the Evaluation Works", method_inner, anchor="method")}
 <script>const EVALS = {json.dumps(_evals_data(stats))};</script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

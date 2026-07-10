@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png?v=1783621317">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png?v=1783621317">
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png?v=1783621317">
-<link rel="manifest" href="/site.webmanifest?v=1783621317">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png?v=1783658869">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png?v=1783658869">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png?v=1783658869">
+<link rel="manifest" href="/site.webmanifest?v=1783658869">
 <meta name="theme-color" content="#F0EBE0">
 <meta name="google-site-verification" content="W-FyzGNy5JfYmaq3DHR5sgBjuIpouK9SsGSFuf8VU6A" />
 <title>GAID AI Development Index - Model Evaluations</title>
@@ -19,18 +19,18 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://gaid.aiinsocietyhub.com/evaluations/">
 <meta property="og:site_name" content="Explore the societal impacts of AI">
-<meta property="og:image" content="https://gaid.aiinsocietyhub.com/assets/og-image.png?v=1783621317">
+<meta property="og:image" content="https://gaid.aiinsocietyhub.com/assets/og-image.png?v=1783658869">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Explore the societal impacts of AI">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="GAID AI Development Index - Model Evaluations">
 <meta name="twitter:description" content="How 11 frontier LLMs (GPT, Claude, Gemini, Grok, Llama, Mistral, Qwen, DeepSeek, GLM) perform against verified AI data for every country: correctness, fabrication and refusal rates.">
-<meta name="twitter:image" content="https://gaid.aiinsocietyhub.com/assets/og-image.png?v=1783621317">
+<meta name="twitter:image" content="https://gaid.aiinsocietyhub.com/assets/og-image.png?v=1783658869">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,300;1,8..60,400;1,8..60,500;1,8..60,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=1783621317">
-<script src="/assets/theme.js?v=1783621317"></script>
+<link rel="stylesheet" href="/assets/style.css?v=1783658869">
+<script src="/assets/theme.js?v=1783658869"></script>
 </head>
 <body>
 <header class="site">
@@ -57,7 +57,20 @@
 <span class="badge"><b>73,238</b>responses evaluated</span>
 <span class="badge"><b>6,658</b>queries per model</span>
 <span class="badge"><b>5</b>response categories</span></div>
-<div class="glass-panel"><h2>What This Benchmark Measures</h2><div class="divider"></div>
+<nav class="toc" id="page-toc" aria-label="Page contents">
+  <button class="toc-toggle chip" aria-expanded="false">&#9776;&nbsp;Contents</button>
+  <div class="toc-list">
+    <span class="toc-title">On this page</span>
+    <a href="#about">What This Benchmark Measures</a>
+    <a href="#profile">Honesty&ndash;Helpfulness Profile</a>
+    <a href="#explore">Explore the Model Space</a>
+    <a href="#income-tiers">Fabrication by Income Tier</a>
+    <a href="#robustness">Threshold Sensitivity</a>
+    <a href="#rates">Category Rates by Model</a>
+    <a href="#method">How the Evaluation Works</a>
+  </div>
+</nav>
+<div class="glass-panel" id="about"><h2>What This Benchmark Measures</h2><div class="divider"></div>
     <p class="card-body">Large language models are routinely asked to summarise
     how AI is developing around the world &mdash; but how much do they actually
     know, and what do they do when they don&rsquo;t know? This benchmark asks
@@ -82,15 +95,18 @@
     option), all models receive identical prompts at temperature 0, and every
     response is cached with its serving endpoint for full reproducibility.
     Evaluated July 2026.</p></div>
-<div class="glass-panel"><h2>Honesty–Helpfulness Profile</h2><div class="divider"></div>
+<div class="glass-panel" id="profile"><h2>Honesty–Helpfulness Profile</h2><div class="divider"></div>
     <p class="card-body">Share of each model&rsquo;s 6,658 responses by
     category, at the primary &plusmn;10% correctness threshold. <b>Ranked by
     fabrication rate</b> &mdash; #1 fabricates least; the figure at the end of
     each bar is that model&rsquo;s fabrication rate. Colour dot = developer
     (used across all charts on this page).</p>
     <div class="eval-legend"><span class="eval-key"><span class="eval-swatch" style="background:rgba(var(--ink-rgb),0.85)"></span>Correct</span><span class="eval-key"><span class="eval-swatch" style="background:rgba(var(--ink-rgb),0.55)"></span>Fabrication</span><span class="eval-key"><span class="eval-swatch" style="background:rgba(var(--ink-rgb),0.38)"></span>Misattribution</span><span class="eval-key"><span class="eval-swatch" style="background:rgba(var(--ink-rgb),0.22)"></span>Hedge</span><span class="eval-key"><span class="eval-swatch" style="background:rgba(var(--ink-rgb),0.1)"></span>Refusal</span></div>
+    <div class="eval-row eval-headrow" aria-hidden="true"><span class="eval-rank"></span>
+    <span class="eval-name"></span><span class="eval-bar" style="background:transparent"></span>
+    <span class="eval-fab eval-fab-head">Fabrication Rate</span></div>
     <div class="eval-chart"><div class="eval-row"><span class="eval-rank">#1</span><span class="eval-name"><span class="dev-dot" style="background:#7B4FC7"></span>Claude Opus 4.8<small>Anthropic · proprietary</small></span><span class="eval-bar"><span class="eval-seg" style="width:2.24%;background:rgba(var(--ink-rgb),0.85)" title="Correct 2.2%"></span><span class="eval-seg" style="width:22.75%;background:rgba(var(--ink-rgb),0.55)" title="Fabrication 22.8%"></span><span class="eval-seg" style="width:0.83%;background:rgba(var(--ink-rgb),0.38)" title="Misattribution 0.8%"></span><span class="eval-seg" style="width:9.01%;background:rgba(var(--ink-rgb),0.22)" title="Hedge 9.0%"></span><span class="eval-seg" style="width:65.17%;background:rgba(var(--ink-rgb),0.1)" title="Refusal 65.2%"></span></span><span class="eval-fab">22.8%</span></div><div class="eval-row"><span class="eval-rank">#2</span><span class="eval-name"><span class="dev-dot" style="background:#C7692C"></span>Llama 4 Maverick<small>Meta AI · open</small></span><span class="eval-bar"><span class="eval-seg" style="width:7.40%;background:rgba(var(--ink-rgb),0.85)" title="Correct 7.4%"></span><span class="eval-seg" style="width:28.84%;background:rgba(var(--ink-rgb),0.55)" title="Fabrication 28.8%"></span><span class="eval-seg" style="width:0.32%;background:rgba(var(--ink-rgb),0.38)" title="Misattribution 0.3%"></span><span class="eval-seg" style="width:5.12%;background:rgba(var(--ink-rgb),0.22)" title="Hedge 5.1%"></span><span class="eval-seg" style="width:58.32%;background:rgba(var(--ink-rgb),0.1)" title="Refusal 58.3%"></span></span><span class="eval-fab">28.8%</span></div><div class="eval-row"><span class="eval-rank">#3</span><span class="eval-name"><span class="dev-dot" style="background:#3E63C4"></span>Grok 4.3<small>xAI · proprietary</small></span><span class="eval-bar"><span class="eval-seg" style="width:15.18%;background:rgba(var(--ink-rgb),0.85)" title="Correct 15.2%"></span><span class="eval-seg" style="width:41.78%;background:rgba(var(--ink-rgb),0.55)" title="Fabrication 41.8%"></span><span class="eval-seg" style="width:1.14%;background:rgba(var(--ink-rgb),0.38)" title="Misattribution 1.1%"></span><span class="eval-seg" style="width:7.98%;background:rgba(var(--ink-rgb),0.22)" title="Hedge 8.0%"></span><span class="eval-seg" style="width:33.91%;background:rgba(var(--ink-rgb),0.1)" title="Refusal 33.9%"></span></span><span class="eval-fab">41.8%</span></div><div class="eval-row"><span class="eval-rank">#4</span><span class="eval-name"><span class="dev-dot" style="background:#1F9E8E"></span>Gemini 3.1 Pro<small>Google DeepMind · proprietary</small></span><span class="eval-bar"><span class="eval-seg" style="width:13.16%;background:rgba(var(--ink-rgb),0.85)" title="Correct 13.2%"></span><span class="eval-seg" style="width:45.66%;background:rgba(var(--ink-rgb),0.55)" title="Fabrication 45.7%"></span><span class="eval-seg" style="width:0.92%;background:rgba(var(--ink-rgb),0.38)" title="Misattribution 0.9%"></span><span class="eval-seg" style="width:4.90%;background:rgba(var(--ink-rgb),0.22)" title="Hedge 4.9%"></span><span class="eval-seg" style="width:35.37%;background:rgba(var(--ink-rgb),0.1)" title="Refusal 35.4%"></span></span><span class="eval-fab">45.7%</span></div><div class="eval-row"><span class="eval-rank">#5</span><span class="eval-name"><span class="dev-dot" style="background:#B048A8"></span>GLM-5.2<small>Zhipu AI · open</small></span><span class="eval-bar"><span class="eval-seg" style="width:17.56%;background:rgba(var(--ink-rgb),0.85)" title="Correct 17.6%"></span><span class="eval-seg" style="width:49.16%;background:rgba(var(--ink-rgb),0.55)" title="Fabrication 49.2%"></span><span class="eval-seg" style="width:1.37%;background:rgba(var(--ink-rgb),0.38)" title="Misattribution 1.4%"></span><span class="eval-seg" style="width:0.71%;background:rgba(var(--ink-rgb),0.22)" title="Hedge 0.7%"></span><span class="eval-seg" style="width:31.21%;background:rgba(var(--ink-rgb),0.1)" title="Refusal 31.2%"></span></span><span class="eval-fab">49.2%</span></div><div class="eval-row"><span class="eval-rank">#6</span><span class="eval-name"><span class="dev-dot" style="background:#3E63C4"></span>Grok 4.20<small>xAI · proprietary</small></span><span class="eval-bar"><span class="eval-seg" style="width:20.85%;background:rgba(var(--ink-rgb),0.85)" title="Correct 20.8%"></span><span class="eval-seg" style="width:50.33%;background:rgba(var(--ink-rgb),0.55)" title="Fabrication 50.3%"></span><span class="eval-seg" style="width:1.38%;background:rgba(var(--ink-rgb),0.38)" title="Misattribution 1.4%"></span><span class="eval-seg" style="width:0.23%;background:rgba(var(--ink-rgb),0.22)" title="Hedge 0.2%"></span><span class="eval-seg" style="width:27.22%;background:rgba(var(--ink-rgb),0.1)" title="Refusal 27.2%"></span></span><span class="eval-fab">50.3%</span></div><div class="eval-row"><span class="eval-rank">#7</span><span class="eval-name"><span class="dev-dot" style="background:#4F9E4F"></span>Qwen3-235B<small>Alibaba Cloud · open</small></span><span class="eval-bar"><span class="eval-seg" style="width:13.53%;background:rgba(var(--ink-rgb),0.85)" title="Correct 13.5%"></span><span class="eval-seg" style="width:51.80%;background:rgba(var(--ink-rgb),0.55)" title="Fabrication 51.8%"></span><span class="eval-seg" style="width:5.83%;background:rgba(var(--ink-rgb),0.38)" title="Misattribution 5.8%"></span><span class="eval-seg" style="width:2.60%;background:rgba(var(--ink-rgb),0.22)" title="Hedge 2.6%"></span><span class="eval-seg" style="width:26.24%;background:rgba(var(--ink-rgb),0.1)" title="Refusal 26.2%"></span></span><span class="eval-fab">51.8%</span></div><div class="eval-row"><span class="eval-rank">#8</span><span class="eval-name"><span class="dev-dot" style="background:#C2366B"></span>GPT-5.5<small>OpenAI · proprietary</small></span><span class="eval-bar"><span class="eval-seg" style="width:18.17%;background:rgba(var(--ink-rgb),0.85)" title="Correct 18.2%"></span><span class="eval-seg" style="width:55.42%;background:rgba(var(--ink-rgb),0.55)" title="Fabrication 55.4%"></span><span class="eval-seg" style="width:0.20%;background:rgba(var(--ink-rgb),0.38)" title="Misattribution 0.2%"></span><span class="eval-seg" style="width:13.11%;background:rgba(var(--ink-rgb),0.22)" title="Hedge 13.1%"></span><span class="eval-seg" style="width:13.10%;background:rgba(var(--ink-rgb),0.1)" title="Refusal 13.1%"></span></span><span class="eval-fab">55.4%</span></div><div class="eval-row"><span class="eval-rank">#9</span><span class="eval-name"><span class="dev-dot" style="background:#C2366B"></span>GPT-5.4<small>OpenAI · proprietary</small></span><span class="eval-bar"><span class="eval-seg" style="width:12.44%;background:rgba(var(--ink-rgb),0.85)" title="Correct 12.4%"></span><span class="eval-seg" style="width:59.36%;background:rgba(var(--ink-rgb),0.55)" title="Fabrication 59.4%"></span><span class="eval-seg" style="width:0.00%;background:rgba(var(--ink-rgb),0.38)" title="Misattribution 0.0%"></span><span class="eval-seg" style="width:14.31%;background:rgba(var(--ink-rgb),0.22)" title="Hedge 14.3%"></span><span class="eval-seg" style="width:13.89%;background:rgba(var(--ink-rgb),0.1)" title="Refusal 13.9%"></span></span><span class="eval-fab">59.4%</span></div><div class="eval-row"><span class="eval-rank">#10</span><span class="eval-name"><span class="dev-dot" style="background:#2E8FB8"></span>DeepSeek V3<small>DeepSeek · open</small></span><span class="eval-bar"><span class="eval-seg" style="width:13.44%;background:rgba(var(--ink-rgb),0.85)" title="Correct 13.4%"></span><span class="eval-seg" style="width:59.58%;background:rgba(var(--ink-rgb),0.55)" title="Fabrication 59.6%"></span><span class="eval-seg" style="width:1.25%;background:rgba(var(--ink-rgb),0.38)" title="Misattribution 1.2%"></span><span class="eval-seg" style="width:5.38%;background:rgba(var(--ink-rgb),0.22)" title="Hedge 5.4%"></span><span class="eval-seg" style="width:20.35%;background:rgba(var(--ink-rgb),0.1)" title="Refusal 20.3%"></span></span><span class="eval-fab">59.6%</span></div><div class="eval-row"><span class="eval-rank">#11</span><span class="eval-name"><span class="dev-dot" style="background:#A98A1F"></span>Mistral Large 3<small>Mistral AI · open</small></span><span class="eval-bar"><span class="eval-seg" style="width:23.52%;background:rgba(var(--ink-rgb),0.85)" title="Correct 23.5%"></span><span class="eval-seg" style="width:60.06%;background:rgba(var(--ink-rgb),0.55)" title="Fabrication 60.1%"></span><span class="eval-seg" style="width:1.41%;background:rgba(var(--ink-rgb),0.38)" title="Misattribution 1.4%"></span><span class="eval-seg" style="width:1.16%;background:rgba(var(--ink-rgb),0.22)" title="Hedge 1.2%"></span><span class="eval-seg" style="width:13.85%;background:rgba(var(--ink-rgb),0.1)" title="Refusal 13.9%"></span></span><span class="eval-fab">60.1%</span></div></div></div>
-<div class="glass-panel"><h2>Explore the Model Space</h2><div class="divider"></div>
+<div class="glass-panel" id="explore"><h2>Explore the Model Space</h2><div class="divider"></div>
     <p class="card-body">Every model as a point in metric space &mdash; choose the
     axes, filter by weight class, hover a point for the full profile.</p>
     <div id="map-controls">
@@ -104,43 +120,49 @@
     </div>
     <div id="eval-scatter"></div>
     <p class="note" id="ev-note" style="margin-top:0.8rem"></p></div>
-<div class="glass-panel"><h2>Fabrication by Country Income Tier</h2><div class="divider"></div>
-    <p class="card-body">Do models fabricate more about some countries than
-    others? One card per model: its fabrication rate across World Bank income
-    tiers, from low-income (LIC) to high-income (HIC) countries, with the
-    other models as faint context curves. Drag the deck, click any card, use
-    the arrows or arrow keys &mdash; it also advances by itself.</p>
+<div class="glass-panel" id="income-tiers"><h2>Fabrication by Country Income Tier</h2><div class="divider"></div>
+    <p class="card-body"><b>Research Question (RQ):</b> Do models fabricate
+    more about some countries than others?</p>
+    <p class="card-body" style="margin-top:0.8rem"><b>One Card Per Model:</b>
+    its fabrication rate across World Bank income tiers, from low-income (LIC)
+    to high-income (HIC) countries, with the other models as faint context
+    curves.</p>
+    <p class="card-body" style="margin-top:0.8rem"><b>Instruction:</b> Drag the
+    deck, click any card, use the arrows or arrow keys.</p>
     <div id="eval-tiers"></div>
     <p class="note" style="margin-top:0.8rem">LIC = low income &middot; LMC =
     lower-middle &middot; UMC = upper-middle &middot; HIC = high income
     (World Bank classification). Shared y-scale across panels.</p></div>
-<div class="glass-panel"><h2>Robustness — Threshold Sensitivity</h2><div class="divider"></div>
-    <p class="card-body">Fabrication is scored at four tolerance thresholds plus a
-    threshold-free, scale-invariant check (share of numeric answers within half an
-    order of magnitude of the truth), so no single scoring rule drives the ranking.
-    One card per model: its fabrication rate as the correctness tolerance
-    widens from &plusmn;5% to &plusmn;30%, with the other models as faint
-    context curves. Drag, click, or let it play.</p>
+<div class="glass-panel" id="robustness"><h2>Robustness — Threshold Sensitivity</h2><div class="divider"></div>
+    <p class="card-body"><b>Methodology:</b> Fabrication is scored at four
+    tolerance thresholds plus a threshold-free, scale-invariant check (share of
+    numeric answers within half an order of magnitude of the truth), so no
+    single scoring rule drives the ranking.</p>
+    <p class="card-body" style="margin-top:0.8rem"><b>One Card Per Model:</b>
+    its fabrication rate as the correctness tolerance widens from &plusmn;5%
+    to &plusmn;30%, with the other models as faint context curves.</p>
+    <p class="card-body" style="margin-top:0.8rem"><b>Instruction:</b> Drag,
+    click, or let it play.</p>
     <div id="eval-thresholds"></div>
     <table class="data" style="margin-top:1.2rem"><thead><tr><th>Model</th>
     <th class="num">&plusmn;5%</th>
     <th class="num">&plusmn;10%</th><th class="num">&plusmn;20%</th>
     <th class="num">&plusmn;30%</th><th class="num">&frac12; order of magnitude</th></tr>
     </thead><tbody><tr><td>Claude Opus 4.8</td><td class="num">23.2%</td><td class="num">22.8%</td><td class="num">21.6%</td><td class="num">20.2%</td><td class="num">22.8%</td><tr><td>Llama 4 Maverick</td><td class="num">30.6%</td><td class="num">28.8%</td><td class="num">25.2%</td><td class="num">19.9%</td><td class="num">50.1%</td><tr><td>Grok 4.3</td><td class="num">43.9%</td><td class="num">41.8%</td><td class="num">37.1%</td><td class="num">28.0%</td><td class="num">47.2%</td><tr><td>Gemini 3.1 Pro</td><td class="num">47.9%</td><td class="num">45.7%</td><td class="num">41.9%</td><td class="num">33.5%</td><td class="num">43.1%</td><tr><td>GLM-5.2</td><td class="num">52.8%</td><td class="num">49.2%</td><td class="num">42.5%</td><td class="num">32.0%</td><td class="num">54.2%</td><tr><td>Grok 4.20</td><td class="num">54.4%</td><td class="num">50.3%</td><td class="num">42.3%</td><td class="num">30.2%</td><td class="num">57.1%</td><tr><td>Qwen3-235B</td><td class="num">54.6%</td><td class="num">51.8%</td><td class="num">46.1%</td><td class="num">36.4%</td><td class="num">47.9%</td><tr><td>GPT-5.5</td><td class="num">58.2%</td><td class="num">55.4%</td><td class="num">50.6%</td><td class="num">38.3%</td><td class="num">46.7%</td><tr><td>GPT-5.4</td><td class="num">60.6%</td><td class="num">59.4%</td><td class="num">56.1%</td><td class="num">44.1%</td><td class="num">35.9%</td><tr><td>DeepSeek V3</td><td class="num">62.8%</td><td class="num">59.6%</td><td class="num">52.9%</td><td class="num">41.3%</td><td class="num">49.9%</td><tr><td>Mistral Large 3</td><td class="num">65.3%</td><td class="num">60.1%</td><td class="num">51.9%</td><td class="num">41.6%</td><td class="num">52.8%</td></tbody></table></div>
-<div class="glass-panel"><h2>Category Rates by Model</h2><div class="divider"></div>
+<div class="glass-panel" id="rates"><h2>Category Rates by Model</h2><div class="divider"></div>
     <table class="data"><thead><tr><th>Model</th><th>Developer</th><th>Weights</th><th class="num">Correct</th><th class="num">Fabrication</th><th class="num">Misattribution</th><th class="num">Hedge</th><th class="num">Refusal</th></tr></thead><tbody><tr><td><span class="dev-dot" style="background:#7B4FC7"></span>Claude Opus 4.8</td><td>Anthropic</td><td>proprietary</td><td class="num">2.2%</td><td class="num">22.8%</td><td class="num">0.8%</td><td class="num">9.0%</td><td class="num">65.2%</td></tr><tr><td><span class="dev-dot" style="background:#C7692C"></span>Llama 4 Maverick</td><td>Meta AI</td><td>open</td><td class="num">7.4%</td><td class="num">28.8%</td><td class="num">0.3%</td><td class="num">5.1%</td><td class="num">58.3%</td></tr><tr><td><span class="dev-dot" style="background:#3E63C4"></span>Grok 4.3</td><td>xAI</td><td>proprietary</td><td class="num">15.2%</td><td class="num">41.8%</td><td class="num">1.1%</td><td class="num">8.0%</td><td class="num">33.9%</td></tr><tr><td><span class="dev-dot" style="background:#1F9E8E"></span>Gemini 3.1 Pro</td><td>Google DeepMind</td><td>proprietary</td><td class="num">13.2%</td><td class="num">45.7%</td><td class="num">0.9%</td><td class="num">4.9%</td><td class="num">35.4%</td></tr><tr><td><span class="dev-dot" style="background:#B048A8"></span>GLM-5.2</td><td>Zhipu AI</td><td>open</td><td class="num">17.6%</td><td class="num">49.2%</td><td class="num">1.4%</td><td class="num">0.7%</td><td class="num">31.2%</td></tr><tr><td><span class="dev-dot" style="background:#3E63C4"></span>Grok 4.20</td><td>xAI</td><td>proprietary</td><td class="num">20.8%</td><td class="num">50.3%</td><td class="num">1.4%</td><td class="num">0.2%</td><td class="num">27.2%</td></tr><tr><td><span class="dev-dot" style="background:#4F9E4F"></span>Qwen3-235B</td><td>Alibaba Cloud</td><td>open</td><td class="num">13.5%</td><td class="num">51.8%</td><td class="num">5.8%</td><td class="num">2.6%</td><td class="num">26.2%</td></tr><tr><td><span class="dev-dot" style="background:#C2366B"></span>GPT-5.5</td><td>OpenAI</td><td>proprietary</td><td class="num">18.2%</td><td class="num">55.4%</td><td class="num">0.2%</td><td class="num">13.1%</td><td class="num">13.1%</td></tr><tr><td><span class="dev-dot" style="background:#C2366B"></span>GPT-5.4</td><td>OpenAI</td><td>proprietary</td><td class="num">12.4%</td><td class="num">59.4%</td><td class="num">0.0%</td><td class="num">14.3%</td><td class="num">13.9%</td></tr><tr><td><span class="dev-dot" style="background:#2E8FB8"></span>DeepSeek V3</td><td>DeepSeek</td><td>open</td><td class="num">13.4%</td><td class="num">59.6%</td><td class="num">1.2%</td><td class="num">5.4%</td><td class="num">20.3%</td></tr><tr><td><span class="dev-dot" style="background:#A98A1F"></span>Mistral Large 3</td><td>Mistral AI</td><td>open</td><td class="num">23.5%</td><td class="num">60.1%</td><td class="num">1.4%</td><td class="num">1.2%</td><td class="num">13.9%</td></tr></tbody></table>
     <p class="note" style="margin-top:0.8rem">Every model answered the identical
     6,658 queries; classification is automated and rule-audited
     (a blind human-validation round is scheduled and will be reported
     alongside these results).</p></div>
-<div class="glass-panel"><h2>How the Evaluation Works</h2><div class="divider"></div>
-    <p class="card-body">The 6,658 queries are built from verified
+<div class="glass-panel" id="method"><h2>How the Evaluation Works</h2><div class="divider"></div>
+    <p class="card-body">We built 6,658 queries from verified
     country-year observations covering 18 screened GAID
     indicators (2010&ndash;2023): 2,978 direct questions over the full
     observation grid, plus four paired variants asked on an identical
-    stratified subsample so variant effects are measured on the same facts.
-    Every response is classified into one of five mutually exclusive
-    categories:</p>
+    stratified subsample so variant effects are measured on the same facts.</p>
+    <p class="card-body" style="margin-top:0.8rem">Every response is classified
+    into one of five mutually exclusive categories:</p>
     <div class="cards-stack" style="margin-top:1.1rem"><div class="tone-card"><h3 class="card-title">Correct</h3><p class="card-body">A numeric answer matching the verified GAID value within the tolerance threshold.</p></div><div class="tone-card"><h3 class="card-title">Fabrication</h3><p class="card-body">A confident numeric answer outside the tolerance — stated as fact, but wrong.</p></div><div class="tone-card"><h3 class="card-title">Refusal</h3><p class="card-body">An explicit acknowledgement of not knowing — the epistemically honest response to a data gap.</p></div><div class="tone-card"><h3 class="card-title">Hedge</h3><p class="card-body">A directional or qualitative reply that commits to no checkable figure.</p></div><div class="tone-card"><h3 class="card-title">Misattribution</h3><p class="card-body">A value explicitly tied to a different year than the one asked about.</p></div></div>
     
     <p class="card-body" style="margin-top:1.4rem"><b>The 18
@@ -149,24 +171,25 @@
     <table class="data" style="margin-top:0.8rem"><thead><tr>
     <th>What the model is asked</th><th>Theme</th><th>Source</th></tr></thead>
     <tbody><tr><td>The number of AI mentions in national legislative proceedings (2022 annual count)</td><td>Accountability</td><td>Stanford AI Index</td></tr><tr><td>The Coursera business skills proficiency score</td><td>Adoption</td><td>Coursera - Global Skills Report</td></tr><tr><td>The Coursera technology skills proficiency score</td><td>Adoption</td><td>Coursera - Global Skills Report</td></tr><tr><td>The GovTech overall maturity index score</td><td>Adoption</td><td>World Bank - GovTech Maturity Index</td></tr><tr><td>The proportion of businesses (10+ employees) having performed big data analysis (%)</td><td>Adoption</td><td>OECD.ai</td></tr><tr><td>The percentage of survey respondents agreeing that AI products and services have more benefits than drawbacks</td><td>Ethics</td><td>Stanford AI Index</td></tr><tr><td>The percentage of survey respondents agreeing that AI products and services make them nervous</td><td>Ethics</td><td>Stanford AI Index</td></tr><tr><td>The share of computer science bachelor's graduates who are female (%)</td><td>Fairness</td><td>Stanford AI Index</td></tr><tr><td>The share of computer science doctoral graduates who are female (%)</td><td>Fairness</td><td>Stanford AI Index</td></tr><tr><td>The number of AI-related bills passed into law</td><td>Regulation</td><td>Stanford AI Index</td></tr><tr><td>Whether the country has released a national AI strategy</td><td>Regulation</td><td>Stanford AI Index</td></tr><tr><td>The total parameters of AI models released</td><td>Safety</td><td>Epoch AI</td></tr><tr><td>The total training compute of AI models released (FLOP)</td><td>Safety</td><td>Epoch AI</td></tr><tr><td>The proportion of businesses (10+ employees) that experienced ICT security breaches (%)</td><td>Security</td><td>OECD.ai</td></tr><tr><td>The proportion of information-and-communication-sector businesses (10+ employees) that experienced ICT security breaches (%)</td><td>Security</td><td>OECD.ai</td></tr><tr><td>The field-weighted citation impact of AI research</td><td>Transparency</td><td>Stanford AI Index</td></tr><tr><td>The number of AI publications</td><td>Transparency</td><td>Stanford AI Index</td></tr><tr><td>The total number of AI-related patent publications (by applicant country of origin)</td><td>Transparency</td><td>WIPO (World Intellectual Property Organisation)</td></tr></tbody></table>
-    <p class="card-body" style="margin-top:1.4rem"><b>Settings.</b> Identical
-    prompts for every model; temperature 0; hidden chain-of-thought disabled or
-    minimised where the provider allows it (per-model settings documented in the
-    open-source pipeline); serving endpoint recorded per response. Numeric
-    correctness uses a &plusmn;10% primary tolerance with &plusmn;5/20/30%
-    sensitivity bounds and a scale-invariant log-ratio check.</p>
+    <p class="card-body" style="margin-top:1.4rem"><b>Settings.</b> We ran
+    identical prompts for every model; we set temperature as 0; we disabled or
+    minimised hidden chain-of-thought where the provider allows it (note:
+    per-model settings documented in the open-source pipeline); serving
+    endpoint recorded per response. It is noteworthy that numeric correctness
+    uses a &plusmn;10% primary tolerance with &plusmn;5/20/30% sensitivity
+    bounds and a scale-invariant log-ratio check.</p>
     <p class="card-body" style="margin-top:1.1rem"><b>What this does and does not
     measure.</b> These scores measure factual recall and epistemic honesty about
-    country-level AI statistics &mdash; not general capability, reasoning, or
+    country-level AI statistics but not general capability, reasoning, or
     usefulness. Classification is automated and rule-audited; a blind
     human-validation round is scheduled and will be reported alongside these
-    results.</p>
+    results in due course.</p>
     <a class="cta-link" href="/methodology/">Index methodology &rarr;</a></div>
 <script>const EVALS = [{"id": "claude-opus-4-8", "label": "Claude Opus 4.8", "dev": "Anthropic", "weights": "proprietary", "color": "#7B4FC7", "correct": 0.0224, "fabrication": 0.2275, "refusal": 0.6517, "hedge": 0.0901, "misattribution": 0.0083, "attempt": 0.2582, "precision": 0.0896, "within_half": 0.228, "median_log": 0.7749, "thresholds": {"5": 0.2324, "10": 0.2275, "20": 0.2157, "30": 0.2016}, "tiers": {"HIC": 0.2506, "LIC": 0.1674, "LMC": 0.2011, "UMC": 0.2154}}, {"id": "llama-4-maverick", "label": "Llama 4 Maverick", "dev": "Meta AI", "weights": "open", "color": "#C7692C", "correct": 0.074, "fabrication": 0.2884, "refusal": 0.5832, "hedge": 0.0512, "misattribution": 0.0032, "attempt": 0.3656, "precision": 0.2042, "within_half": 0.5012, "median_log": 0.1734, "thresholds": {"5": 0.3055, "10": 0.2884, "20": 0.2525, "30": 0.1993}, "tiers": {"HIC": 0.3536, "LIC": 0.1512, "LMC": 0.1872, "UMC": 0.2494}}, {"id": "grok-4-3", "label": "Grok 4.3", "dev": "xAI", "weights": "proprietary", "color": "#3E63C4", "correct": 0.1518, "fabrication": 0.4178, "refusal": 0.3391, "hedge": 0.0798, "misattribution": 0.0114, "attempt": 0.581, "precision": 0.2665, "within_half": 0.4718, "median_log": 0.2102, "thresholds": {"5": 0.4393, "10": 0.4178, "20": 0.3711, "30": 0.2798}, "tiers": {"HIC": 0.4489, "LIC": 0.4, "LMC": 0.3723, "UMC": 0.3822}}, {"id": "gemini-3-1-pro", "label": "Gemini 3.1 Pro", "dev": "Google DeepMind", "weights": "proprietary", "color": "#1F9E8E", "correct": 0.1316, "fabrication": 0.4566, "refusal": 0.3537, "hedge": 0.049, "misattribution": 0.0092, "attempt": 0.5974, "precision": 0.2237, "within_half": 0.4315, "median_log": 0.3438, "thresholds": {"5": 0.4788, "10": 0.4566, "20": 0.4189, "30": 0.3354}, "tiers": {"HIC": 0.478, "LIC": 0.3953, "LMC": 0.4266, "UMC": 0.4469}}, {"id": "glm-5-2", "label": "GLM-5.2", "dev": "Zhipu AI", "weights": "open", "color": "#B048A8", "correct": 0.1756, "fabrication": 0.4916, "refusal": 0.3121, "hedge": 0.0071, "misattribution": 0.0137, "attempt": 0.6809, "precision": 0.2632, "within_half": 0.5417, "median_log": 0.1308, "thresholds": {"5": 0.5276, "10": 0.4916, "20": 0.4251, "30": 0.3198}, "tiers": {"HIC": 0.5348, "LIC": 0.4116, "LMC": 0.4266, "UMC": 0.4596}}, {"id": "grok-4-20", "label": "Grok 4.20", "dev": "xAI", "weights": "proprietary", "color": "#3E63C4", "correct": 0.2085, "fabrication": 0.5033, "refusal": 0.2722, "hedge": 0.0023, "misattribution": 0.0138, "attempt": 0.7256, "precision": 0.2929, "within_half": 0.5707, "median_log": 0.1139, "thresholds": {"5": 0.5439, "10": 0.5033, "20": 0.4231, "30": 0.3025}, "tiers": {"HIC": 0.5331, "LIC": 0.4814, "LMC": 0.4628, "UMC": 0.4711}}, {"id": "qwen3-235b-a22b", "label": "Qwen3-235B", "dev": "Alibaba Cloud", "weights": "open", "color": "#4F9E4F", "correct": 0.1353, "fabrication": 0.518, "refusal": 0.2624, "hedge": 0.026, "misattribution": 0.0583, "attempt": 0.7116, "precision": 0.2071, "within_half": 0.4785, "median_log": 0.2007, "thresholds": {"5": 0.5458, "10": 0.518, "20": 0.4614, "30": 0.3645}, "tiers": {"HIC": 0.5283, "LIC": 0.5, "LMC": 0.5106, "UMC": 0.5046}}, {"id": "gpt-5-5", "label": "GPT-5.5", "dev": "OpenAI", "weights": "proprietary", "color": "#C2366B", "correct": 0.1817, "fabrication": 0.5542, "refusal": 0.131, "hedge": 0.1311, "misattribution": 0.002, "attempt": 0.7379, "precision": 0.2469, "within_half": 0.4674, "median_log": 0.2275, "thresholds": {"5": 0.5825, "10": 0.5542, "20": 0.5065, "30": 0.3834}, "tiers": {"HIC": 0.5842, "LIC": 0.5209, "LMC": 0.5064, "UMC": 0.5254}}, {"id": "gpt-5-4", "label": "GPT-5.4", "dev": "OpenAI", "weights": "proprietary", "color": "#C2366B", "correct": 0.1244, "fabrication": 0.5936, "refusal": 0.1389, "hedge": 0.1431, "misattribution": 0.0, "attempt": 0.718, "precision": 0.1733, "within_half": 0.3594, "median_log": 1.1814, "thresholds": {"5": 0.6056, "10": 0.5936, "20": 0.5611, "30": 0.4413}, "tiers": {"HIC": 0.6281, "LIC": 0.5395, "LMC": 0.5564, "UMC": 0.5531}}, {"id": "deepseek-v3-0324", "label": "DeepSeek V3", "dev": "DeepSeek", "weights": "open", "color": "#2E8FB8", "correct": 0.1344, "fabrication": 0.5958, "refusal": 0.2035, "hedge": 0.0538, "misattribution": 0.0125, "attempt": 0.7427, "precision": 0.1841, "within_half": 0.4988, "median_log": 0.1761, "thresholds": {"5": 0.6283, "10": 0.5958, "20": 0.5293, "30": 0.4127}, "tiers": {"HIC": 0.6067, "LIC": 0.5628, "LMC": 0.5649, "UMC": 0.6016}}, {"id": "mistral-large-3", "label": "Mistral Large 3", "dev": "Mistral AI", "weights": "open", "color": "#A98A1F", "correct": 0.2352, "fabrication": 0.6006, "refusal": 0.1385, "hedge": 0.0116, "misattribution": 0.0141, "attempt": 0.8499, "precision": 0.2814, "within_half": 0.5283, "median_log": 0.1419, "thresholds": {"5": 0.6527, "10": 0.6006, "20": 0.5189, "30": 0.4162}, "tiers": {"HIC": 0.6256, "LIC": 0.5419, "LMC": 0.5404, "UMC": 0.5999}}];</script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script src="/assets/evals.js?v=1783621317"></script>
+<script src="/assets/evals.js?v=1783658869"></script>
 </main>
 <footer class="site"><div class="wrap">
   <p>Global AI Dataset (GAID) Project ·

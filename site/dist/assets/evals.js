@@ -296,3 +296,32 @@
   addEventListener("gaid-theme", renderAll);
   renderAll();
 })();
+
+/* ── page bookmarks: toggle + active-section tracking ─────────────── */
+(function () {
+  const toc = document.getElementById("page-toc");
+  if (!toc) return;
+  const btn = toc.querySelector(".toc-toggle");
+  btn.addEventListener("click", ev => {
+    ev.stopPropagation();
+    toc.classList.toggle("open");
+    btn.setAttribute("aria-expanded", toc.classList.contains("open"));
+  });
+  document.addEventListener("click", ev => {
+    if (!toc.contains(ev.target)) toc.classList.remove("open");
+  });
+  const links = [...toc.querySelectorAll("a")];
+  links.forEach(a => a.addEventListener("click", () =>
+    toc.classList.remove("open")));
+  const byId = new Map(links.map(a => [a.getAttribute("href").slice(1), a]));
+  const io = new IntersectionObserver(entries => entries.forEach(en => {
+    if (en.isIntersecting) {
+      links.forEach(l => l.classList.remove("active"));
+      byId.get(en.target.id)?.classList.add("active");
+    }
+  }), { rootMargin: "-12% 0px -72% 0px" });
+  byId.forEach((_, id) => {
+    const el = document.getElementById(id);
+    if (el) io.observe(el);
+  });
+})();
