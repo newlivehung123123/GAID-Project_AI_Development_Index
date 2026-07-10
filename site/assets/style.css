@@ -448,3 +448,8 @@ html { scroll-behavior: smooth; }
   .toc-list a.active { border-color: rgba(var(--ink-rgb), 0.6); opacity: 1; }
   .toc-list a.active svg { opacity: 1; stroke-width: 2.1; }
 }
+
+/* compact tooltip for short labels (segments) */
+.profile-card.tip-sm { width: auto; max-width: 240px; padding: 0.5rem 0.85rem; }
+.profile-card.tip-sm b { font-family: var(--serif); font-size: 0.85rem;
+                         font-weight: 600; white-space: nowrap; }

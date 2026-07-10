@@ -28,8 +28,9 @@
   const tip = document.createElement("div");
   tip.className = "profile-card";
   document.body.appendChild(tip);
-  function showTip(ev, html) {
+  function showTip(ev, html, small) {
     tip.innerHTML = html;
+    tip.classList.toggle("tip-sm", !!small);
     tip.classList.add("on");
     const pad = 12, vw = document.documentElement.clientWidth;
     let x = ev.clientX + 16;
@@ -53,7 +54,7 @@
   /* instant tooltips for the stacked profile bars */
   document.querySelectorAll(".eval-seg[data-tip]").forEach(seg => {
     seg.addEventListener("mousemove", ev =>
-      showTip(ev, `<div class="pc-head"><b>${seg.dataset.tip}</b></div>`));
+      showTip(ev, `<b>${seg.dataset.tip}</b>`, true));
     seg.addEventListener("mouseleave", hideTip);
   });
 
@@ -276,7 +277,6 @@
       grabCursor: true,
       centeredSlides: true,
       slidesPerView: "auto",
-      slideToClickedSlide: true,
       rewind: true,   // indefinite cycle: prev at the first card wraps to the
                       // last, next at the last wraps back to the first
       coverflowEffect: { rotate: 38, stretch: 0, depth: 160, modifier: 1,
@@ -292,10 +292,21 @@
     };
     sw.on("slideChange", update);
     update();
-    host.querySelectorAll(".swiper-slide").forEach((slide, i) =>
-      slide.addEventListener("click", () => {
-        if (sw.activeIndex !== i) sw.slideTo(i);
-      }));
+    // Every click on the deck navigates. A click that reaches a SIDE slide
+    // jumps straight to it; a click landing on the front card's outer thirds
+    // (which visually overlap the neighbours) steps prev/next.
+    host.querySelector(".flow-swiper").addEventListener("click", ev => {
+      const slide = ev.target.closest(".swiper-slide");
+      const slides = [...host.querySelectorAll(".swiper-slide")];
+      if (slide) {
+        const i = slides.indexOf(slide);
+        if (i !== sw.activeIndex) { sw.slideTo(i); return; }
+        const r = slide.getBoundingClientRect();
+        const fx = (ev.clientX - r.left) / r.width;
+        if (fx < 0.33) sw.slidePrev();
+        else if (fx > 0.67) sw.slideNext();
+      }
+    });
     host.querySelectorAll(".flow-nav button").forEach(b =>
       b.addEventListener("click", () =>
         +b.dataset.d < 0 ? sw.slidePrev() : sw.slideNext()));

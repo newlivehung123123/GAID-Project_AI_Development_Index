@@ -614,7 +614,7 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
     (World Bank classification). Shared y-scale across panels.</p>"""
 
     thr_rows = "".join(
-        f'<tr><td>{label(m)[0]}</td>'
+        f'<tr><td>{model_logo_img(m)}{label(m)[0]}</td>'
         + "".join(f'<td class="num">{rates[m][f"pct_{t}"]["fabrication"]:.1%}</td>'
                   for t in (5, 10, 20, 30))
         + (lambda ce: f'<td class="num">{ce["within_half_order_of_magnitude"]:.1%}</td>'
