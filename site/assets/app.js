@@ -15,6 +15,14 @@
   const sx = document.getElementById("scatter-x");
   const sy = document.getElementById("scatter-y");
 
+  // Country navigation goes through the shared tap-to-peek gate (profile.js):
+  // on desktop it opens the country page immediately (unchanged); on touch the
+  // first tap only shows the national-profile card and a quick second tap on
+  // the same country opens its page. Falls back to opening immediately if
+  // profile.js somehow isn't loaded.
+  const nav = (url, key) =>
+    (window.gaidNav ? window.gaidNav(url, key) : (location.href = url));
+
   const ids = [meta.overall_id, ...Object.keys(meta.pillars), ...Object.keys(meta.lenses)];
   const labels = {
     [meta.overall_id]: "Overall — GAID AI Development Index",
@@ -57,7 +65,7 @@
     .attr("d", geopath)
     .attr("stroke-width", 0.5)
     .style("cursor", "pointer")
-    .on("click", (_, d) => { if (names[d.id]) location.href = "/countries/" + d.id + ".html"; })
+    .on("click", (_, d) => { if (names[d.id]) nav("/countries/" + d.id + ".html", d.id); })
     .on("mousemove", (ev, d) => {
       if (window.gaidProfile && names[d.id]) window.gaidProfile.show(d.id, ev);
     })
@@ -94,7 +102,7 @@
       .attr("class", "scatter-dot")
       .attr("cx", d => xScale(d.x)).attr("cy", d => yScale(d.y)).attr("r", 6)
       .style("cursor", "pointer")
-      .on("click", (_, d) => location.href = "/countries/" + d.iso + ".html")
+      .on("click", (_, d) => nav("/countries/" + d.iso + ".html", d.iso))
       .on("mousemove", (ev, d) => window.gaidProfile && window.gaidProfile.show(d.iso, ev))
       .on("mouseleave", () => window.gaidProfile && window.gaidProfile.hide());
     document.getElementById("scatter-note").textContent =

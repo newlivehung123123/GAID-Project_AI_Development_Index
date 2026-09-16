@@ -16,3 +16,10 @@ __pycache__/
 *.pyc
 .venv/
 gaid-site-upload.zip
+
+# macOS
+.DS_Store
+
+# duplicate upload folder + local paper build
+gaid-site-upload 2/
+paper/*.docx

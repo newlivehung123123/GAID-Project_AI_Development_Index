@@ -82,6 +82,15 @@ def layout(title: str, description: str, body: str, *, depth: int = 0,
     return f"""<!DOCTYPE html>
 <html lang="en" class="eos">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZJ38JRD4BZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  gtag('js', new Date());
+
+  gtag('config', 'G-ZJ38JRD4BZ');
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -194,15 +203,6 @@ def build_home(meta: dict, indices: dict, latest: int) -> str:
         f'<div class="tone-card"><h3 class="card-title">{pid} — {name}</h3>'
         f'<p class="card-body">{PILLAR_BLURBS.get(pid, "")}</p></div>'
         for pid, name in meta["pillars"].items())
-    stats = "".join(
-        f'<span class="badge"><b>{v}</b>{label}</span>'
-        for v, label in [
-            (len(meta["countries"]), "countries &amp; territories"),
-            ("1,331", "verified indicators"),
-            (meta["n_ranked"], f"countries ranked ({latest})"),
-            (6, "measurement pillars"),
-            (f'GAID {meta["wave"]["tag"].replace("_", " ")}', "dataset"),
-        ])
     map_inner = f"""
     <div id="map-controls">
       <label><span>Index</span> <select id="index-select"></select></label>
@@ -236,7 +236,6 @@ def build_home(meta: dict, indices: dict, latest: int) -> str:
         "indices, and a living benchmark of how equitably AI capability is distributed "
         "worldwide.",
     ) + f"""
-<div class="stat-line">{stats}</div>
 <nav class="section-tabs">
   <a href="#world-map">World Map</a>
   <a href="#scatter-plot">Scatter Plot</a>
@@ -315,9 +314,11 @@ def build_rankings(meta: dict, indices: dict, latest: int) -> str:
         rows.append(f'<tr data-iso3="{c["iso3"]}"><td class="rank num">#{c["overall"]["rank"]}</td>'
                     f'<td><a href="/countries/{c["iso3"]}.html">{c["name"]}</a></td>{cells}</tr>')
     table_inner = f"""
+    <div class="table-scroll">
     <table class="data" id="rank-table"><thead><tr>
     <th class="num">Rank</th><th>Country</th>{heads}</tr></thead>
     <tbody>{"".join(rows)}</tbody></table>
+    </div>
     <script>
     document.querySelectorAll("#rank-table th").forEach((th, i) => th.addEventListener("click", () => {{
       const tb = th.closest("table").querySelector("tbody");
@@ -328,7 +329,7 @@ def build_rankings(meta: dict, indices: dict, latest: int) -> str:
         const cmp = isNaN(an) || isNaN(bn) ? av.localeCompare(bv) : an - bn;
         return asc ? cmp : -cmp;
       }}).forEach(r => tb.appendChild(r));
-    }})));
+    }}));
     </script>
     <script src="/assets/profile.js?v={BUILD}"></script>"""
     body = page_title_block(
@@ -549,37 +550,43 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
                  + "".join(f'<td class="num">{p[cat]:.1%}</td>'
                            for cat, _, _ in EVAL_CATEGORIES) + "</tr>")
     table_inner = f"""
+    <div class="table-scroll">
     <table class="data"><thead>{head}</thead><tbody>{rows}</tbody></table>
+    </div>
     <p class="note" style="margin-top:0.8rem">Every model answered the identical
     {n_queries:,} queries; classification is automated and rule-audited
     (a blind human-validation round is scheduled and will be reported
     alongside these results).</p>"""
 
     context_inner = f"""
-    <p class="card-body">Large language models are routinely asked to summarise
-    how AI is developing around the world &mdash; but how much do they actually
-    know, and what do they do when they don&rsquo;t know? This benchmark asks
-    each of {n_models} frontier models the same {n_queries:,} factual questions
-    about national AI development &mdash; AI publications, investment, talent,
-    legislation, compute and more, for specific countries and years &mdash; and
-    scores every answer against the verified value in the
-    <a href="https://doi.org/10.7910/DVN/PUMGYU">GAID dataset</a> (harmonised
-    from 11 international sources, published on Harvard Dataverse).</p>
+    <p class="card-body">Large language models (LLMs) are routinely asked to
+    summarise how AI is developing around the world. However, how much do they
+    actually know, and what do they do when they don&rsquo;t know? This
+    benchmark (1) asks each of {n_models} frontier models the same set of
+    {n_queries:,} factual questions about national AI development, covering AI
+    publications, investment, talent, legislation, compute and more, for
+    specific countries and years, and (2) scores every answer against the
+    verified value (ground truth) in the latest version of the
+    <a href="https://doi.org/10.7910/DVN/PUMGYU">GAID dataset</a> (note:
+    harmonised from 11 international sources of global panel AI data,
+    published on Harvard Dataverse).</p>
     <p class="card-body" style="margin-top:1.1rem">Every question has a known
-    answer. A typical query looks like this:</p>
+    answer (the ground-truth data). A typical query we use for AI evaluation
+    and LLM stress-testing looks like this:</p>
     <div class="tone-card" style="margin-top:0.9rem"><p class="card-body">
     &ldquo;According to the Stanford AI Index, what was the number of AI
     publications for Albania in 2010? Please provide a specific numeric value
     if the information is available.&rdquo;</p></div>
-    <p class="card-body" style="margin-top:1.1rem">A model can answer correctly,
-    admit it doesn&rsquo;t know, hedge without committing to a figure &mdash; or
-    state a wrong number with confidence: a <b>fabrication</b>. Because the
-    ground truth is verified, fabrication is measured directly rather than
-    assumed. Questions span five prompt variants (direct, hedged, decoy-anchored,
-    comparative, and structured JSON with an explicit &ldquo;unknown&rdquo;
-    option), all models receive identical prompts at temperature 0, and every
-    response is cached with its serving endpoint for full reproducibility.
-    Evaluated July 2026.</p>"""
+    <p class="card-body" style="margin-top:1.1rem">A LLM can answer correctly,
+    admit it doesn&rsquo;t know, hedge without committing to a figure, or state
+    a wrong number with confidence (meaning a <b>fabrication</b>). Because the
+    ground truth is verified, fabrication is measured directly by
+    stress-testing LLM responses against the GAID data. Questions span five
+    prompt variants (direct, hedged, decoy-anchored, comparative, and
+    structured JSON with an explicit &ldquo;unknown&rdquo; option), all models
+    receive identical prompts at temperature 0, and every response is cached
+    with its serving endpoint for full reproducibility. AI evaluation/LLM
+    stress-testing was completed in July 2026.</p>"""
 
     explore_inner = """
     <p class="card-body">Every model as a point in metric space &mdash; choose the
@@ -603,7 +610,7 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
     <p class="card-body"><b>Research Question (RQ):</b> Do models fabricate
     more about some countries than others?</p>
     <p class="card-body" style="margin-top:0.8rem"><b>One Card Per Model:</b>
-    its fabrication rate across World Bank income tiers, from low-income (LIC)
+    Its fabrication rate across World Bank income tiers, from low-income (LIC)
     to high-income (HIC) countries, with the other models as faint context
     curves.</p>
     <p class="card-body" style="margin-top:0.8rem"><b>Instruction:</b> Drag the
@@ -626,16 +633,18 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
     numeric answers within half an order of magnitude of the truth), so no
     single scoring rule drives the ranking.</p>
     <p class="card-body" style="margin-top:0.8rem"><b>One Card Per Model:</b>
-    its fabrication rate as the correctness tolerance widens from &plusmn;5%
+    Its fabrication rate as the correctness tolerance widens from &plusmn;5%
     to &plusmn;30%, with the other models as faint context curves.</p>
     <p class="card-body" style="margin-top:0.8rem"><b>Instruction:</b> Drag,
     click, or let it play.</p>
     <div id="eval-thresholds"></div>
-    <table class="data" style="margin-top:1.2rem"><thead><tr><th>Model</th>
+    <div class="table-scroll" style="margin-top:1.2rem">
+    <table class="data"><thead><tr><th>Model</th>
     <th class="num">&plusmn;5%</th>
     <th class="num">&plusmn;10%</th><th class="num">&plusmn;20%</th>
     <th class="num">&plusmn;30%</th><th class="num">&frac12; order of magnitude</th></tr>
-    </thead><tbody>{thr_rows}</tbody></table>"""
+    </thead><tbody>{thr_rows}</tbody></table>
+    </div>"""
 
     cat_cards = "".join(
         f'<div class="tone-card"><h3 class="card-title">{name}</h3>'
@@ -660,9 +669,11 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
     <p class="card-body" style="margin-top:1.4rem"><b>The {len(indicators)}
     indicators.</b> Every question asks for one of these verified quantities,
     for a specific country and year:</p>
-    <table class="data" style="margin-top:0.8rem"><thead><tr>
+    <div class="table-scroll" style="margin-top:0.8rem">
+    <table class="data"><thead><tr>
     <th>What the model is asked</th><th>Theme</th><th>Source</th></tr></thead>
-    <tbody>{ind_rows}</tbody></table>"""
+    <tbody>{ind_rows}</tbody></table>
+    </div>"""
 
     method_inner = f"""
     <p class="card-body">We built {n_queries:,} queries from verified
@@ -690,7 +701,7 @@ def build_evals(stats: dict, indicators: list[dict]) -> str:
     <a class="cta-link" href="/methodology/">Index methodology &rarr;</a>"""
 
     body = page_title_block(
-        "Global AI Dataset (GAID) Project: GAID AI Development Index",
+        "Global AI Dataset (GAID) Project: The Accuracy/Fabrication Benchmark",
         f"Stress-testing {n_models} frontier LLMs against {n_queries:,} verified "
         "facts about national AI development — measuring what models truly know "
         "about every country, and whether they fabricate when they don't.",

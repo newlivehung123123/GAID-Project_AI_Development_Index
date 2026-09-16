@@ -108,6 +108,7 @@ nav.top a:hover, nav.top a.active { opacity: 0.65; }
   font-size: clamp(2.2rem, 5vw, 3.5rem);
   font-weight: 400; letter-spacing: 0.10em;
   color: var(--ink); margin: 0 0 1rem; line-height: 1.15;
+  overflow-wrap: break-word;   /* wrap long tokens on narrow screens only */
 }
 .author-line {
   font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em;
@@ -192,6 +193,14 @@ h2 {
   padding: 0.45rem 0.8rem; border: none; outline: none; border-radius: 10px;
   background-color: var(--raised); color: var(--ink);
 }
+/* on narrow screens the axis pickers stack full-width so they can't
+   push the page wider than the viewport */
+@media (max-width: 640px) {
+  #map-controls { gap: 0.8rem 1.2rem; }
+  #map-controls label { flex-direction: column; align-items: flex-start;
+                        gap: 0.3rem; width: 100%; }
+  #map-controls select { width: 100%; }
+}
 #choropleth { width: 100%; }
 #choropleth svg { display: block; width: 100%; height: auto; }
 .map-tooltip {
@@ -216,6 +225,8 @@ table.data td { border-bottom: 1px solid rgba(var(--ink-rgb), 0.07); }
 table.data tr:last-child td { border-bottom: none; }
 table.data tbody tr:hover td { background: var(--surface); }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+/* wide tables scroll sideways on narrow screens; no effect when they fit */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .rank { font-weight: 700; }
 
 /* ── Country profile ────────────────────────────────────────────── */
@@ -310,4 +321,151 @@ footer.site a { font-weight: 500; }
 @media (max-width: 640px) {
   table.data { font-size: 0.8rem; }
   table.data th, table.data td { padding: 0.5rem 0.4rem; }
+  /* keep columns readable and let the wrapper scroll instead of clipping */
+  .table-scroll table.data { min-width: 560px; }
 }
+
+/* ── Model evaluations (same monochrome ink-alpha language as pc-bars) ── */
+.eval-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem;
+               margin: 0.9rem 0 1.1rem; }
+.eval-key { font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
+            opacity: 0.75; display: inline-flex; align-items: center; gap: 0.4rem; }
+.eval-swatch { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.eval-row { display: flex; align-items: center; gap: 0.7rem; margin-top: 0.55rem; }
+.eval-name { flex: 0 0 168px; font-size: 0.8rem; line-height: 1.25; }
+.eval-name small { display: block; font-size: 0.62rem; letter-spacing: 0.06em;
+                   text-transform: uppercase; opacity: 0.55; }
+.eval-bar { flex: 1; display: flex; height: 14px; border-radius: 7px;
+            overflow: hidden; background: rgba(var(--ink-rgb), 0.05); }
+.eval-seg { display: block; height: 100%; }
+@media (max-width: 640px) {
+  .eval-name { flex-basis: 118px; }
+}
+
+.eval-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.3rem 0 1.1rem; }
+.chip { font-family: var(--serif); font-size: 0.66rem; letter-spacing: 0.16em;
+        text-transform: uppercase; padding: 0.42rem 1.05rem; border-radius: 999px;
+        border: 1px solid rgba(var(--ink-rgb), 0.28); background: transparent;
+        color: var(--ink); cursor: pointer; opacity: 0.75; }
+.chip:hover { opacity: 1; }
+.chip.on { background: var(--ink); color: var(--bg); border-color: transparent;
+           opacity: 1; }
+
+.eval-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+             gap: 1.1rem; margin-top: 0.4rem; }
+.eval-cell h4 { font-family: var(--serif); font-size: 0.78rem; font-weight: 600;
+                letter-spacing: 0.04em; margin: 0 0 0.25rem; opacity: 0.85; }
+.eval-cell svg { display: block; width: 100%; height: auto; }
+
+/* ── Cover-flow model deck (evaluations page) ────────────────────── */
+.flow-wrap { position: relative; height: 430px; perspective: 1200px;
+             outline: none; margin-top: 0.6rem; overflow: hidden; }
+.flow-stage { position: absolute; inset: 0; transform-style: preserve-3d; }
+.flow-card { position: absolute; left: 50%; top: 50%;
+             width: min(500px, 82%); padding: 1rem 1.1rem 0.8rem;
+             background: var(--bg);
+             border: 1px solid rgba(var(--ink-rgb), 0.14);
+             border-radius: 16px; box-shadow: var(--panel-shadow);
+             cursor: pointer;
+             transition: transform 0.5s cubic-bezier(0.22, 0.72, 0.28, 1),
+                         opacity 0.35s ease; }
+.flow-card.front { cursor: default; }
+.flow-card h4 { font-family: var(--serif); font-size: 0.82rem; font-weight: 600;
+                letter-spacing: 0.05em; margin: 0 0 0.4rem; opacity: 0.85; }
+.flow-card svg { display: block; width: 100%; height: auto; }
+.flow-nav { display: flex; align-items: center; justify-content: center;
+            gap: 0.9rem; margin-top: 0.9rem; }
+.flow-caption { font-size: 0.72rem; letter-spacing: 0.1em;
+                text-transform: uppercase; opacity: 0.7; text-align: center; }
+@media (max-width: 640px) { .flow-wrap { height: 330px; } }
+
+/* ── Evaluations v3: org colours, ranks, swiper coverflow ────────── */
+.dev-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+           margin-right: 0.45rem; vertical-align: baseline; }
+.eval-rank { flex: 0 0 30px; font-size: 0.78rem; font-weight: 600;
+             font-variant-numeric: tabular-nums; opacity: 0.65; }
+.eval-fab { flex: 0 0 46px; text-align: right; font-size: 0.75rem;
+            font-weight: 600; font-variant-numeric: tabular-nums; }
+/* swiper takes over card positioning: undo the hand-rolled 3D rules */
+.flow-card { position: static; left: auto; top: auto; width: 100%;
+             transition: none; cursor: inherit; }
+.flow-swiper { padding: 0.8rem 0 1.2rem; }
+.flow-swiper .swiper-slide { width: min(520px, 84%); }
+.flow-swiper .swiper-slide:not(.swiper-slide-active) .flow-card { opacity: 0.55; }
+
+/* ── page bookmarks (evaluations) ────────────────────────────────── */
+html { scroll-behavior: smooth; }
+.eval-fab-head { font-size: 0.56rem; text-transform: uppercase;
+                 letter-spacing: 0.1em; font-weight: 600; opacity: 0.6;
+                 line-height: 1.3; white-space: normal; }
+.eval-headrow { margin-bottom: 0.1rem; }
+.toc { position: fixed; left: 14px; bottom: 16px; z-index: 70;
+       font-family: var(--serif); }
+.toc-list { display: none; position: absolute; bottom: 46px; left: 0;
+            width: 236px; max-height: 62vh; overflow: auto;
+            background: var(--bg); border: 1px solid rgba(var(--ink-rgb), 0.16);
+            border-radius: 14px; box-shadow: var(--panel-shadow);
+            padding: 0.7rem 0.45rem 0.55rem; }
+.toc.open .toc-list { display: block; }
+.toc-title { display: block; font-size: 0.58rem; letter-spacing: 0.18em;
+             text-transform: uppercase; opacity: 0.55; padding: 0 0.8rem 0.4rem; }
+.toc-list a { display: block; padding: 0.35rem 0.8rem; font-size: 0.76rem;
+              color: var(--ink); text-decoration: none; opacity: 0.72;
+              border-left: 2px solid transparent; border-radius: 0 8px 8px 0; }
+.toc-list a:hover { opacity: 1; background: rgba(var(--ink-rgb), 0.05); }
+.toc-list a.active { opacity: 1; font-weight: 600;
+                     border-left-color: rgba(var(--ink-rgb), 0.65); }
+@media (min-width: 1660px) {
+  /* enough gutter: pin the list open beside the content, hide the toggle */
+  .toc { top: 150px; bottom: auto; left: calc((100vw - 72rem) / 2 - 260px); }
+  .toc-toggle { display: none; }
+  .toc-list { display: block; position: static; width: 224px; max-height: none;
+              background: transparent; border: none; box-shadow: none;
+              padding: 0; }
+}
+
+/* ── logos, scatter legend, bookmark rail ────────────────────────── */
+.dev-logo { display: inline-block; vertical-align: -2px; margin-right: 0.45rem; }
+.nyx .dev-logo.mono { filter: invert(1); }
+.eval-seg { cursor: pointer; }
+.scatter-flex { display: flex; gap: 1.2rem; align-items: flex-start; }
+#eval-scatter { flex: 1; min-width: 0; }
+#ev-legend { flex: 0 0 170px; padding-top: 0.5rem; }
+#ev-legend .lg-row { display: flex; align-items: center; gap: 0.15rem;
+                     font-size: 0.76rem; font-weight: 600; padding: 0.24rem 0; }
+@media (max-width: 760px) {
+  .scatter-flex { flex-direction: column; }
+  /* the plot keeps a readable width and scrolls sideways on narrow screens */
+  #eval-scatter { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  #eval-scatter svg { display: block; width: 680px; max-width: none; height: auto; }
+  #ev-legend { flex-basis: auto; display: flex; flex-wrap: wrap;
+               gap: 0.1rem 1rem; padding-top: 0; }
+}
+.toc-list a { display: flex; align-items: center; gap: 0.55rem; }
+.toc-list a svg { flex: 0 0 18px; width: 18px; height: 18px; opacity: 0.8; }
+@media (min-width: 1180px) {
+  /* persistent icon bookmark rail on the left, labels expand on hover */
+  .toc { top: 50%; transform: translateY(-50%); bottom: auto; left: 10px; }
+  .toc-toggle { display: none; }
+  .toc-list { display: block; position: static; width: auto; max-height: none;
+              background: transparent; border: none; box-shadow: none;
+              padding: 0; overflow: visible; }
+  .toc-title { display: none; }
+  .toc-list a { width: 42px; height: 42px; padding: 0 0 0 11px; margin: 0.35rem 0;
+                border-radius: 999px; border: 1px solid rgba(var(--ink-rgb), 0.20);
+                background: var(--bg); box-shadow: var(--panel-shadow);
+                overflow: hidden; white-space: nowrap; opacity: 0.88;
+                transition: width 0.25s ease; }
+  .toc-list a svg { flex: 0 0 20px; width: 20px; height: 20px; }
+  .toc-list a span { opacity: 0; transition: opacity 0.18s ease 0.08s;
+                     font-size: 0.74rem; }
+  .toc-list a:hover { width: 250px; opacity: 1; }
+  .toc-list a:hover span { opacity: 1; }
+  .toc-list a.active { border-color: rgba(var(--ink-rgb), 0.6); opacity: 1; }
+  .toc-list a.active svg { opacity: 1; stroke-width: 2.1; }
+}
+
+/* compact tooltip for short labels (segments) */
+.profile-card.tip-sm { width: auto; max-width: 240px; padding: 0.5rem 0.85rem; }
+.profile-card.tip-sm b { font-family: var(--serif); font-size: 0.85rem;
+                         font-weight: 600; white-space: nowrap; }

@@ -108,6 +108,7 @@ nav.top a:hover, nav.top a.active { opacity: 0.65; }
   font-size: clamp(2.2rem, 5vw, 3.5rem);
   font-weight: 400; letter-spacing: 0.10em;
   color: var(--ink); margin: 0 0 1rem; line-height: 1.15;
+  overflow-wrap: break-word;   /* wrap long tokens on narrow screens only */
 }
 .author-line {
   font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em;
@@ -192,6 +193,14 @@ h2 {
   padding: 0.45rem 0.8rem; border: none; outline: none; border-radius: 10px;
   background-color: var(--raised); color: var(--ink);
 }
+/* on narrow screens the axis pickers stack full-width so they can't
+   push the page wider than the viewport */
+@media (max-width: 640px) {
+  #map-controls { gap: 0.8rem 1.2rem; }
+  #map-controls label { flex-direction: column; align-items: flex-start;
+                        gap: 0.3rem; width: 100%; }
+  #map-controls select { width: 100%; }
+}
 #choropleth { width: 100%; }
 #choropleth svg { display: block; width: 100%; height: auto; }
 .map-tooltip {
@@ -216,6 +225,8 @@ table.data td { border-bottom: 1px solid rgba(var(--ink-rgb), 0.07); }
 table.data tr:last-child td { border-bottom: none; }
 table.data tbody tr:hover td { background: var(--surface); }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+/* wide tables scroll sideways on narrow screens; no effect when they fit */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .rank { font-weight: 700; }
 
 /* ── Country profile ────────────────────────────────────────────── */
@@ -310,6 +321,8 @@ footer.site a { font-weight: 500; }
 @media (max-width: 640px) {
   table.data { font-size: 0.8rem; }
   table.data th, table.data td { padding: 0.5rem 0.4rem; }
+  /* keep columns readable and let the wrapper scroll instead of clipping */
+  .table-scroll table.data { min-width: 560px; }
 }
 
 /* ── Model evaluations (same monochrome ink-alpha language as pc-bars) ── */
@@ -422,6 +435,9 @@ html { scroll-behavior: smooth; }
                      font-size: 0.76rem; font-weight: 600; padding: 0.24rem 0; }
 @media (max-width: 760px) {
   .scatter-flex { flex-direction: column; }
+  /* the plot keeps a readable width and scrolls sideways on narrow screens */
+  #eval-scatter { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  #eval-scatter svg { display: block; width: 680px; max-width: none; height: auto; }
   #ev-legend { flex-basis: auto; display: flex; flex-wrap: wrap;
                gap: 0.1rem 1rem; padding-top: 0; }
 }
