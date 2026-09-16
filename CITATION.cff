@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+title: GAID AI Development Index
+message: >-
+  If you use this software or the index it produces, please cite both this
+  repository and the underlying Global AI Dataset deposit.
+type: software
+authors:
+  - given-names: Jason
+    family-names: Hung
+  - given-names: Nicolas
+    family-names: Grossman
+repository-code: >-
+  https://github.com/newlivehung123123/GAID-Project_AI_Development_Index
+url: https://gaid.aiinsocietyhub.com/
+abstract: >-
+  A six-pillar composite index of national artificial intelligence development
+  for 227 countries and territories, built from the Global AI Dataset (GAID)
+  Project wave 1 version 2. The pipeline downloads the deposited wave from
+  Harvard Dataverse, verifies its checksum, harmonises it into a canonical
+  panel, and computes annual editions under nested equal weights with published
+  coverage gates and a full validation suite.
+keywords:
+  - composite indicator
+  - artificial intelligence
+  - national AI capacity
+  - open data
+  - reproducibility
+license: MIT
+references:
+  - type: data
+    title: Global AI Dataset (GAID) Project, wave 1, version 2
+    authors:
+      - given-names: Jason
+        family-names: Hung
+    doi: 10.7910/DVN/PUMGYU
+    year: 2026
+    publisher:
+      name: Harvard Dataverse
