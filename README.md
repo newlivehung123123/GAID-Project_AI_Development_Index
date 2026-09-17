@@ -302,8 +302,10 @@ python paper/make_figures.py        # -> paper/figures/figure1_workflow.png
 ```
 
 `paper/figure_audit.py` is a bounding-box overlap check. `make_figures.py` calls
-it on every figure and raises if any two text or patch elements collide, so a
-figure cannot be committed with overlapping labels.
+it on every figure and it raises `FigureOverlapError` if any two text or patch
+elements collide, before the figure is written, so a figure with overlapping
+labels never reaches disk and cannot be committed. Figure 1 is checked a second
+time, for any text that leaves the stage band it belongs to.
 
 ---
 

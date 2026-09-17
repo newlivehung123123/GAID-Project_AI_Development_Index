@@ -1,5 +1,13 @@
-"""Bounding box overlap audit for the paper figures."""
+"""Bounding box overlap audit for the paper figures.
+
+`audit` raises FigureOverlapError when any two labelled elements collide,
+so a figure with overlapping labels is never written to disk.
+"""
 from matplotlib.transforms import Bbox
+
+
+class FigureOverlapError(AssertionError):
+    """Raised when a figure would be saved with colliding labels."""
 
 def _bb(a, r):
     try:
@@ -55,4 +63,8 @@ def audit(fig, name, text_vs_patch=True, tol=1.0):
                     bad.append(f"{lbl}  x  bar patch  ({a:.0f} px2)")
     print(f"[{name}] {'OVERLAPS' if bad else 'clean'}"
           + ("".join("\n    " + b for b in bad) if bad else ""))
+    if bad:
+        raise FigureOverlapError(
+            f"{name} has {len(bad)} overlapping element pair(s) and was not "
+            "written:" + "".join("\n    " + b for b in bad))
     return bad

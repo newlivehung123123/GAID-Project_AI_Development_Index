@@ -4,7 +4,8 @@ paper. Run after `python -m gaid_pipeline indices`.
     python paper/make_figures.py
 
 Every figure is checked for overlapping text by figure_audit.audit before it
-is written, so a figure cannot be saved with colliding labels.
+is written. The audit raises FigureOverlapError on any collision, so a
+figure cannot be saved with colliding labels.
 """
 from __future__ import annotations
 
@@ -27,7 +28,7 @@ from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 from matplotlib.transforms import Bbox
 
 from gaid_pipeline import indices as IX
-from figure_audit import audit, _area
+from figure_audit import audit, FigureOverlapError, _area
 
 OUT = ROOT / "paper" / "figures"
 OUT.mkdir(parents=True, exist_ok=True)
@@ -171,6 +172,10 @@ for i, t in labels:
         bad.append(f"stage {i+1} text leaves its band: {t.get_text()[:44]!r}")
 print("[figure 1 containment]", "OVERLAPS" if bad else "clean",
       *("\n    " + x for x in bad))
+if bad:
+    raise FigureOverlapError(
+        f"figure 1 has {len(bad)} text block(s) outside their stage band and "
+        "was not written:" + "".join("\n    " + x for x in bad))
 
 fig.savefig(OUT / "figure1_workflow.png"); plt.close(fig)
 
