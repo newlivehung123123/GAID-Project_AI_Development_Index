@@ -295,7 +295,10 @@ panel and index config, in black and white.
 
 ```bash
 python -m gaid_pipeline indices     # figures read indices + the canonical panel
-python paper/make_figures.py        # -> paper/figures/figure{1,2,3,4}.png
+python paper/make_figures.py        # -> paper/figures/figure1_workflow.png
+                                    #    figure2_coverage_cliff.png
+                                    #    figure3_pillar_coverage.png
+                                    #    figure4_rank_stability.png
 ```
 
 `paper/figure_audit.py` is a bounding-box overlap check. `make_figures.py` calls
